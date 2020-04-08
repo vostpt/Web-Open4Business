@@ -1,0 +1,4 @@
+<div style="margin-left: -30px" class="h-100 position-relative">
+  <app-catalog-loader name="app-map"></app-catalog-loader>
+  <app-catalog-map *ngIf="contentReady" [markers]="systemMarkers" (mapEvents)="onMapEvent($event)"></app-catalog-map>
+</div>

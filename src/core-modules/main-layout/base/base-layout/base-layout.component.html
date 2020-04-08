@@ -1,0 +1,57 @@
+<!-- begin:: Page -->
+<ng-container *ngIf="selfLayout !== 'blank'; else blankLayout">
+  <ng-container *ngIf="contentReady">
+    <!-- begin:: Header Mobile -->
+    <app-main-layout-header-mobile [entity]="entity" [systems]="datasets.systems" [systemSelectForm]="systemSelectForm"
+      [selectedMenu]="selectedMenu" [applications]="datasets.applications"
+      (headerMobileEvents)="onHeaderEvents($event)">
+    </app-main-layout-header-mobile>
+    <!-- end:: Header Mobile -->
+
+    <div class="kt-grid kt-grid--hor kt-grid--root">
+      <!-- begin::Body -->
+      <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--ver kt-page">
+        <div class="kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-wrapper" id="kt_wrapper">
+          <!-- begin:: Header -->
+          <app-main-layout-header [entity]="entity" [systems]="datasets.systems" [systemSelectForm]="systemSelectForm"
+            [selectedMenu]="selectedMenu" [zones]="datasets.zones" [zonesForm]="zonesForm"
+            [applications]="datasets.applications" (headerEvents)="onHeaderEvents($event)"></app-main-layout-header>
+          <!-- end:: Header -->
+
+          <!-- begin:: Content -->
+          <div class="kt-body kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor kt-grid--stretch" id="kt_body">
+            <div [ngClass]="{'kt-container kt-container--fluid kt-grid kt-grid--ver': true}">
+              <!-- begin:: Aside Left -->
+              <ng-container *ngIf="asideDisplay">
+                <button class="kt-aside-close" id="kt_aside_close_btn"><i class="la la-close"></i></button>
+                <router-outlet name="layout-aside-left"></router-outlet>
+              </ng-container>
+              <!-- end:: Aside Left -->
+
+              <div class="kt-content kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor" id="kt_content">
+                <!-- begin:: Content Body -->
+                <div ktContentAnimate class="kt-container kt-grid__item kt-grid__item--fluid"
+                  [ngClass]="{'kt-container--fluid': fluid}">
+                  <router-outlet></router-outlet>
+                </div>
+                <!-- end:: Content Body -->
+              </div>
+            </div>
+            <!-- end:: Content -->
+          </div>
+          <!-- <app-layout-page-footer></app-layout-page-footer> -->
+
+        </div>
+      </div>
+      <!-- end:: Body -->
+
+      <kt-scroll-top></kt-scroll-top>
+      <!-- <kt-sticky-toolbar></kt-sticky-toolbar> -->
+    </div>
+  </ng-container>
+</ng-container>
+<!-- end:: Page -->
+
+<ng-template #blankLayout>
+  <router-outlet></router-outlet>
+</ng-template>

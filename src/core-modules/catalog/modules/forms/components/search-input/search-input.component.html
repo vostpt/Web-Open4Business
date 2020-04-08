@@ -1,0 +1,21 @@
+<div class="kt-input-icon kt-input-icon--right">
+  <input
+    [id]="id"
+    [placeholder]="placeholder"
+    [title]="tooltip"
+    value="{{value}}"
+    [attr.autofocus]="autofocus"
+    class="form-control text-dark"
+    [ngClass]="{ 'form-control-lg': size === 'large' }"
+    (input)="onChanged($event)"
+    (blur)="onTouched()">
+  <div class="d-flex kt-input-icon__icon kt-input-icon__icon--right" [ngClass]="{'kt--padding-right-50': deleteIconVisible}">
+    <span [hidden]="!deleteIconVisible" title="{{ 'dictionary.clear' | translate | titlecase }}"
+      class="clear-button kt--padding-right-10" (click)="onClearButtonClicked()">
+      <i class="fa fa-times"></i>
+    </span>
+    <span class="search-button" title="{{ 'dictionary.search' | translate }}" (click)="onSearchButtonClicked()">
+      <i class="fa fa-search text-primary"></i>
+    </span>
+  </div>
+</div>

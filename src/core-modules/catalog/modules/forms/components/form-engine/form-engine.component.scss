@@ -1,0 +1,65 @@
+.field-group-button-delete {
+  i {
+    cursor: pointer;
+  }
+  height: 45px;
+  padding-top: 10px;
+}
+
+.field-group-button-plus {
+  i {
+    cursor: pointer;
+  }
+  margin-bottom: 0.5rem;
+}
+
+.field-group-buttons {
+  width: 25px;
+}
+
+.field-group-parameter {
+  padding-right: 10px;
+  position: relative;
+  min-width: 300px;
+  max-width: auto;
+  width: auto;
+
+  &:last-child {
+    padding-right: 0px;
+  }
+
+  div {
+    height: 45px;
+  }
+}
+
+.field-group-row {
+  overflow-x: auto;
+  max-width: calc(100% - 25px);
+  width: calc(100% - 25px);
+
+  &::-webkit-scrollbar {
+    background-color: #aaa;
+    border-radius: 20px;
+    height: 8px;
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgb(145, 143, 143);
+    border-radius: 20px;
+  }
+}
+
+.separator {
+  span {
+    background: #fff;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding-right: 10px;
+  }
+
+  border-bottom: 1px solid #aeaeae;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+}

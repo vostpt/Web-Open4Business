@@ -1,0 +1,76 @@
+<label *ngIf="label">
+  <i [class]="icon"></i> {{label}} {{required ? '*' : ''}}
+</label>
+<div [ngClass]="{'kt-input-icon kt-input-icon--right': fieldIcon || hasError, 'input-group': isInputGroup}">
+  <div #prependedContent class="input-group-prepend">
+    <ng-content select="[prepend]"></ng-content>
+  </div>
+  <div *ngFor="let action of actions" class="input-group-prepend">
+    <span *ngIf="action.type === 'label' && action.orientation === 'left'" class="input-group-text">
+      {{ action.title }}
+    </span>
+    <a *ngIf="action.type === 'button' && action.orientation === 'left'" href="javascript:;" class="btn btn-secondary"
+      (click)="onActionClicked(action.id)">
+      <i class="{{action.icon}}"></i>
+    </a>
+  </div>
+  <input
+    [id]="id"
+    [type]="type"
+    [placeholder]="placeholder"
+    [required]="required"
+    [disabled]="formControlField.disabled"
+    [readonly]="readonly"
+    [title]="tooltip"
+    value="{{value}}"
+    [attr.minLength]="minLength"
+    [attr.maxLength]="maxLength"
+    [attr.min]="min"
+    [attr.max]="max"
+    [attr.autofocus]="autofocus"
+    class="form-control text-dark"
+    [ngClass]="{'border border-danger': hasError}"
+    (input)="onChanged($event)"
+    (blur)="onTouched()">
+  <div *ngIf="copyToClipboard" class="input-group-append">
+    <a [id]="clipboardId" href="javascript:;" class="btn btn-secondary clipboardId" data-clipboard="true"><i class="la la-copy"></i></a>
+  </div>
+  <div *ngFor="let action of actions" class="input-group-prepend">
+    <span *ngIf="action.type === 'label' && action.orientation === 'right'" class="input-group-text">
+      {{ action.title }}
+    </span>
+    <a *ngIf="action.type === 'button' && action.orientation === 'right'" href="javascript:;" class="btn btn-secondary"
+      (click)="onActionClicked(action.id)">
+      <i class="{{action.icon}}"></i>
+    </a>
+    <a *ngIf="action.type === 'download'" href="{{action.downloadLink}}" target="_blank" class="btn btn-secondary">
+      <i class="{{action.icon}}"></i>
+    </a>
+    <a *ngIf="action.type === 'password' && type === 'password'" href="javascript:;"
+      (click)="togglePasswordVisibility(true)" class="btn btn-secondary">
+      <i class="fa fa-eye"></i>
+    </a>
+    <a *ngIf="action.type === 'password' && type === 'text'" href=" javascript:;" (click)="togglePasswordVisibility(false)"
+      class="btn btn-secondary">
+      <i class="fa fa-eye-slash"></i>
+    </a>
+  </div>
+  <span *ngIf="hasError" class="kt-input-icon__icon kt-input-icon__icon--right">
+    <span>
+      <i class="fa fa-exclamation-triangle text-danger" title="{{errorMessage}}" data-toggle="m-tooltip"></i>
+    </span>
+  </span>
+  <span *ngIf="fieldIcon" class="kt-input-icon__icon kt-input-icon__icon--right">
+    <span class="fieldIcon" (click)="fieldIconClicked($event)">
+      <i class={{fieldIcon}}></i>
+    </span>
+  </span>
+</div>
+
+<div *ngIf="description && !hideMessages && !hasError" class="pt-1">
+  {{description}}
+</div>
+
+<div  class="text-danger error-message pt-1">
+ <span *ngIf="!hideMessages && hasError"> {{ errorMessage }}</span>
+</div>

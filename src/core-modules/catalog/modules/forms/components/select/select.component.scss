@@ -1,0 +1,27 @@
+@import '@ng-select/ng-select/themes/default.theme.css';
+
+app-catalog-form-select {
+  .ng-select.custom-theme {
+    font-family: sans-serif, Arial;
+    border-radius: 0.25rem;
+
+    &.ng-select-single .ng-select-container {
+      height: 40px;
+    }
+
+    .ng-select-container {
+      border: 1px solid #ebedf2;
+      border-radius: 0.25rem;
+      height: 40px;
+    }
+
+    &.ng-select-error .ng-select-container {
+      border-color: #f4516c !important;
+    }
+  }
+
+  .col-xs-auto {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+}

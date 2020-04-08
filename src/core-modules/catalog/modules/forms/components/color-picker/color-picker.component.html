@@ -1,0 +1,7 @@
+<div ngbDropdown class="d-inline-block">
+  <button  class="color-button" ngbDropdownToggle [style.background-color]="color">
+  </button>
+  <div ngbDropdownMenu>
+    <color-swatches (onChange)="handleChange($event)"></color-swatches>
+  </div>
+</div>

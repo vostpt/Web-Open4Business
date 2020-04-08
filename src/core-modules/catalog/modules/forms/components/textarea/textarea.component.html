@@ -1,0 +1,32 @@
+<label *ngIf="label" class="col-form-label">
+  <i [class]=icon></i> {{label}} {{required ? '*' : ''}}
+</label>
+<textarea
+  [id]="id"
+  [placeholder]="placeholder"
+  [required]="required"
+  [disabled]="formControlField.disabled"
+  [readonly]="readonly"
+  [title]="tooltip"
+  value="{{value}}"
+  [attr.autofocus]="autofocus"
+  data-toggle="m-tooltip"
+  class="form-control"
+  [rows]="rows"
+  [ngClass]="{'not-resizable': resizable === false, 'border border-danger': hasError}"
+  (input)="onChanged($event)"
+  (blur)="onTouched()"></textarea>
+<div *ngIf="copyToClipboard">
+  <div class="kt--space-10"></div>
+  <a [id]="clipboardId" href="javascript:;" class="btn btn-secondary" data-clipboard="true">
+    <i class="la la-clipboard"></i>
+  </a>
+</div>
+
+<div *ngIf="description && !hideMessages && !hasError" class="text-capitalize pt-1">
+  {{description}}
+</div>
+
+<div  class="text-danger error-message pt-1">
+  <span *ngIf="!hideMessages && hasError">{{ errorMessage }}</span>
+</div>

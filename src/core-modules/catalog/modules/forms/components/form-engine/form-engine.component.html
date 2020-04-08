@@ -1,0 +1,137 @@
+<div *ngIf="errors?.length > 0"
+  class="alert alert-danger alert-dismissible fade show m-alert m-alert--air m-alert--outline m-alert--outline-2x"
+  role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+  <ul class="kt-pl-15 mb-0">
+    <li *ngFor="let error of errors">
+      {{ error | translate }}
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="contentReady" class="row">
+  <div *ngFor="let parameter of parameters" id="parameter-{{parameter.key}}" class="kt-pb-10 col-12"
+    [ngClass]="{ 'd-none': !isParameterVisible(parameter) }">
+    <ng-container *ngTemplateOutlet="formTemplate; context: { parameter: parameter }"></ng-container>
+  </div>
+</div>
+
+<form [formGroup]="form">
+  <ng-template #formTemplate let-parameter="parameter">
+    <ng-container *ngIf="isParameterVisible(parameter)">
+      <ng-container [ngSwitch]="parameter.dataType">
+        <!-- select -->
+        <div *ngSwitchCase="'static-list'">
+          <app-catalog-form-select [formControlName]="parameter.key" [formControlField]="getControlField(parameter)"
+            label="{{ parameter.label }}" [placeholder]="parameter.placeholder" [items]="datasets[parameter.key]"
+            appendTo="#parameter-{{parameter.key}}" [required]="parameter.validations?.isRequired"
+            [clearable]="parameter.multipleSelection" [multiple]="parameter.multipleSelection">
+          </app-catalog-form-select>
+        </div>
+        <div *ngSwitchCase="'dynamic-list'" class="position-relative">
+          <app-catalog-loader name="parameter-{{parameter.key}}"></app-catalog-loader>
+          <app-catalog-form-select [formControlName]="parameter.key" [formControlField]="getControlField(parameter)"
+            label="{{ parameter.label }}" [placeholder]="parameter.placeholder" [items]="datasets[parameter.key]"
+            appendTo="#parameter-{{parameter.key}}" [required]="parameter.validations?.isRequired"
+            [clearable]="parameter.multipleSelection" [multiple]="parameter.multipleSelection">
+          </app-catalog-form-select>
+        </div>
+        <!-- checkbox -->
+        <div *ngSwitchCase="'boolean'" class="kt-pt-10">
+          <label>
+            {{ parameter.label }} <ng-container *ngIf="parameter.validations?.isRequired">*</ng-container>
+          </label>
+          <div class="kt-pt-10">
+            <app-catalog-form-checkbox [formControlName]="parameter.key" [formControlField]="getControlField(parameter)"
+              label="{{ 'labels.enabled' | translate }}">
+            </app-catalog-form-checkbox>
+          </div>
+        </div>
+        <!-- textarea -->
+        <div *ngSwitchCase="'text'">
+          <app-catalog-form-textarea [formControlName]="parameter.key" [formControlField]="getControlField(parameter)"
+            label="{{ parameter.label }}" [placeholder]="parameter.placeholder"
+            [required]="parameter.validations?.isRequired">
+          </app-catalog-form-textarea>
+        </div>
+        <!-- separator -->
+        <div *ngSwitchCase="'separator'">
+          <div class="kt-pb-10 w-100 separator">
+            <span> {{ parameter.label }} </span>
+          </div>
+        </div>
+        <!-- fields-group -->
+        <div *ngSwitchCase="'fields-group'" class="position-relative">
+          <div class="kt-pb-10"> {{ parameter.label }} <ng-container *ngIf="parameter.validations?.isRequired">*
+            </ng-container>
+          </div>
+          <div class="d-flex">
+            <div class="field-group-row">
+              <div *ngFor="let control of f[parameter.key]['controls']; let i = index" class="d-flex">
+                <div *ngFor="let field of parameter.fields" class="field-group-parameter">
+                  <label *ngIf="i === 0">{{ field.label }} <ng-container *ngIf="field.validations?.isRequired">*
+                    </ng-container></label>
+                  <ng-container
+                    *ngTemplateOutlet="formTemplateFieldsGroup; context: { parameter: field, parent: parameter.key, line: i }">
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+            <div class="field-group-buttons">
+              <ng-container *ngFor="let control of f[parameter.key]['controls']; let i = index">
+                <div *ngIf="i === 0" class="field-group-button-plus text-right">
+                  <i class="fa fa-plus text-primary" (click)="onFieldGroupRowAdded(parameter.key)"></i>
+                </div>
+                <div class="field-group-button-delete text-right">
+                  <i class="fa fa-trash text-danger" (click)="onFieldGroupRowRemoved(parameter.key, i)"></i>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+        <div *ngSwitchDefault>
+          <app-catalog-form-input [formControlName]="parameter.key" [formControlField]="getControlField(parameter)"
+            label="{{ parameter.label }}" [required]="parameter.validations?.isRequired"
+            [placeholder]="parameter.placeholder">
+          </app-catalog-form-input>
+        </div>
+      </ng-container>
+      <div *ngIf="parameter.hint" class="kt-pt-5">
+        {{ parameter.hint }}
+      </div>
+    </ng-container>
+  </ng-template>
+
+  <ng-template #formTemplateFieldsGroup let-parameter="parameter" let-parent="parent" let-line="line">
+    <ng-container *ngIf="isParameterVisible(parameter)">
+      <ng-container [ngSwitch]="parameter.dataType" [formArrayName]="parent">
+        <!-- select -->
+        <div *ngSwitchCase="'static-list'" [formGroupName]="line">
+          <app-catalog-form-select [formControlName]="parameter.key"
+            [formControlField]="getControlField(parameter, parent, line)" [placeholder]="parameter.placeholder"
+            [items]="datasets[parameter.key]" appendTo="#parameter-{{parent}}" [clearable]="parameter.multipleSelection"
+            [multiple]="parameter.multipleSelection">
+          </app-catalog-form-select>
+        </div>
+        <!-- checkbox -->
+        <div *ngSwitchCase="'boolean'" class="kt-pb-10">
+          <app-catalog-form-checkbox [formControlName]="parameter.key"
+            [formControlField]="getControlField(parameter, parent, line)" label="{{ 'labels.enabled' | translate }}">
+          </app-catalog-form-checkbox>
+        </div>
+        <!-- textarea -->
+        <div *ngSwitchCase="'text'">
+          <app-catalog-form-textarea [formControlName]="parameter.key"
+            [formControlField]="getControlField(parameter, parent, line)" label="{{ parameter.label }}"
+            [placeholder]="parameter.placeholder">
+          </app-catalog-form-textarea>
+        </div>
+        <div *ngSwitchDefault [formGroupName]="line">
+          <app-catalog-form-input [formControlName]="parameter.key"
+            [formControlField]="getControlField(parameter, parent, line)" [placeholder]="parameter.placeholder">
+          </app-catalog-form-input>
+        </div>
+      </ng-container>
+    </ng-container>
+  </ng-template>
+</form>

@@ -1,0 +1,43 @@
+<label *ngIf="label">
+  <i [class]="icon"></i> {{label}} {{required ? '*' : ''}}
+</label>
+<div class="form-input">
+  <ng-select
+    [disabled]="formControlField.disabled"
+    [appendTo]="appendTo"
+    [(ngModel)]="selectedValue"
+    [multiple]="multiple"
+    [items]="items"
+    [bindLabel]="bindLabel"
+    [bindValue]="bindValue"
+    [placeholder]="placeholder"
+    [required]="required"
+    [clearable]="clearable"
+    class="custom-theme"
+    [ngClass]="{'ng-select-error': hasError}"
+    (change)="onChanged($event)"
+    (blur)="onTouched()"
+    [groupBy]="groupBy"
+  >
+    <ng-template *ngIf="groupBy" ng-optgroup-tmp let-item="item">
+      {{item[groupBy]}}
+    </ng-template>
+
+    <ng-container *ngIf="customView">
+      <ng-template ng-label-tmp let-item="item">
+        <ng-template *ngTemplateOutlet="labelTemplate; context : { $implicit: item }"></ng-template>
+      </ng-template>
+      <ng-template ng-option-tmp let-item="item">
+        <ng-template *ngTemplateOutlet="optionsTemplate; context : { $implicit: item }"></ng-template>
+      </ng-template>
+    </ng-container>
+  </ng-select>
+</div>
+
+<div *ngIf="description && !hideMessages && !hasError">
+  {{ description }}
+</div>
+
+<div *ngIf="!hideMessages && hasError" class="text-danger error-message pt-1">
+  {{ errorMessage }}
+</div>

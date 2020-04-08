@@ -1,0 +1,9 @@
+<label class="kt-checkbox kt-checkbox--solid mb-0"
+  [ngClass]="{ 'kt-checkbox--disabled': formControlField.disabled, 'kt-checkbox--brand': !formControlField.disabled }">
+  <input type="checkbox" name="radio" [disabled]="formControlField.disabled"
+    [checked]="checked" (change)="onChanged($event)">
+  <span></span>
+  <label class="mb-0">
+    {{label}}
+  </label>
+</label>
