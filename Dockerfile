@@ -19,11 +19,11 @@ RUN npm run build
 FROM nginx:1.17-alpine as publishStage
 
 ## Copy default nginx configuration.s
-COPY .docker/build/nginx.conf /etc/nginx/conf.d/default.conf
+COPY .docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 ## Remove default nginx website.
 RUN rm -rf /usr/share/nginx/html/*
 
-COPY --from=buildStage /build/dist     /app
+COPY --from=buildStage /build/dist /app
 
 CMD ["nginx", "-g", "daemon off;"]

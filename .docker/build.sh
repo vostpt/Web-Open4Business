@@ -5,18 +5,16 @@
 # Mandatory:
 # DOCKER_USERNAME
 # DOCKER_PASSWORD
-# REGISTRY_HOST     example: domatica.no-ip.org:1080 
-# REGISTRY_PROJECT  example: cloud
-# REGISTRY_NAME     example: shr-gui-accounts
+# REPOSITORY     example for docker hub: username/repo
 #
 # Optional:
 # REPOSITORY_TAG    default: latest   [ PR | latest | staging | stable | ... ]
 # COMMAND           default: publish  [ publish | build ]
 
 # Check if all necessary ENV variables are defined!
-if [ -z $DOCKER_USERNAME ] || [ -z $DOCKER_PASSWORD ] || [ -z $REGISTRY_HOST ] || [ -z $REGISTRY_PROJECT ] || [ -z $REGISTRY_NAME ]
+if [ -z $DOCKER_USERNAME ] || [ -z $DOCKER_PASSWORD ] || [ -z $REPOSITORY ]
 then
-  echo "ERROR: Environment variables missing! Please supply: \$DOCKER_USERNAME, \$DOCKER_PASSWORD, \$REGISTRY_HOST, \$REGISTRY_PROJECT, \$REGISTRY_NAME."
+  echo "ERROR: Environment variables missing! Please supply: \$DOCKER_USERNAME, \$DOCKER_PASSWORD, \$REPOSITORY."
   exit 1
 fi
 
@@ -36,12 +34,15 @@ fi
 # Local variables
 LOCAL_PATH="$(pwd)/$(dirname $0)"
 ROOT_PATH="$(dirname $LOCAL_PATH)"
-DOCKER_REPOSITORY_NAME="${REGISTRY_HOST}/${REGISTRY_PROJECT}/${REGISTRY_NAME}"
+DOCKER_REPOSITORY_NAME="${REPOSITORY}"
 DOCKER_IMAGE_NAME="${DOCKER_REPOSITORY_NAME}:${PROJECT_VERSION}"
 DOCKER_IMAGE_TAG="${DOCKER_REPOSITORY_NAME}:$REPOSITORY_TAG"
 
 # Build docker image
+echo "path: ${ROOT_PATH}"
+echo "command: ${COMMAND}"
 echo "Building image: ${DOCKER_IMAGE_NAME}"
+
 run-and-exit-on-error docker build \
   --file docker/build/Dockerfile \
   --target ${COMMAND}Stage \
