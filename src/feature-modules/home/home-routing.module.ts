@@ -3,6 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { BaseLayoutComponent } from '@core-modules/main-layout';
 
+import { AsideLeftComponent } from '@home-feature-module/components/aside-left/aside-left.component';
+import { MapComponent } from './pages/map/map.component';
 
 const routes: Routes = [
   {
@@ -13,7 +15,22 @@ const routes: Routes = [
         isAsideLeftActive: false,
         selectedMenu: 'map'
       }
-    }
+    },
+    children: [
+      {
+        path: '',
+        component: AsideLeftComponent,
+        outlet: 'layout-aside-left'
+      },
+      {
+        path: '',
+        component: MapComponent,
+        pathMatch: 'full',
+        data: {
+          breadcrumb: 'Overview' // TODO add translation in the future
+        }
+      }
+    ]
   }
 ];
 

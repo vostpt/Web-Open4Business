@@ -1,0 +1,10 @@
+<!-- begin::Offcanvas Toolbar Quick Actions -->
+<div ktOffcanvas [options]="offcanvasOptions" id="kt_quick_panel" class="kt-quick-panel" [ngStyle]="{'overflow': 'hidden'}">
+  <a href="javascript:;" class="kt-quick-panel__close" id="kt_quick_panel_close_btn" (click)="onClose()">
+    <i class="flaticon2-delete"></i>
+  </a>
+  <div class="kt-mt-50 h-100 px-4">
+    <ng-content select="[content]"></ng-content>
+  </div>
+</div>
+<!-- end::Offcanvas Toolbar Quick Actions -->

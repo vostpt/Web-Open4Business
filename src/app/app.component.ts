@@ -20,22 +20,22 @@ export class AppComponent implements OnInit, OnDestroy {
     private router: Router,
     private translateService: TranslateService,
     private loader: NgxSpinnerService
-    //private layoutConfigService: LayoutConfigService,
-    //private splashScreenService: SplashScreenService
+    // private layoutConfigService: LayoutConfigService,
+    // private splashScreenService: SplashScreenService
   ) {
     this.translateService.addLangs(['pt']);
     this.translateService.setDefaultLang('pt');
     this.translateService.setTranslation(ptLanguage.lang, ptLanguage.data, true);
-		//this.translationService.loadTranslations(enLang, chLang, esLang, jpLang, deLang, frLang);
-   }
+    // this.translationService.loadTranslations(enLang, chLang, esLang, jpLang, deLang, frLang);
+  }
 
 
   ngOnInit(): void {
 
     this.loader.show('splash-screen-loader');
 
-    //this.translateService.setDefaultLang('en');
-    //this.translateService.use('en');
+    // this.translateService.setDefaultLang('en');
+    // this.translateService.use('en');
 
 
     const routerSubscription = this.router.events.subscribe(event => {

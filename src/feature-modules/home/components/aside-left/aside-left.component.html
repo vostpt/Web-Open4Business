@@ -1,0 +1,8 @@
+<app-layout-aside-left>
+  <li *ngFor="let menu of menus" class="mb-3">
+    <div [routerLink]="menu.url" [queryParams]="route.snapshot.queryParams" routerLinkActive="is-active"
+      class="d-flex align-items-center justify-content-center aside-left-menu-item" title="{{ menu.title || '' }}">
+      <i class="{{ menu.icon }}"></i>
+    </div>
+  </li>
+</app-layout-aside-left>

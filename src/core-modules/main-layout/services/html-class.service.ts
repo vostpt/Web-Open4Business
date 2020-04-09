@@ -32,7 +32,7 @@ export class HtmlClassService {
 
   /**
    * Build html element classes from layout config
-   * @param layoutConfig: layoutConfig
+   * @param layoutConfig
    */
   setConfig(layoutConfig: LayoutConfigModel) {
     this.config = layoutConfig;
@@ -90,7 +90,6 @@ export class HtmlClassService {
         bodyClasses.forEach(cssClass => document.body.classList.add(cssClass));
       }
     }
-
     if (objectPath.get(this.config, 'self.layout') === 'boxed' && objectPath.has(this.config, 'self.body.background-image')) {
       document.body.style.backgroundImage = 'url("' + objectPath.get(this.config, 'self.body.background-image') + '")';
     }
@@ -112,10 +111,9 @@ export class HtmlClassService {
    */
   private initHeader() {
     // Fixed header
-    if (objectPath.get(this.config, 'header.self.fixed.desktop.enabled')) {
+    if (objectPath.get(this.config, 'header.self.fixed.desktop')) {
       document.body.classList.add('kt-header--fixed');
       objectPath.push(this.classes, 'header', 'kt-header--fixed');
-      document.body.classList.add('kt-header--minimize-' + objectPath.get(this.config, 'header.self.fixed.desktop.mode'));
     } else {
       document.body.classList.add('kt-header--static');
     }
@@ -123,6 +121,10 @@ export class HtmlClassService {
     if (objectPath.get(this.config, 'header.self.fixed.mobile')) {
       document.body.classList.add('kt-header-mobile--fixed');
       objectPath.push(this.classes, 'header_mobile', 'kt-header-mobile--fixed');
+    }
+
+    if (objectPath.get(this.config, 'header.menu.self.layout')) {
+      objectPath.push(this.classes, 'header_menu', 'kt-header-menu--layout-' + objectPath.get(this.config, 'header.menu.self.layout'));
     }
   }
 
@@ -148,21 +150,11 @@ export class HtmlClassService {
    * Init Aside
    */
   private initAside() {
-    // Hack: Always insert aside classes. Hey, it works like this!
-    // if (objectPath.get(this.config, 'aside.self.display') !== true) {
-    // 	return;
-    // }
+    if (objectPath.get(this.config, 'aside.self.display') !== true) {
+      return;
+    }
 
     document.body.classList.add('kt-aside--enabled');
-
-    if (objectPath.get(this.config, 'aside.self.skin')) {
-      objectPath.push(this.classes, 'aside', 'kt-aside--skin-' + objectPath.get(this.config, 'aside.self.skin'));
-      document.body.classList.add('kt-aside--skin-' + objectPath.get(this.config, 'aside.self.skin'));
-      objectPath.push(this.classes, 'aside_menu', 'kt-aside-menu--skin-' + objectPath.get(this.config, 'aside.self.skin'));
-
-      document.body.classList.add('kt-aside__brand--skin-' + objectPath.get(this.config, 'aside.self.skin'));
-      objectPath.push(this.classes, 'brand', 'kt-aside__brand--skin-' + objectPath.get(this.config, 'aside.self.skin'));
-    }
 
     // Fixed Aside
     if (objectPath.get(this.config, 'aside.self.fixed')) {
@@ -179,7 +171,7 @@ export class HtmlClassService {
 
     // Menu
     // Dropdown Submenu
-    if (objectPath.get(this.config, 'aside.self.fixed') !== true && objectPath.get(this.config, 'aside.menu.dropdown')) {
+    if (objectPath.get(this.config, 'aside.menu.dropdown')) {
       objectPath.push(this.classes, 'aside_menu', 'kt-aside-menu--dropdown');
       // enable menu dropdown
     }

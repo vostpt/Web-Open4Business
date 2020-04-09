@@ -1,34 +1,31 @@
 import { NgModule } from '@angular/core';
 
-import { MainLayoutModule } from '@external-modules/main-layout';
-// import { CatalogModule } from '@external-modules/catalog';
+import { MainLayoutModule } from '@core-modules/main-layout';
+import { CatalogModule } from '@core-modules/catalog';
 
 import { HomeRoutingModule } from './home-routing.module';
 
+import { AsideLeftComponent } from '@home-feature-module/components/aside-left/aside-left.component';
+import { MapComponent } from '@home-feature-module/pages/map/map.component';
 
-
-//import { MapComponent } from '@home-feature-module/pages/map/map.component';
-
-//import { MapService } from './pages/map/services/map.service';
+import { HomeService } from './services/home.service';
+import { MapService } from './services/map.service';
 
 @NgModule({
   declarations: [
-
-    //MapComponent
-
-
+    AsideLeftComponent,
+    MapComponent
   ],
   imports: [
     MainLayoutModule,
-   // CatalogModule,
+    CatalogModule,
 
-    HomeRoutingModule,
-
-
+    HomeRoutingModule
   ],
   exports: [],
   providers: [
-  //  MapService
+    HomeService,
+    MapService
   ]
 })
 

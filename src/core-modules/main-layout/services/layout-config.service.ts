@@ -10,7 +10,6 @@ import { LayoutConfigModel } from '../_config/layout-config.model';
 export class LayoutConfigService {
 
   layoutConfig: LayoutConfigModel;
-
   onConfigUpdated$: Subject<LayoutConfigModel>;
 
   constructor() {
@@ -19,7 +18,7 @@ export class LayoutConfigService {
 
   /**
    * Initialize layout config
-   * @param config: config
+   * @param config
    */
   loadConfiguration(config: LayoutConfigModel) {
     this.layoutConfig = config;
@@ -56,7 +55,7 @@ export class LayoutConfigService {
     // set brand logo
     const logoObject = get(this.layoutConfig, 'self.logo');
 
-    let logo;
+    let logo: any;
     if (typeof logoObject === 'string') {
       logo = logoObject;
     }

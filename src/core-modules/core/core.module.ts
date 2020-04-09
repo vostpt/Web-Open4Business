@@ -12,6 +12,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 // Services.
 import { AuthenticationService } from './services/authentication.service';
+import { EnvironmentService } from './services/environment.service';
 
 
 // Interceptors.
@@ -29,14 +30,14 @@ import { environment } from './models/environment.model';
 import { UrlModel } from './models/url.model';
 
 
-// // Initialize LayoutConfigService.
-// import { LayoutConfig } from '../main-layout/_config/layout.config';
-// import { LayoutConfigService } from '../main-layout/services/layout-config.service';
+// Initialize LayoutConfigService.
+import { LayoutConfig } from '../main-layout/_config/layout.config';
+import { LayoutConfigService } from '../main-layout/services/layout-config.service';
 
 
-// export function initializeLayoutConfig(appConfig: LayoutConfigService) {
-//   return () => { appConfig.loadConfiguration(new LayoutConfig().configs); };
-// }
+export function initializeLayoutConfig(appConfig: LayoutConfigService) {
+  return () => { appConfig.loadConfiguration(new LayoutConfig().configs); };
+}
 
 // // Initialize Translations.
 // export function httpLoaderFactory(http: HttpClient) {
@@ -76,14 +77,15 @@ import { UrlModel } from './models/url.model';
   exports: [],
   providers: [
     AuthenticationService,
+    EnvironmentService,
 
-    // LayoutConfigService,
-    // {
-    //   // LayoutConfigService initializer
-    //   provide: APP_INITIALIZER,
-    //   useFactory: initializeLayoutConfig,
-    //   deps: [LayoutConfigService], multi: true
-    // },
+    LayoutConfigService,
+    {
+      // LayoutConfigService initializer
+      provide: APP_INITIALIZER,
+      useFactory: initializeLayoutConfig,
+      deps: [LayoutConfigService], multi: true
+    },
     {
       // App base HREF definition.
       provide: APP_BASE_HREF,

@@ -1,0 +1,42 @@
+<!-- begin: Header -->
+<div ktHeader #ktHeader class="kt-header kt-grid__item" [ngClass]="htmlClassService.getClasses('header', true)"
+  id="kt_header">
+  <ngb-progressbar class="kt-loading-bar" *ngIf="(loader.progress$|async) > 0" [value]="loader.progress$|async"
+    height="3px"></ngb-progressbar>
+
+  <!-- begin:: Brand -->
+  <app-main-layout-header-brand></app-main-layout-header-brand>
+  <!-- end:: Brand -->
+
+  <!-- begin:: Title -->
+  <h3 class="kt-header__title kt-grid__item">
+    <div class="logo-text-container d-none d-md-block">
+      <span class="logo-primary">#Open</span><span class="logo-secondary">4Business</span>
+    </div>
+  </h3>
+  <!-- end:: Title -->
+
+  <!-- begin: Header Menu -->
+  <app-main-layout-menu-horizontal *ngIf="menuHeaderDisplay"></app-main-layout-menu-horizontal>
+  <!-- end: Header Menu -->
+
+  <!-- begin:: Header Topbar -->
+  <!-- empty div to fix topbar to stay on the right when menu-horizontal is hidden -->
+  <div *ngIf="!menuHeaderDisplay"></div>
+  <kt-topbar></kt-topbar>
+  <!-- end:: Header Topbar -->
+
+  <app-main-layout-aside-right>
+    <div content class="h-100">
+      <ul class="navbar-nav text-uppercase">
+        <li class="nav-item"><a href="https://open4biz-dev.vost.pt" class="nav-link">Entrada</a></li>
+        <li class="nav-item"><a href="https://open4biz-dev.vost.pt" class="nav-link">Lista de Empresas</a></li>
+        <li class="nav-item"><a href="https://open4biz-dev.vost.pt" class="nav-link">Formulário para grandes empresas e cadeias</a></li>
+        <li class="nav-item"><a href="https://open4biz-dev.vost.pt" class="nav-link">Sobre</a></li>
+        <li class="nav-item"><a href="https://open4biz-dev.vost.pt" class="nav-link">Política de Privacidade e Política de Cookies</a></li>
+      </ul>
+    </div>
+  </app-main-layout-aside-right>
+
+</div>
+<!-- end: Header -->

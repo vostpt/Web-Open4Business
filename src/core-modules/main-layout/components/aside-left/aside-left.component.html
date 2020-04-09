@@ -1,0 +1,17 @@
+<!-- BEGIN: Left Aside -->
+<div ktOffcanvas [options]="menuCanvasOptions" class="kt-aside kt-aside--fixed kt-grid__item kt-grid kt-grid--desktop kt-grid--hor-desktop" id="kt_aside">
+	<!-- BEGIN: Aside Menu -->
+	<div class="kt-aside-menu-wrapper kt-grid__item kt-grid__item--fluid" id="kt_aside_menu_wrapper">
+
+		<div #asideMenu [perfectScrollbar]="{wheelPropagation: false}" [ngStyle]="{'max-height': '100vh', 'position': 'relative'}" id="kt_aside_menu" class="kt-aside-menu"
+			(mouseenter)="mouseEnter($event)" (mouseleave)="mouseLeave($event)"
+			[ngClass]="htmlClassService.getClasses('aside_menu', true)">
+			<ul class="kt-menu__nav" [ngClass]="htmlClassService.getClasses('aside_menu_nav', true)">
+        <ng-content></ng-content>
+			</ul>
+    </div>
+
+	</div>
+	<!-- END: Aside Menu -->
+</div>
+<!-- END: Left Aside -->

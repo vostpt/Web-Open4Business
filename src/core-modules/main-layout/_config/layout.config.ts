@@ -2,17 +2,14 @@ import { LayoutConfigModel } from './layout-config.model';
 
 export class LayoutConfig {
   public defaults: LayoutConfigModel = {
-    demo: 'demo2',
+    demo: 'demo7',
     // == Base Layout
     self: {
       layout: 'fluid', // fluid|boxed
       body: {
         'background-image': './assets/media/misc/bg-1.jpg',
       },
-      logo: {
-        desktop: './assets/media/logos/logo-2.png',
-        sticky: './assets/media/logos/logo-2-sm.png',
-      },
+      logo: 'assets/images/logos/o4b.png',
     },
     // == Page Splash Screen loading
     loader: {
@@ -24,7 +21,7 @@ export class LayoutConfig {
     // == Colors for javascript
     colors: {
       state: {
-        brand: '#374afb',
+        brand: '#22b9ff',
         light: '#ffffff',
         dark: '#282a3c',
         primary: '#5867dd',
@@ -50,22 +47,17 @@ export class LayoutConfig {
     },
     header: {
       self: {
-        width: 'fluid',
+        skin: 'light',
         fixed: {
-          desktop: {
-            enabled: true,
-            mode: 'topbar',
-          },
+          desktop: true,
           mobile: true,
         },
-      },
-      search: {
-        display: true,
       },
       menu: {
         self: {
           display: true,
-          'root-arrow': false,
+          'root-arrow': true,
+          layout: 'default',
         },
         desktop: {
           arrow: true,
@@ -85,19 +77,23 @@ export class LayoutConfig {
     },
     aside: {
       self: {
-        skin: 'light',
-        fixed: true,
         display: false,
+        fixed: true,
         minimize: {
-          toggle: true,
-          default: false,
+          toggle: false,
+          default: true,
+        },
+      },
+      footer: {
+        self: {
+          display: true,
         },
       },
       menu: {
         dropdown: false,
-        scroll: true,
+        scroll: false,
         submenu: {
-          accordion: true,
+          accordion: false,
           dropdown: {
             arrow: true,
             'hover-timeout': 500,
@@ -108,24 +104,22 @@ export class LayoutConfig {
     subheader: {
       display: true,
       fixed: false,
-      layout: 'subheader-v2',
-      width: 'fixed',
-      style: 'transparent',
+      width: 'fluid',
+      layout: 'subheader-search',
+      style: 'solid',
     },
     content: {
       width: 'fluid',
     },
-
-    // footer: {
-    //   self: {
-    //     width: "fluid",
-    //     fixed: true
-    //   }
-    // }
-
+    brand: {
+      self: {
+        skin: 'navy',
+      },
+    },
     footer: {
       self: {
-        width: 'fixed',
+        width: 'fluid',
+        fixed: false,
       },
     },
   };

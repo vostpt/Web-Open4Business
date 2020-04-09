@@ -8,9 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 
 import { AppInjector } from '../../../core/injectors/app-injector';
 
-// import { EnvironmentService } from '../../../core/services/environment.service';
+import { EnvironmentService } from '../../../core/services/environment.service';
 // import { PermissionsService } from '@core/services/permissions.service';
-
 
 export abstract class BasePageComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -19,7 +18,7 @@ export abstract class BasePageComponent implements OnInit, OnDestroy, AfterViewI
   public logger: NGXLogger;
   public loader: NgxSpinnerService;
   public notification: ToastrService;
-  // public environment: EnvironmentService;
+  public environment: EnvironmentService;
   // public permissions: any;
   // public permissionsService: any;
 
@@ -29,7 +28,7 @@ export abstract class BasePageComponent implements OnInit, OnDestroy, AfterViewI
     this.logger = injector.get(NGXLogger);
     this.loader = injector.get(NgxSpinnerService);
     this.notification = injector.get(ToastrService);
-    // this.environment = injector.get(EnvironmentService);
+    this.environment = injector.get(EnvironmentService);
     // this.permissionsService = AppInjector.getInjector().get(PermissionsService);
     // this.permissions = this.permissionsService.getPermissions();
   }
