@@ -6,12 +6,14 @@ if (!window['__env']) {
 
 export class EnvironmentModel {
   baseHref: string;
-  apiUrl: string;
   logLevel: NgxLoggerLevel;
+  apiUrl: string;
+  mapbox: string;
 }
 
 export const environment: EnvironmentModel = {
   baseHref: window['__env'].baseHref,
+  logLevel: NgxLoggerLevel[String((window['__env'].logLevel) || 'ERROR')],
   apiUrl: window['__env'].apiUrl,
-  logLevel: NgxLoggerLevel[String((window['__env'].logLevel) || 'ERROR')]
+  mapbox: window['__env'].mapbox
 };

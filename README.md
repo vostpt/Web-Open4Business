@@ -18,7 +18,7 @@ This is a critical priority project. All resources should be focused on this, ap
 | ----------- | :------: | :---------------: | -------------------------------------------- | ----------- |
 | APP_URL     |   Yes    |                   | http://localhost:5000                        |             |
 | APP_PORT    |          | 80                | 0 - 40000                                    |             |
-| LOG_LEVEL   |          | ['error', 'warn'] | ['log', 'error', 'warn', 'debug', 'verbose'] |             |
+| LOG_LEVEL   |          | ['error', 'warn'] | OFF|TRACE|DEBUG|INFO|LOG|WARN|ERROR|FATAL    |             |
 
 
 Create a new file "environment.js" file in "src" directory with the content below. Atention: this is a JS file, not TS!
@@ -29,7 +29,6 @@ window.__env = {
   logLevel: 'TRACE'
 };
 ```
-Allowed log levels: TRACE|DEBUG|INFO|LOG|WARN|ERROR|FATAL|OFF
 
 ### Run the following commands:
 ``` 

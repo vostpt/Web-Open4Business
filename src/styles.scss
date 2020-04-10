@@ -19,3 +19,36 @@
   color: var(--base-color-02);
 }
 
+
+
+
+
+// Mapbox overrides
+.mapboxgl-popup {
+  // font-family: Lato, sans-serif;
+  transition: none;
+}
+.mapboxgl-popup-content {
+  transition: none;
+  padding: 6vh 1.3vw 4vh 1.3vw;
+  min-width: 19vw;
+  box-shadow: 8px 8px 17px -6px #B9AFF0;
+}
+.mapboxgl-popup-content p {
+  margin: 0;
+}
+.mapboxgl-popup-content h4 {
+  font-weight: bold;
+}
+.mapboxgl-popup-content h6 {
+  font-weight: bold;
+}
+.mapboxgl-popup-close-button {
+  right: 0.5vw;
+  top: 1vh;
+  font-size: 80%;
+  color: #909090;
+}
+.mapboxgl-popup-close-button:before {
+  content: 'FECHAR ';
+}
