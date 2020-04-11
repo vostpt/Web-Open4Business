@@ -3,8 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { BaseLayoutComponent } from '@core-modules/main-layout';
 
-import { AsideLeftComponent } from '@home-feature-module/components/aside-left/aside-left.component';
 import { MapComponent } from './pages/map/map.component';
+import { LargeCompaniesComponent } from './pages/large-companies/large-companies.component';
+import { SmallMediumCompaniesComponent } from './pages/small-medium-companies/small-medium-companies.component';
 
 const routes: Routes = [
   {
@@ -19,17 +20,20 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: AsideLeftComponent,
-        outlet: 'layout-aside-left'
-      },
-      {
-        path: '',
         component: MapComponent,
         pathMatch: 'full',
-        data: {
-          breadcrumb: 'Overview' // TODO add translation in the future
-        }
+      },
+      {
+        path: 'small-medium-companies',
+        component: SmallMediumCompaniesComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'large-companies',
+        component: LargeCompaniesComponent,
+        pathMatch: 'full',
       }
+
     ]
   }
 ];

@@ -1,6 +1,11 @@
 export const locale = {
   lang: 'pt',
   data: {
+    dictionary: {
+      cancelar: 'Cancelar',
+      required: 'Obrigatório',
+      submit: 'Submeter'
+    },
     TRANSLATOR: {
       SELECT: 'Select your language',
     },

@@ -11,7 +11,7 @@
 $kt-state-colors: (
     // Metronic states
     brand: (
-        base: #22b9ff,
+        base: #4eaa4f,
         inverse: #ffffff
     ),
     light: (
@@ -25,7 +25,7 @@ $kt-state-colors: (
 
     // Bootstrap states
     primary: (
-        base: #5867dd,
+        base: #4eaa4f,
         inverse: #ffffff
     ),
     success: (
@@ -54,7 +54,7 @@ $kt-brand-hover-color: #f5f6fc;
 $kt-secondary-brand-color: #43348b;
 
 // Page bg color
-$kt-page-bg-color: #f9f9fc;  // page bg color
+$kt-page-bg-color: #fff;  // page bg color
 
 // Aside bg color
 $kt-aside-bg-color: #fff;

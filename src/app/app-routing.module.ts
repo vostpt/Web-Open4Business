@@ -7,7 +7,6 @@ const routes: Routes = [
 
   {
     path: '',
-    pathMatch: 'full',
     loadChildren: () => import('@home-feature-module/home.module').then(m => m.HomeModule)
   },
 

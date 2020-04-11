@@ -13,3 +13,16 @@
 		}
 	}
 }
+
+.kt-header__topbar-wrapper {
+  min-width: 200px;
+  font-size: large;
+  font-weight: 500;
+  color: var(--base-color-02);
+  padding: 12px 0;
+
+  @media (min-width: 1025px) {
+    padding: 28px 0;
+
+  }
+}

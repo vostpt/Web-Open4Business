@@ -116,6 +116,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CommonModule,
     RouterModule,
 
+    TranslateModule,
+
     NgbDropdownModule,
     NgbTabsetModule,
     NgbProgressbarModule,

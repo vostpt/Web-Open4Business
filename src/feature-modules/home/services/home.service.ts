@@ -1,43 +1,31 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+import { environment, UrlModel } from '@core-modules/core';
 
 @Injectable()
 export class HomeService {
 
-  // public energyMenus: {
-  //   id: string;
-  //   name: string;
-  //   url: string;
-  //   icon: string;
-  // }[];
+  private apiUrl = `${environment.apiUrl}`;
 
-  constructor() { }
+  constructor(
+    private http: HttpClient
+  ) { }
 
-  getMenus() {
-    return [
-      {
-        id: 'dashboards',
-        name: 'Dashboards',
-        url: 'dashboards',
-        icon: 'fas fa-eye'
-      },
-      {
-        id: 'charts',
-        name: 'Charts',
-        url: 'charts',
-        icon: 'fas fa-signal'
-      },
-      {
-        id: 'devices',
-        name: 'Devices',
-        url: 'devices',
-        icon: 'far fa-list-alt'
-      },
-      {
-        id: 'device-properties',
-        name: 'Device properties',
-        url: 'device-properties',
-        icon: 'flaticon-dashboard'
-      }
-    ];
+
+
+  sendLargeCompaniesForm(body:
+    {
+      company: string,
+      name: string,
+      lastName: string,
+      email: string,
+      phone: string,
+    }
+  ) {
+    const url = new UrlModel(this.apiUrl).setPath('charts');
+    
+    return this.http.post(url.buildUrl(), body);
   }
+
 }

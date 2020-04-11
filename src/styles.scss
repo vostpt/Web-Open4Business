@@ -1,15 +1,11 @@
 @import "./core-modules/main-layout/_assets/styles/style.angular.scss";
 // @import "./core-modules/main-layout/_assets/styles/custom/layout-customization.scss";
 
-
-
-
+// Custom classes.
 :root {
   --base-color-01: #4eaa4f;
   --base-color-02: #43348b;
 }
-
-
 
 .logo-primary {
   color: var(--base-color-01);
@@ -20,18 +16,22 @@
 }
 
 
+// Theme overrides.
+.kt-portlet {
+  box-shadow: none;
+}
 
 
-
-// Mapbox overrides
+// Mapbox overrides.
 .mapboxgl-popup {
   // font-family: Lato, sans-serif;
   transition: none;
 }
 .mapboxgl-popup-content {
   transition: none;
-  padding: 6vh 1.3vw 4vh 1.3vw;
   min-width: 19vw;
+  padding: 6vh 1.3vw 4vh 1.3vw;
+  text-align: justify;
   box-shadow: 8px 8px 17px -6px #B9AFF0;
 }
 .mapboxgl-popup-content p {
