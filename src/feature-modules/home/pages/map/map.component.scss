@@ -8,10 +8,25 @@
   background-color: rgba(0,0,0,0.5);
   line-height: 3em;
   text-align: center;
+
+  p {
+    margin-bottom: 0px;
+  }
 }
 
-a.warn-close {
+.lead {
+  font-weight: 200;
+  font-size: 1.8rem;
+  text-align: center;
+  padding-top: 10px;
+}
+
+a.warn-link {
   color: #4eaa4f;
+}
+
+i.warn-close {
+  cursor: pointer;
 }
 
 .button__wrapper {

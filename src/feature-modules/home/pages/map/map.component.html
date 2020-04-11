@@ -1,8 +1,9 @@
+
 <div class="section--primary">
-  <div class="cookies-warn">
+  <div class="cookies-warn" *ngIf="showCookieWarn">  
     <p>
-      Utilizamos cookies para melhorar a experiência de navegação. Saber mais sobre a nossa política de cookies <a routerLink="/cookies" class="warn-close">aqui</a>.
-      &nbsp;&nbsp;<i class="fa fa-times" onclick="$(this).closest('cookies-warn').remove()"></i>
+      Utilizamos cookies para melhorar a experiência de navegação. Saber mais sobre a nossa política de cookies <a routerLink="/cookies" class="warn-link">aqui</a>.
+      &nbsp;&nbsp;<i class="fa fa-times warn-close" (click)="dismissCookieWarn()"></i>
     </p>
   </div>
   <div class="container">

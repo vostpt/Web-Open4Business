@@ -1,36 +1,31 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Map, Popup } from 'mapbox-gl';
-
-import { BasePageComponent } from '@core-modules/main-layout';
-
-import { MapService } from '@home-feature-module/services/map.service';
-
-import { MapboxMarkerProperties } from '@home-feature-module/models/mapbox-marker-properties.model'
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {BasePageComponent} from '@core-modules/main-layout';
+import {MapboxMarkerProperties} from '@home-feature-module/models/mapbox-marker-properties.model';
+import {MapService} from '@home-feature-module/services/map.service';
+import {Map, Popup} from 'mapbox-gl';
 
 @Component({
   selector: 'app-home-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent extends BasePageComponent implements OnInit, OnDestroy {
+export class MapComponent extends BasePageComponent implements OnInit,
+                                                               OnDestroy {
+  public showCookieWarn: boolean = true;
 
-  constructor(
-    private readonly mapService: MapService
-  ) {
+  constructor(private readonly mapService: MapService) {
     super();
   }
-
 
   ngOnInit() {
     this.loader.show('app-map');
 
     let markers: GeoJSON.FeatureCollection;
 
-    this.subscriptions.push(
-      this.mapService.getMarkers().subscribe(
-        (result: { data: { locations: object[] } }) => {
-          markers = this.mapService.parseResponsoToGeoJSON(result.data.locations);
+    this.subscriptions.push(this.mapService.getMarkers().subscribe(
+        (result: {data: {locations: object[]}}) => {
+          markers =
+              this.mapService.parseResponsoToGeoJSON(result.data.locations);
           this.loadMapbox(markers);
         },
         (error) => {
@@ -39,41 +34,35 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
           // TODO: remove this after tests!
           markers = this.mapService.getMarkersMockup();
           this.loadMapbox(markers);
-        }
-      )
-    );
+        }));
 
     this.draw();
-
   }
 
   loadMapbox(markers: GeoJSON.FeatureCollection) {
-
     const map = new Map({
       accessToken: this.environment.variables.mapbox,
       container: 'map-container',
       style: 'mapbox://styles/mapbox/light-v10',
-      center: [-7.8536599, 39.557191], // [lng, lat]
+      center: [-7.8536599, 39.557191],  // [lng, lat]
       zoom: 7
     });
 
     // Load markers image
-    map.loadImage('assets/images/mapbox/pin.png',
-      function (error, image) {
-        if (error) throw error;
-        map.addImage('pin', image);
-      }
-    );
+    map.loadImage('assets/images/mapbox/pin.png', function(error, image) {
+      if (error) throw error;
+      map.addImage('pin', image);
+    });
 
 
-    map.on('load', function () {
-
+    map.on('load', function() {
       map.addSource('businesses', {
         type: 'geojson',
         data: markers,
         cluster: true,
-        clusterMaxZoom: 14, // Max zoom to cluster points on
-        clusterRadius: 50   // Radius of each cluster when clustering points (defaults to 50)
+        clusterMaxZoom: 14,  // Max zoom to cluster points on
+        clusterRadius: 50    // Radius of each cluster when clustering points
+                             // (defaults to 50)
       });
 
       map.addLayer({
@@ -82,13 +71,18 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
         source: 'businesses',
         filter: ['has', 'point_count'],
         paint: {
-          // Use step expressions (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
+          // Use step expressions
+          // (https://docs.mapbox.com/mapbox-gl-js/style-spec/#expressions-step)
           // with three steps to implement three types of circles:
           // Blue, 20px circles when point count is less than 100
           // Yellow, 30px circles when point count is between 100 and 750
           // Pink, 40px circles when point count is greater than or equal to 750
-          'circle-color': ['step', ['get', 'point_count'], '#51bbd6', 100, '#f1f075', 750, '#f28cb1'],
-          'circle-radius': ['step', ['get', 'point_count'], 20, 100, 30, 750, 40]
+          'circle-color': [
+            'step', ['get', 'point_count'], '#51bbd6', 100, '#f1f075', 750,
+            '#f28cb1'
+          ],
+          'circle-radius':
+              ['step', ['get', 'point_count'], 20, 100, 30, 750, 40]
         }
       });
 
@@ -110,34 +104,34 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
         source: 'businesses',
         filter: ['!', ['has', 'point_count']],
         layout: {
-          'icon-image': "pin",
+          'icon-image': 'pin',
           'icon-size': 0.8,
           'icon-allow-overlap': true,
         }
       });
 
       // Events.
-      map.on('mouseenter', 'clusters', function () {
+      map.on('mouseenter', 'clusters', function() {
         map.getCanvas().style.cursor = 'pointer';
       });
-      map.on('mouseleave', 'clusters', function () {
+      map.on('mouseleave', 'clusters', function() {
         map.getCanvas().style.cursor = '';
       });
 
-      map.on('mouseenter', 'unclustered-point', function () {
+      map.on('mouseenter', 'unclustered-point', function() {
         map.getCanvas().style.cursor = 'pointer';
       });
-      map.on('mouseleave', 'unclustered-point', function () {
+      map.on('mouseleave', 'unclustered-point', function() {
         map.getCanvas().style.cursor = '';
       });
 
-      map.on('click', 'unclustered-point', function (e) {
+      map.on('click', 'unclustered-point', function(e) {
         const element = new MapboxMarkerProperties(e.features[0].properties);
         const coordinates = e.lngLat
 
-        new Popup({ offset: 25 })
-          .setLngLat(coordinates)
-          .setHTML(`
+                            new Popup({offset: 25})
+                                .setLngLat(coordinates)
+                                .setHTML(`
       
             <h4>${element.store}</h4>
             <p class="small">Minimercados, supermercados, hipermercados, </p>
@@ -155,30 +149,23 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
                 <div class="col-7">
                     <p>09:00 às 18:00</p>
                 </div>
-            </div> `)
-          .addTo(map);
-
+            </div> `).addTo(map);
       });
 
       map.resize();
-
     });
-
   }
 
-
-
-
   draw() {
-
-
     this.logger.debug('App ready!');
     this.loader.hide('app-map');
   }
 
-
   ngOnDestroy() {
     this.subscriptions.forEach(sb => sb.unsubscribe());
   }
-}
 
+  dismissCookieWarn() {
+    this.showCookieWarn = false;
+  }
+}
