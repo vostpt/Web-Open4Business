@@ -1,3 +1,24 @@
+<div class="section--primary">
+  <div class="cookies-warn">
+    <p>
+      Utilizamos cookies para melhorar a experiência de navegação. Saber mais sobre a nossa política de cookies <a routerLink="/cookies" class="warn-close">aqui</a>.
+      &nbsp;&nbsp;<i class="fa fa-times" onclick="$(this).closest('cookies-warn').remove()"></i>
+    </p>
+  </div>
+  <div class="container">
+    <p class="lead">Informa aqui que a tua empresa e/ou negócio continua aberta e como é que
+      <wbr>
+              podemos usufruir dos produtos e serviços neste período excecional.
+      </p>
+      <div class="button__wrapper">
+        <a routerLink="/small-medium-companies" class="button button--secondary">Pequenas e médias
+          empresas</a>
+        <a routerLink="/large-companies" class="button button--secondary">Grandes empresas e
+          cadeias</a>
+      </div>
+  </div>
+</div>
+
 <div class="map-container">
   <app-catalog-loader name="app-map"></app-catalog-loader>
   <div id="map-container"></div>
