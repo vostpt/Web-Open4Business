@@ -9,7 +9,6 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('@home-feature-module/home.module').then(m => m.HomeModule)
   },
-
   // {
   //   path: 'backoffice',
   //   //canActivate: [AuthenticationGuard],

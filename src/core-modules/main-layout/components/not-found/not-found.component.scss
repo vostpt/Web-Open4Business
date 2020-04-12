@@ -1,0 +1,25 @@
+.center-block {
+  text-align: center;
+}
+
+.logo {
+  width: 300px;
+  margin-top: 24px;
+}
+
+.main-text {
+  margin: 24px 0;
+  font-size: 1.2rem;
+}
+
+.main-button {
+  background-color: transparent;
+  border: solid 1px #43348b;
+  padding: 15px;
+
+  &:hover {
+    background-color: #43348b;
+    color: #FFFFFF;
+  }
+}
+

@@ -35,3 +35,21 @@
 .footer-block {
   padding-top: 22px;
 }
+
+.footer-block.left-block {  
+  padding-left: 28%;
+}
+
+.footer-block.right-block {  
+  padding-left: 64px;
+}
+
+@media (max-width: 991.98px) { 
+  .footer-block.left-block {  
+    padding-left: 0;
+  }
+
+  .footer-block.right-block {  
+    padding-left: 0px;
+  }
+}

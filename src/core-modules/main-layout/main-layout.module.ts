@@ -47,6 +47,7 @@ import { ScrollTopDirective } from './directives/scroll-top.directive';
 
 // Pipes.
 import { FirstLetterPipe } from './pipes/first-letter.pipe';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -60,7 +61,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 @NgModule({
   declarations: [
     BaseLayoutComponent,
-
+    NotFoundComponent,
+    
     HeaderComponent,
     HeaderMobileComponent,
     BrandComponent,
