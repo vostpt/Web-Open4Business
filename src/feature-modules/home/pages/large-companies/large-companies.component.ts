@@ -1,13 +1,10 @@
-import { Component, OnDestroy, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { BasePageComponent } from '@core-modules/main-layout';
-
-import { HomeService } from '@home-feature-module/services/home.service';
 import { FormsService } from '@core-modules/catalog/modules/forms';
-
+import { environment } from '@core-modules/core';
+import { BasePageComponent } from '@core-modules/main-layout';
+import { HomeService } from '@home-feature-module/services/home.service';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
-
 
 
 @Component({
@@ -15,8 +12,8 @@ import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
   templateUrl: './large-companies.component.html',
   styleUrls: ['./large-companies.component.scss']
 })
-export class LargeCompaniesComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
-
+export class LargeCompaniesComponent extends BasePageComponent implements
+    OnInit, AfterViewInit, OnDestroy {
   form: FormGroup;
 
   defaultUploadConfiguration: DropzoneConfigInterface = {
@@ -43,9 +40,8 @@ export class LargeCompaniesComponent extends BasePageComponent implements OnInit
     ...this.defaultUploadConfiguration,
     ...{
       dictDefaultMessage: 'Pressione ou arraste um ficheiro .csv',
-      url: '/nothign',
-      acceptedFiles: '.txt',
-      previewsContainer: '#dataUploadPreview'
+          url: `${environment.apiUrl}/insights/v1/file`, acceptedFiles: '.csv',
+          previewsContainer: '#dataUploadPreview'
     }
   };
 
@@ -53,27 +49,27 @@ export class LargeCompaniesComponent extends BasePageComponent implements OnInit
     ...this.defaultUploadConfiguration,
     ...{
       dictDefaultMessage: 'Pressione ou arraste uma imagem .jpg ou .png',
-      url: '/nothign',
-      acceptedFiles: '.txt',
-      previewsContainer: '#logoUploadPreview'
+          url: `${environment.apiUrl}/insights/v1/file`,
+          acceptedFiles: ['.png', '.jpg', '.jepg'],
+          previewsContainer: '#logoUploadPreview'
     }
   };
 
 
   constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly homeService: HomeService,
-    private readonly formsService: FormsService
-  ) {
+      private readonly formBuilder: FormBuilder,
+      private readonly homeService: HomeService,
+      private readonly formsService: FormsService) {
     super();
   }
 
-  get f() { return this.form.controls; }
+  get f() {
+    return this.form.controls;
+  }
 
   ngOnInit() {
-
     this.loader.show('pageLoader');
- 
+
     this.form = this.formBuilder.group({
       company: [null, Validators.required],
       name: [null, Validators.required],
@@ -99,44 +95,48 @@ export class LargeCompaniesComponent extends BasePageComponent implements OnInit
 
       const bodyPayload = this.form.value;
       this.subscriptions.push(
-        this.homeService.sendLargeCompaniesForm(bodyPayload).subscribe(
-          () => {
-            this.notification.success('A informação foi enviada com sucesso');
-          },
-          err => {
-            // if ((err.error.data || {}).errors) {
-            //   this.formGeneralErrors.messages = err.error.data.errors;
-            // } else {
-            //   this.formGeneralErrors.messages.push(err.error.resultMessage);
-            // }
-            // this.formGeneralErrors.visible = true;
+          this.homeService.sendLargeCompaniesForm(bodyPayload)
+              .subscribe(
+                  () => {
+                    this.notification.success(
+                        'A informação foi enviada com sucesso');
+                  },
+                  err => {
+                    // if ((err.error.data || {}).errors) {
+                    //   this.formGeneralErrors.messages =
+                    //   err.error.data.errors;
+                    // } else {
+                    //   this.formGeneralErrors.messages.push(err.error.resultMessage);
+                    // }
+                    // this.formGeneralErrors.visible = true;
 
-            this.loader.hide('pageLoader');
-          }
-        )
-      );
-    } else {
+                    this.loader.hide('pageLoader');
+                  }));
+    }
+    else {
       // TODO: verificar estes erros!
       this.formsService.showErrors(this.form);
     }
   }
 
-  onFileAdded(event) {
-  }
+  onFileAdded(event) {}
 
-  onFileRemoved(event) {
-  }
+  onFileRemoved(event) {}
 
   onUploadSuccess(formField, event) {
     console.log('onUploadSuccess', event);
 
     const file = event[0];
     const response = event[1];
-    file.previewElement.querySelectorAll('.result-success').forEach(el => { el.classList.remove('d-none'); })
-    file.previewElement.querySelectorAll('.result-error').forEach(el => { el.classList.add('d-none'); })
+    file.previewElement.querySelectorAll('.result-success').forEach(el => {
+      el.classList.remove('d-none');
+    });
+
+    file.previewElement.querySelectorAll('.result-error').forEach(el => {
+      el.classList.add('d-none'); 
+    })
 
     this.form.get(formField).setValue(response.data?.id);
-
   }
 
   onUploadError(event) {
@@ -145,10 +145,11 @@ export class LargeCompaniesComponent extends BasePageComponent implements OnInit
     const file = event[0];
     const response = event[1];
 
-    file.previewElement.querySelectorAll('.result-success').forEach(el => { el.classList.add('d-none'); })
-    file.previewElement.querySelectorAll('.result-error').forEach(el => { el.classList.remove('d-none'); })
-
+    file.previewElement.querySelectorAll('.result-success').forEach(el => {
+      el.classList.add('d-none');
+    })
+    file.previewElement.querySelectorAll('.result-error').forEach(el => {
+      el.classList.remove('d-none');
+    })
   }
-
-
 }
