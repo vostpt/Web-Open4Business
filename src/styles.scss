@@ -7,6 +7,10 @@
   --base-color-02: #43348b;
 }
 
+div.kt-content {
+  background-color: #F9F7FF;
+}
+
 .logo-primary {
   color: var(--base-color-01);
 }
@@ -51,4 +55,27 @@
 }
 .mapboxgl-popup-close-button:before {
   content: 'FECHAR ';
+}
+
+ul.breadcrumbs {
+  margin: 0;
+  padding: 20px 0;
+  text-transform: uppercase;
+  color: #909090;
+
+  li {
+    display: inline;
+    margin: 0 3px;
+
+    a {
+      color: #909090 !important;
+    }
+
+
+  }
+  
+  li.current {
+    font-weight: 500;
+  }
+  
 }

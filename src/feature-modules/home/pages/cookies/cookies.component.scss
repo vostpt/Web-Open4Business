@@ -1,0 +1,25 @@
+.kt-portlet {
+  background-color: #ffffff;
+  color: #333;
+}
+
+.kt-portlet .kt-portlet__head {
+  border-bottom: 1px solid #4eaa4f;
+
+  .title-date {
+    color: #909090;
+    font-weight: lighter;
+  }
+}
+
+.body-text {
+  padding-left: 32px;
+}
+
+.main-title {
+  margin-bottom: 32px;
+}
+
+h4 {
+  color: #333;
+}
