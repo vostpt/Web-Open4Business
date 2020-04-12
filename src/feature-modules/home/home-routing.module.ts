@@ -8,6 +8,7 @@ import { LargeCompaniesComponent } from './pages/large-companies/large-companies
 import { SmallMediumCompaniesComponent } from './pages/small-medium-companies/small-medium-companies.component';
 import { NotFoundComponent } from '@core-modules/main-layout/components/not-found/not-found.component';
 import { CookiesComponent } from './pages/cookies/cookies.component';
+import { AboutComponent } from './pages/about/about.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,11 @@ const routes: Routes = [
       {
         path: 'cookies',
         component: CookiesComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'about',
+        component: AboutComponent,
         pathMatch: 'full',
       },
       {

@@ -40,6 +40,7 @@ export class LargeCompaniesComponent extends BasePageComponent implements OnInit
 
     this.loader.hide('pageLoader');
 
+    document.getElementById('kt_quick_panel_close_btn').click();
   }
 
   onFormSubmit() {

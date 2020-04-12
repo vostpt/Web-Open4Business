@@ -37,6 +37,8 @@ export class MapComponent extends BasePageComponent implements OnInit,
         }));
 
     this.draw();
+
+    document.getElementById('kt_quick_panel_close_btn').click();
   }
 
   loadMapbox(markers: GeoJSON.FeatureCollection) {

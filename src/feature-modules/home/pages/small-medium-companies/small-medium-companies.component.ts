@@ -40,6 +40,7 @@ export class SmallMediumCompaniesComponent extends BasePageComponent implements 
 
     this.loader.hide('pageLoader');
 
+    document.getElementById('kt_quick_panel_close_btn').click();
   }
 
   onFormSubmit() {

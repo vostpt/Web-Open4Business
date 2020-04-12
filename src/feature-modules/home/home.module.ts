@@ -12,6 +12,7 @@ import { LargeCompaniesComponent } from '@home-feature-module/pages/large-compan
 import { HomeService } from './services/home.service';
 import { MapService } from './services/map.service';
 import { CookiesComponent } from './pages/cookies/cookies.component';
+import { AboutComponent } from './pages/about/about.component';
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { CookiesComponent } from './pages/cookies/cookies.component';
     MapComponent,
     SmallMediumCompaniesComponent,
     LargeCompaniesComponent,
-    CookiesComponent
+    CookiesComponent,
+    AboutComponent
   ],
   providers: [
     HomeService,
