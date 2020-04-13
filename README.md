@@ -13,14 +13,6 @@ This is a critical priority project. All resources should be focused on this, ap
 ## Installation
 
 ### Environment variables
-
-| Name        | Required | Default           | Possibilities                                | Description |
-| ----------- | :------: | :---------------: | -------------------------------------------- | ----------- |
-| APP_URL     |   Yes    |                   | http://localhost:5000                        |             |
-| APP_PORT    |          | 80                | 0 - 40000                                    |             |
-| LOG_LEVEL   |          | ['error', 'warn'] | OFF|TRACE|DEBUG|INFO|LOG|WARN|ERROR|FATAL    |             |
-
-
 Create a new file "environment.js" file in "src" directory with the content below. Atention: this is a JS file, not TS!
 ```
 window.__env = {

@@ -111,13 +111,13 @@ export class UrlModel extends Url {
   }
 
 
-  parseUrl(url: string) {
-    const _url = new URL(url);
-    this.protocol = _url.protocol.replace(/[^a-zA-Z]+/g, ''); // Keep only letters.
-    this.host = _url.hostname;
-    this.port = parseInt(_url.port, 10);
-    this.path = decodeURI(this.clearStartAndEndSlashes(_url.pathname));
-    this.queryParams = ( _url.search ? JSON.parse('{"' + _url.search.replace(/&/g, '","').replace(/=/g, '":"').replace('?', '') + '"}', (key, value) => key === '' ? value : decodeURIComponent(value)) : {} );
+  parseUrl(s: string) {
+    const url = new URL(s);
+    this.protocol = url.protocol.replace(/[^a-zA-Z]+/g, ''); // Keep only letters.
+    this.host = url.hostname;
+    this.port = parseInt(url.port, 10);
+    this.path = decodeURI(this.clearStartAndEndSlashes(url.pathname));
+    this.queryParams = ( url.search ? JSON.parse('{"' + url.search.replace(/&/g, '","').replace(/=/g, '":"').replace('?', '') + '"}', (key, value) => key === '' ? value : decodeURIComponent(value)) : {} );
   }
 
 }

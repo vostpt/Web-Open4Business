@@ -1,3 +1,28 @@
+.sharing-section {
+  background-color: var(--base-color-01);
+  color: #fff;
+  font-size: 1.1rem;
+  //margin: 0 -25px;
+  padding: 15px;
+
+  .brand {
+    font-size: 3rem;
+    color: white;
+    padding: 20px 0;
+  }
+
+  .text {
+    font-size: 1.6rem;
+    font-weight: 200;
+    padding: 20px 0;
+    line-height: 28px;
+    margin-bottom: 0;
+  }
+
+}
+
+
+
 #kt_footer {
   background-color: #43348b;
   color: #fff;

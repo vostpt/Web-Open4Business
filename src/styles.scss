@@ -25,10 +25,23 @@ div.kt-content {
   box-shadow: none;
 }
 
+.border-danger {
+  border-color: red !important;
+}
+
+.text-danger {
+  color: red !important;
+}
+
+.btn-primary {
+  background-color: var(--base-color-02);
+  border-color: var(--base-color-02);
+  color: #ffffff;
+}
+
 
 // Mapbox overrides.
 .mapboxgl-popup {
-  // font-family: Lato, sans-serif;
   transition: none;
 }
 .mapboxgl-popup-content {
@@ -70,8 +83,6 @@ ul.breadcrumbs {
     a {
       color: #909090 !important;
     }
-
-
   }
   
   li.current {
@@ -80,26 +91,15 @@ ul.breadcrumbs {
   
 }
 
+// Dropzone overrides.
 dropzone {
-  .dropzone {
-    border: 2px dashed #ebedf2 !important;
-    color: #fff;
-    padding: 0px;
-  }
-
-  .dropzone .dz-message {
-    color: #3f4047;
-    height: 100% !important;
-    margin: auto !important;
-    padding: 60px;
-    text-align: center;
-    font-weight: 400;
-    font-size: 1.5rem;
-    display: table;
-
-    span {
-      display: table-cell;
-      vertical-align: middle;
+  .dz-wrapper {
+    .dz-message {
+      max-width: 100% !important;
+      margin: auto !important;
+      padding: 60px 0;
+      font-weight: 400;
+      font-size: 1.3rem;
     }
   }
 

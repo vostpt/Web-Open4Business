@@ -24,7 +24,7 @@ export class HomeService {
     }
   ) {
     const url = new UrlModel(this.apiUrl).setPath('/insights/v1/business');
-    
+
     return this.http.post(url.buildUrl(), body);
   }
 

@@ -10,6 +10,7 @@ import { HomeRoutingModule } from './home-routing.module';
 import { MapComponent } from '@home-feature-module/pages/map/map.component';
 import { SmallMediumCompaniesComponent } from '@home-feature-module/pages/small-medium-companies/small-medium-companies.component';
 import { LargeCompaniesComponent } from '@home-feature-module/pages/large-companies/large-companies.component';
+import { LargeCompaniesSuccessSubmissionComponent } from '@home-feature-module/pages/large-companies/success-submission.component';
 
 import { HomeService } from './services/home.service';
 import { MapService } from './services/map.service';
@@ -29,6 +30,7 @@ import { AboutComponent } from './pages/about/about.component';
     MapComponent,
     SmallMediumCompaniesComponent,
     LargeCompaniesComponent,
+    LargeCompaniesSuccessSubmissionComponent,
     CookiesComponent,
     AboutComponent
   ],

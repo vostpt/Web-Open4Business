@@ -1,19 +1,23 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {BasePageComponent} from '@core-modules/main-layout';
-import {MapboxMarkerProperties} from '@home-feature-module/models/mapbox-marker-properties.model';
-import {MapService} from '@home-feature-module/services/map.service';
-import {Map, Popup} from 'mapbox-gl';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Map, Popup } from 'mapbox-gl';
+
+import { BasePageComponent } from '@core-modules/main-layout';
+
+import { MapService } from '@home-feature-module/services/map.service';
+
+import { MapboxMarkerProperties } from '@home-feature-module/models/mapbox-marker-properties.model';
 
 @Component({
   selector: 'app-home-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent extends BasePageComponent implements OnInit,
-                                                               OnDestroy {
-  public showCookieWarn: boolean = true;
+export class MapComponent extends BasePageComponent implements OnInit, OnDestroy {
+  public showCookieWarn = true;
 
-  constructor(private readonly mapService: MapService) {
+  constructor(
+    private readonly mapService: MapService
+  ) {
     super();
   }
 
@@ -23,18 +27,18 @@ export class MapComponent extends BasePageComponent implements OnInit,
     let markers: GeoJSON.FeatureCollection;
 
     this.subscriptions.push(this.mapService.getMarkers().subscribe(
-        (result: {data: {locations: object[]}}) => {
-          markers =
-              this.mapService.parseResponsoToGeoJSON(result.data.locations);
-          this.loadMapbox(markers);
-        },
-        (error) => {
-          this.loader.hide('energy-dashboard');
-          this.logger.error('Error fetching map markers', error);
-          // TODO: remove this after tests!
-          markers = this.mapService.getMarkersMockup();
-          this.loadMapbox(markers);
-        }));
+      (result: { data: { locations: object[] } }) => {
+        markers =
+          this.mapService.parseResponsoToGeoJSON(result.data.locations);
+        this.loadMapbox(markers);
+      },
+      (error) => {
+        this.loader.hide('energy-dashboard');
+        this.logger.error('Error fetching map markers', error);
+        // TODO: remove this after tests!
+        markers = this.mapService.getMarkersMockup();
+        this.loadMapbox(markers);
+      }));
 
     this.draw();
 
@@ -51,20 +55,22 @@ export class MapComponent extends BasePageComponent implements OnInit,
     });
 
     // Load markers image
-    map.loadImage('assets/images/mapbox/pin.png', function(error, image) {
-      if (error) throw error;
+    map.loadImage('assets/images/mapbox/pin.png', (error, image) => {
+      if (error) {
+        throw error;
+      }
       map.addImage('pin', image);
     });
 
 
-    map.on('load', function() {
+    map.on('load', () => {
       map.addSource('businesses', {
         type: 'geojson',
         data: markers,
         cluster: true,
         clusterMaxZoom: 14,  // Max zoom to cluster points on
         clusterRadius: 50    // Radius of each cluster when clustering points
-                             // (defaults to 50)
+        // (defaults to 50)
       });
 
       map.addLayer({
@@ -84,7 +90,7 @@ export class MapComponent extends BasePageComponent implements OnInit,
             '#f28cb1'
           ],
           'circle-radius':
-              ['step', ['get', 'point_count'], 20, 100, 30, 750, 40]
+            ['step', ['get', 'point_count'], 20, 100, 30, 750, 40]
         }
       });
 
@@ -113,35 +119,33 @@ export class MapComponent extends BasePageComponent implements OnInit,
       });
 
       // Events.
-      map.on('mouseenter', 'clusters', function() {
+      map.on('mouseenter', 'clusters', () => {
         map.getCanvas().style.cursor = 'pointer';
       });
-      map.on('mouseleave', 'clusters', function() {
+      map.on('mouseleave', 'clusters', () => {
         map.getCanvas().style.cursor = '';
       });
 
-      map.on('mouseenter', 'unclustered-point', function() {
+      map.on('mouseenter', 'unclustered-point', () => {
         map.getCanvas().style.cursor = 'pointer';
       });
-      map.on('mouseleave', 'unclustered-point', function() {
+      map.on('mouseleave', 'unclustered-point', () => {
         map.getCanvas().style.cursor = '';
       });
 
-      map.on('click', 'unclustered-point', function(e) {
+      map.on('click', 'unclustered-point', (e) => {
         const element = new MapboxMarkerProperties(e.features[0].properties);
-        const coordinates = e.lngLat
+        const coordinates = e.lngLat;
 
-                            new Popup({offset: 25})
-                                .setLngLat(coordinates)
-                                .setHTML(`
-      
+        new Popup({ offset: 25 })
+          .setLngLat(coordinates)
+          .setHTML(`
             <h4>${element.store}</h4>
             <p class="small">Minimercados, supermercados, hipermercados, </p>
             <p>Telf.: </p>
             <p>Rua Dr. José Sampaio</p>
             <p>4810-275  </p>
             <br>
-            
             <p><b>Público Geral</b></p>
             <h6>Horário de Funcionamento</h6>
             <div class="row">

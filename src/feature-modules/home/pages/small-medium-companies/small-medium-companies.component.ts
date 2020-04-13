@@ -14,7 +14,7 @@ import { FormsService } from '@core-modules/catalog/modules/forms';
 export class SmallMediumCompaniesComponent extends BasePageComponent implements OnInit, OnDestroy {
 
   form: FormGroup;
-  
+
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly homeService: HomeService,
@@ -60,7 +60,7 @@ export class SmallMediumCompaniesComponent extends BasePageComponent implements 
             //   this.formGeneralErrors.messages.push(err.error.resultMessage);
             // }
             // this.formGeneralErrors.visible = true;
-  
+
             this.loader.hide('pageLoader');
           }
         )

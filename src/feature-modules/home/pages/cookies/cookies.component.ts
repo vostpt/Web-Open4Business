@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
+
 import { BasePageComponent } from '@core-modules/main-layout';
 
 @Component({
@@ -7,17 +8,16 @@ import { BasePageComponent } from '@core-modules/main-layout';
   styleUrls: ['./cookies.component.scss']
 })
 export class CookiesComponent extends BasePageComponent implements OnInit, AfterViewInit {
-  
-  constructor(
-    ) {
-      super();
-    }
+
+  constructor() {
+    super();
+  }
 
   ngOnInit() {
     this.loader.show('pageLoader');
   }
 
-  ngAfterViewInit() { 
+  ngAfterViewInit() {
     this.loader.hide('pageLoader');
 
     document.getElementById('kt_quick_panel_close_btn').click();

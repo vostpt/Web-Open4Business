@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 // import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { NgbDropdownModule, NgbTabsetModule, NgbProgressbarModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbProgressbarModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { PerfectScrollbarModule, PerfectScrollbarConfigInterface, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { TranslateModule } from '@ngx-translate/core';
@@ -62,7 +62,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   declarations: [
     BaseLayoutComponent,
     NotFoundComponent,
-    
+
     HeaderComponent,
     HeaderMobileComponent,
     BrandComponent,
@@ -103,7 +103,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 
     // TODO review imports
     NgbDropdownModule,
-    NgbTabsetModule,
     NgbProgressbarModule,
     NgbTooltipModule,
 
@@ -121,7 +120,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TranslateModule,
 
     NgbDropdownModule,
-    NgbTabsetModule,
     NgbProgressbarModule,
     NgbTooltipModule,
 

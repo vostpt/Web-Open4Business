@@ -1,0 +1,68 @@
+.banner-section {
+  background-color: var(--base-color-01);
+  color: #fff;
+  font-size: 1.1rem;
+  margin: 0 -25px;
+  padding: 15px;
+
+  .title {
+    font-size: 1.8rem;
+    font-weight: 200;
+    margin-bottom: 0;
+  }
+
+  .close-icon {
+    position: relative;
+    float: right;
+    padding: 20px 40px;
+    cursor: pointer;
+  }
+
+}
+
+
+.content-section {
+  background-color: var(--base-color-02);
+  margin: 0 -25px -32px -25px;
+
+  .logo {
+    width: 230px;
+    padding: 20px 0;
+  }
+
+  .brand {
+    font-size: 3rem;
+    color: white;
+    padding: 20px 0;
+  }
+}
+
+
+
+
+
+.center-block {
+  text-align: center;
+}
+
+.logo {
+  width: 300px;
+  margin-top: 24px;
+}
+
+.main-text {
+  margin: 24px 0;
+  font-size: 1.2rem;
+}
+
+.main-button {
+  background-color: transparent;
+  border: solid 1px #43348b;
+  padding: 15px;
+
+  &:hover {
+    background-color: #43348b;
+    color: #FFFFFF;
+  }
+}
+

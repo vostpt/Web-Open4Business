@@ -3,23 +3,19 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { BaseLayoutComponent } from '@core-modules/main-layout';
 
-import { MapComponent } from './pages/map/map.component';
-import { LargeCompaniesComponent } from './pages/large-companies/large-companies.component';
-import { SmallMediumCompaniesComponent } from './pages/small-medium-companies/small-medium-companies.component';
 import { NotFoundComponent } from '@core-modules/main-layout/components/not-found/not-found.component';
-import { CookiesComponent } from './pages/cookies/cookies.component';
-import { AboutComponent } from './pages/about/about.component';
+
+import { MapComponent } from '@home-feature-module/pages/map/map.component';
+import { SmallMediumCompaniesComponent } from '@home-feature-module/pages/small-medium-companies/small-medium-companies.component';
+import { LargeCompaniesComponent } from '@home-feature-module/pages/large-companies/large-companies.component';
+import { LargeCompaniesSuccessSubmissionComponent } from '@home-feature-module/pages/large-companies/success-submission.component';
+import { CookiesComponent } from '@home-feature-module/pages/cookies/cookies.component';
+import { AboutComponent } from '@home-feature-module/pages/about/about.component';
 
 const routes: Routes = [
   {
     path: '',
     component: BaseLayoutComponent,
-    data: {
-      layoutOptions: {
-        isAsideLeftActive: false,
-        selectedMenu: 'map'
-      }
-    },
     children: [
       {
         path: '',
@@ -33,8 +29,18 @@ const routes: Routes = [
       },
       {
         path: 'large-companies',
-        component: LargeCompaniesComponent,
-        pathMatch: 'full',
+        children: [
+          {
+            path: '',
+            component: LargeCompaniesComponent,
+            pathMatch: 'full'
+          },
+          {
+            path: 'success',
+            component: LargeCompaniesSuccessSubmissionComponent,
+            pathMatch: 'full'
+          }
+        ]
       },
       {
         path: 'cookies',
