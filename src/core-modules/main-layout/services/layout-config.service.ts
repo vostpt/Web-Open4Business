@@ -16,10 +16,6 @@ export class LayoutConfigService {
     this.onConfigUpdated$ = new Subject();  // register on config changed event and set default config
   }
 
-  /**
-   * Initialize layout config
-   * @param config
-   */
   loadConfiguration(config: LayoutConfigModel) {
     this.layoutConfig = config;
   }

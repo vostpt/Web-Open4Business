@@ -1,10 +1,7 @@
-// Angular
 import { Injectable } from '@angular/core';
-// Object-Path
 import * as objectPath from 'object-path';
-// RxJS
 import { BehaviorSubject } from 'rxjs';
-// Layout
+
 import { LayoutConfigModel } from '../_config/layout-config.model';
 
 export interface ClassType {
@@ -16,24 +13,18 @@ export interface ClassType {
 
 @Injectable()
 export class HtmlClassService {
-  // Public properties
+
   config: LayoutConfigModel;
   classes: ClassType;
   onClassesUpdated$: BehaviorSubject<ClassType>;
-  // Private properties
+
   private loaded: string[] = [];
 
-  /**
-   * Component constructor
-   */
   constructor() {
     this.onClassesUpdated$ = new BehaviorSubject(this.classes);
   }
 
-  /**
-   * Build html element classes from layout config
-   * @param layoutConfig
-   */
+
   setConfig(layoutConfig: LayoutConfigModel) {
     this.config = layoutConfig;
 

@@ -9,8 +9,14 @@
       "@core-modules/*": [
         "src/core-modules/*"
       ],
+      "@authentication-feature-module/*": [
+        "src/feature-modules/authentication/*"
+      ],
       "@home-feature-module/*": [
         "src/feature-modules/home/*"
+      ],
+      "@businesses-feature-module/*": [
+        "src/feature-modules/businesses/*"
       ]
     },
     "outDir": "./dist/out-tsc",

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { BaseLayoutComponent } from '@core-modules/main-layout';
-
 import { NotFoundComponent } from '@core-modules/main-layout/components/not-found/not-found.component';
 
 import { MapComponent } from '@home-feature-module/pages/map/map.component';
@@ -28,21 +27,6 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'large-companies',
-        children: [
-          {
-            path: '',
-            component: LargeCompaniesComponent,
-            pathMatch: 'full'
-          },
-          {
-            path: 'success',
-            component: LargeCompaniesSuccessSubmissionComponent,
-            pathMatch: 'full'
-          }
-        ]
-      },
-      {
         path: 'cookies',
         component: CookiesComponent,
         pathMatch: 'full',
@@ -51,10 +35,6 @@ const routes: Routes = [
         path: 'about',
         component: AboutComponent,
         pathMatch: 'full',
-      },
-      {
-        path: '**',
-        component: NotFoundComponent
       }
     ]
   }

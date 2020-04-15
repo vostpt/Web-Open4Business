@@ -13,8 +13,8 @@ export class AuthenticationService {
     private http: HttpClient
   ) { }
 
-  verifyToken() {
-    const url = new UrlModel(this.url).setPath('auth/v1/verify-token').buildUrl();
+  verifySession() {
+    const url = new UrlModel(this.url).setPath('auth/v1/session').buildUrl();
     return this.http.get(url);
   }
 

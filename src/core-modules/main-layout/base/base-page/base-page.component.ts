@@ -1,4 +1,5 @@
 import { OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { NGXLogger } from 'ngx-logger';
@@ -14,6 +15,7 @@ import { EnvironmentService } from '../../../core/services/environment.service';
 export abstract class BasePageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   protected subscriptions: Subscription[] = [];
+  public router: Router;
   public translateService: TranslateService;
   public logger: NGXLogger;
   public loader: NgxSpinnerService;
@@ -24,6 +26,7 @@ export abstract class BasePageComponent implements OnInit, OnDestroy, AfterViewI
 
   constructor() {
     const injector = AppInjector.getInjector();
+    this.router = injector.get(Router);
     this.translateService = injector.get(TranslateService);
     this.logger = injector.get(NGXLogger);
     this.loader = injector.get(NgxSpinnerService);

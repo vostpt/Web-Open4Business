@@ -5,7 +5,7 @@
 }
 
 .cookies-warn {
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   line-height: 3em;
   text-align: center;
 
@@ -41,7 +41,7 @@ i.warn-close {
 }
 
 .button {
-  font-family: Lato,sans-serif;
+  font-family: Lato, sans-serif;
   font-weight: 400;
   font-size: 1rem;
   line-height: 1.4;
@@ -69,4 +69,12 @@ i.warn-close {
   height: 85vh;
   // height: 700px;
   width: 100%;
+}
+
+
+.close-icon {
+  position: relative;
+  float: right;
+  padding: 12px 50px;
+  cursor: pointer;
 }

@@ -1,7 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-// import { AuthenticationGuard } from '@external-modules/core';
+import { BaseLayoutComponent } from '@core-modules/main-layout';
+import { NotFoundComponent } from '@core-modules/main-layout/components/not-found/not-found.component';
+
+import { AuthenticationGuard } from '@core-modules/core';
+
 
 const routes: Routes = [
 
@@ -9,20 +13,19 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('@home-feature-module/home.module').then(m => m.HomeModule)
   },
-  // {
-  //   path: 'backoffice',
-  //   //canActivate: [AuthenticationGuard],
-  //   children: [
-  //     {
-  //       path: 'map',
-  //       loadChildren: () => import('@home-feature-module/home.module').then(m => m.HomeModule)
-  //     },
-  //     {
-  //       path: 'energy',
-  //       loadChildren: () => import('@energy-feature-module/energy.module').then(m => m.EnergyModule)
-  //     }
-  //   ]
-  // }
+  {
+    path: 'businesses',
+    canActivate: [AuthenticationGuard],
+    loadChildren: () => import('@businesses-feature-module/businesses.module').then(m => m.BusinessesModule)
+  },
+  {
+    path: 'auth',
+    loadChildren: () => import('@authentication-feature-module/authentication.module').then(m => m.AuthenticationModule)
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
+  }
 
 ];
 

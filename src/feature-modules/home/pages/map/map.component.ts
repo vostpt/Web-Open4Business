@@ -13,7 +13,9 @@ import { MapboxMarkerProperties } from '@home-feature-module/models/mapbox-marke
   styleUrls: ['./map.component.scss']
 })
 export class MapComponent extends BasePageComponent implements OnInit, OnDestroy {
-  public showCookieWarn = true;
+
+  public showCookieWarning = (JSON.parse(localStorage.getItem('dismissedCookieWarning')) ? false : true);
+  public showInformationBanner = (JSON.parse(localStorage.getItem('dismissedInformationBanner')) ? false : true);
 
   constructor(
     private readonly mapService: MapService
@@ -49,7 +51,7 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
     const map = new Map({
       accessToken: this.environment.variables.mapbox,
       container: 'map-container',
-      style: 'mapbox://styles/mapbox/light-v10',
+      style: 'mapbox://styles/mapbox/outdoors-v11',
       center: [-7.8536599, 39.557191],  // [lng, lat]
       zoom: 7
     });
@@ -172,6 +174,12 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
   }
 
   dismissCookieWarn() {
-    this.showCookieWarn = false;
+    this.showCookieWarning = false;
+    localStorage.setItem('dismissedCookieWarning', 'true');
+  }
+
+  dismissInformationBanner() {
+    this.showInformationBanner = false;
+    localStorage.setItem('dismissedInformationBanner', 'true');
   }
 }

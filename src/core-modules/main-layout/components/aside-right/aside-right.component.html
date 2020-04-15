@@ -1,4 +1,3 @@
-<!-- begin::Offcanvas Toolbar Quick Actions -->
 <div ktOffcanvas [options]="offcanvasOptions" id="kt_quick_panel" class="kt-quick-panel" [ngStyle]="{'overflow': 'hidden'}">
   <a href="javascript:;" class="kt-quick-panel__close" id="kt_quick_panel_close_btn" (click)="onClose()">
     <i class="flaticon2-delete"></i>
@@ -7,14 +6,13 @@
     <!-- <ng-content select="[content]"></ng-content> -->
     <div content class="h-100">
       <ul class="navbar-nav text-uppercase">
-        <li class="nav-item"><a routerLink="/" class="nav-link">Entrada</a></li>
-        <li class="nav-item"><a routerLink="/" class="nav-link">Lista de Empresas</a></li>
-        <li class="nav-item"><a routerLink="/small-medium-companies" class="nav-link">Formulário para pequenas e médias empresas</a></li>
-        <li class="nav-item"><a routerLink="/large-companies" class="nav-link">Formulário para grandes empresas e cadeias</a></li>
+        <li class="nav-item"><a routerLink="/auth/signin" class="nav-link">Entrada</a></li>
+        <li class="nav-item"><a routerLink="/businesses/locations" class="nav-link">Lista de Empresas</a></li>
+        <!-- <li class="nav-item"><a routerLink="/small-medium-companies" class="nav-link">Formulário para pequenas e médias empresas</a></li> -->
+        <li class="nav-item"><a routerLink="/businesses/locations/new" class="nav-link">Formulário para grandes empresas e cadeias</a></li>
         <li class="nav-item"><a routerLink="/about" class="nav-link">Sobre</a></li>
         <li class="nav-item"><a routerLink="/cookies" class="nav-link">Política de Privacidade e Política de Cookies</a></li>
       </ul>
     </div>
   </div>
 </div>
-<!-- end::Offcanvas Toolbar Quick Actions -->
