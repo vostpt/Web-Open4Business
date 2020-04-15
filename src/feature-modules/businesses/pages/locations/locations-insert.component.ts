@@ -9,11 +9,11 @@ import { FormsService } from '@core-modules/catalog/modules/forms';
 import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
 
 @Component({
-  selector: 'app-businesses-locations',
-  templateUrl: './locations.component.html',
-  styleUrls: ['./locations.component.scss']
+  selector: 'app-businesses-locations-insert',
+  templateUrl: './locations-insert.component.html',
+  styleUrls: ['./locations-insert.component.scss']
 })
-export class LocationsComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class LocationsInsertComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
 
   form: FormGroup;
   get f() { return this.form.controls; }

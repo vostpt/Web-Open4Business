@@ -21,6 +21,8 @@ export class MapboxMarkerProperties {
   schedule3: string;
   schedule3Dow: string;
   schedule3Type: string;
+  typeOfService: string;
+  obs: string;
 
   constructor(data: object) {
 
@@ -30,8 +32,8 @@ export class MapboxMarkerProperties {
     this.store  = data['store'];
     this.address  = data['address'];
     this.district = data['district'];
-    this.county = data['concelho'];
-    this.parish = data['fregesia'];
+    this.county = data['county'] || data['council'];
+    this.parish = data['parish'];
     this.zipCode  = data['zipCode'];
     this.latitude = data['latitude'];
     this.longitude  = data['longitude'];
@@ -46,6 +48,7 @@ export class MapboxMarkerProperties {
     this.schedule3  = data['schedule3'];
     this.schedule3Dow = data['schedule3Dow'];
     this.schedule3Type  = data['schedule3Type'];
-
+    this.typeOfService  = data['typeOfService'];
+    this.obs  = data['obs'];
   }
 }

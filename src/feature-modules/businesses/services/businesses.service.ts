@@ -13,6 +13,10 @@ export class BusinessesService {
   ) { }
 
 
+  getLocations() {
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations').buildUrl();
+    return this.http.get(url);
+  }
 
   sendNewLocationsFile(body:
     {
@@ -21,12 +25,14 @@ export class BusinessesService {
       lastName: string,
       email: string,
       phone: string,
+      dataFile: string
     }
   ) {
     const url = new UrlModel(this.apiUrl).setPath('/insights/v1/business');
 
     return this.http.post(url.buildUrl(), body);
   }
+
 
 }
 

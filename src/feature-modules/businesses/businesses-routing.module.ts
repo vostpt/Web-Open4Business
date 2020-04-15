@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { BaseLayoutComponent } from '@core-modules/main-layout';
-import { NotFoundComponent } from '@core-modules/main-layout/components/not-found/not-found.component';
 
-import { LocationsComponent } from '@businesses-feature-module/pages/locations/locations.component';
+import { LocationsInsertComponent } from '@businesses-feature-module/pages/locations/locations-insert.component';
+import { LocationsListComponent } from '@businesses-feature-module/pages/locations/locations-list.component';
 import { LocationsSuccessSubmissionComponent } from '@businesses-feature-module/pages/locations/success-submission.component';
 
 
@@ -16,14 +16,14 @@ const routes: Routes = [
       {
         path: 'locations',
         children: [
-          // {
-          //   path: 'new',
-          //   component: LargeCompaniesComponent,
-          //   pathMatch: 'full'
-          // },
+          {
+            path: '',
+            component: LocationsListComponent,
+            pathMatch: 'full'
+          },
           {
             path: 'new',
-            component: LocationsComponent,
+            component: LocationsInsertComponent,
             pathMatch: 'full'
           },
           {

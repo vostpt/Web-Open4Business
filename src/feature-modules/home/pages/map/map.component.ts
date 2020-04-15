@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Map, Popup } from 'mapbox-gl';
 
+import { split, replace } from 'lodash';
+
+
 import { BasePageComponent } from '@core-modules/main-layout';
 
 import { MapService } from '@home-feature-module/services/map.service';
@@ -35,7 +38,7 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
         this.loadMapbox(markers);
       },
       (error) => {
-        this.loader.hide('energy-dashboard');
+        this.loader.hide('app-map');
         this.logger.error('Error fetching map markers', error);
         // TODO: remove this after tests!
         markers = this.mapService.getMarkersMockup();
@@ -139,25 +142,12 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
         const element = new MapboxMarkerProperties(e.features[0].properties);
         const coordinates = e.lngLat;
 
+        map.flyTo({ center: coordinates, offset: [0, 225] });
+
         new Popup({ offset: 25 })
           .setLngLat(coordinates)
-          .setHTML(`
-            <h4>${element.store}</h4>
-            <p class="small">Minimercados, supermercados, hipermercados, </p>
-            <p>Telf.: </p>
-            <p>Rua Dr. José Sampaio</p>
-            <p>4810-275  </p>
-            <br>
-            <p><b>Público Geral</b></p>
-            <h6>Horário de Funcionamento</h6>
-            <div class="row">
-                <div class="col-5">
-                    <p>Ter. a Ter.:</p>
-                </div>
-                <div class="col-7">
-                    <p>09:00 às 18:00</p>
-                </div>
-            </div> `).addTo(map);
+          .setHTML(this.getPopupHTML(element, coordinates))
+          .addTo(map);
       });
 
       map.resize();
@@ -167,6 +157,54 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
   draw() {
     this.logger.debug('App ready!');
     this.loader.hide('app-map');
+  }
+
+  getPopupHTML(properties: MapboxMarkerProperties, coordinates) {
+    let html = `
+      <h4>${properties.store}</h4>
+      <p class="small">Setor, Localidade</p>
+      <p>Telf.: ${properties.phone}</p>
+      <p>${properties.address}</p>
+      <p>${properties.zipCode} ${properties.parish}</p>
+      <br />`;
+
+    html += (properties.schedule1Dow || properties.schedule2Dow || properties.schedule3Dow ? `<h5><b>Horário de Funcionamento</b></h5>` : '');
+
+    for (let i = 1; i <= 3; i++) {
+      const dayOfWeekPeriods = this.formatWeekdaysListProperty(properties[`schedule${i}Dow`]);
+      const schedule = this.formatScheduleProperty(properties[`schedule${i}`]);
+      html += (dayOfWeekPeriods ? `
+          <div class="row">
+            <div class="col-5"><p>${dayOfWeekPeriods}:</p></div>
+            <div class="col-7"><p>${schedule}</p></div>
+          </div>` : '');
+    }
+
+    html += (properties.typeOfService ? `<br /><h5><b>Entregas</b></h5><p>${properties.typeOfService}</p>` : '');
+    html += (properties.obs ? `<br /><p class="notes">${properties.obs}</p>` : '');
+
+    html += `<br /><br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.pt/maps/search/${coordinates.lat},${coordinates.lng}" target="_blank" class="btn btn-primary link">Navegar para...</a></div></div>`;
+
+    return html;
+
+  }
+
+  formatWeekdaysListProperty(weekdays: string) {
+    return weekdays
+      .replace(/ /g, '')
+      .split(',')
+      .map((day, i, arr) => (i === 0 || arr.length - 1 === i ? day.substring(0, 3) : null))
+      .filter(n => n)
+      .join(' a ');
+  }
+
+
+  formatScheduleProperty(property: string) {
+    return property
+      .replace(/ /g, '')
+      .split('-')
+      .map(day => day.substring(0, 5))
+      .join(' às ');
   }
 
   ngOnDestroy() {

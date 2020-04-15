@@ -7,7 +7,8 @@ import { DropzoneModule } from 'ngx-dropzone-wrapper';
 
 import { BusinessesRoutingModule } from './businesses-routing.module';
 
-import { LocationsComponent } from '@businesses-feature-module/pages/locations/locations.component';
+import { LocationsInsertComponent } from '@businesses-feature-module/pages/locations/locations-insert.component';
+import { LocationsListComponent } from '@businesses-feature-module/pages/locations/locations-list.component';
 import { LocationsSuccessSubmissionComponent } from '@businesses-feature-module/pages/locations/success-submission.component';
 
 import { BusinessesService } from './services/businesses.service';
@@ -22,7 +23,8 @@ import { BusinessesService } from './services/businesses.service';
     BusinessesRoutingModule
   ],
   declarations: [
-    LocationsComponent,
+    LocationsInsertComponent,
+    LocationsListComponent,
     LocationsSuccessSubmissionComponent
   ],
   providers: [

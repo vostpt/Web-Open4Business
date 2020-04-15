@@ -2,79 +2,74 @@
   background-color: #4eaa4f;
   color: #fff;
   margin: 0 -25px;
-}
 
-.cookies-warn {
-  background-color: rgba(0, 0, 0, 0.5);
-  line-height: 3em;
-  text-align: center;
 
-  p {
-    margin-bottom: 0px;
+  .cookies-warn {
+    background-color: rgba(0, 0, 0, 0.5);
+    line-height: 3em;
+    text-align: center;
+
+    p {
+      margin-bottom: 0px;
+    }
   }
-}
 
-.lead {
-  font-weight: 200;
-  font-size: 1.8rem;
-  text-align: center;
-  padding-top: 10px;
-}
 
-a.warn-link {
-  color: #4eaa4f;
-}
+  .lead {
+    font-weight: 200;
+    font-size: 1.8rem;
+    text-align: center;
+    padding-top: 10px;
+  }
 
-i.warn-close {
-  cursor: pointer;
-}
+  a.warn-link {
+    color: #4eaa4f;
+  }
 
-.button__wrapper {
-  text-align: center;
-  padding: .5rem 0 2rem;
-}
+  i.warn-close {
+    cursor: pointer;
+  }
 
-.button--secondary {
-  background-color: #43348b;
-  color: #fff;
-  margin: 0 15px;
-}
+  .button__wrapper {
+    text-align: center;
+    padding: .5rem 0 2rem;
+  }
 
-.button {
-  font-family: Lato, sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  line-height: 1.4;
-  text-decoration: none;
-  text-transform: uppercase;
-  letter-spacing: .04rem;
-  text-align: center;
-  padding: 1rem;
-  display: inline-block;
+  .button--secondary {
+    background-color: #43348b;
+    color: #fff;
+    margin: 0 15px;
+  }
+
+  .button {
+    font-family: Lato, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.4;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: .04rem;
+    text-align: center;
+    padding: 1rem;
+    display: inline-block;
+  }
+
+
+  .close-icon {
+    position: relative;
+    float: right;
+    padding: 12px 50px;
+    cursor: pointer;
+  }
 }
 
 .map-container {
   margin-left: -25px;
   margin-right: -25px;
   margin-bottom: -25px;
-  //   position: relative;
-  //   height: 100% !important;
-  //   width: 100% !important;
 }
 
 #map-container {
-  // position: absolute;
-  // top: 0;
-  // bottom: 0;
   height: 85vh;
-  // height: 700px;
   width: 100%;
-}
-
-
-.close-icon {
-  position: relative;
-  float: right;
-  padding: 12px 50px;
-  cursor: pointer;
 }
