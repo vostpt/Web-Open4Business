@@ -1,35 +1,26 @@
 <app-catalog-loader name="pageLoader"></app-catalog-loader>
 
-<div *ngIf="contentReady">
-  <div class="container">
-    <ul class="breadcrumbs">
-      <li><a routerLink="/">OPEN4BUSINESS</a></li>
-      <li>/</li>
-      <li class="current">
-        <span>Lista de localizações</span>
-      </li>
-    </ul>
+<div *ngIf="contentReady" class="container">
+
+  <ul class="breadcrumbs">
+    <li><a routerLink="/">OPEN4BUSINESS</a></li>
+    <li>/</li>
+    <li class="current">
+      <span>Lista de localizações</span>
+    </li>
+  </ul>
+
+  <div class="row filters-section">
+    <div class="col-lg-12 text">
+      Apoiemos os negócios locais e a economia do país.<br />
+      Podemos querer parar o virus, não podemos parar o país.
+    </div>
   </div>
 
-  <div class="kt-portlet container">
-    <div class="kt-portlet__head">
-      <div class="kt-portlet__head-label">
-        <h3 class="kt-portlet__head-title title">
-          Pequenas, médias e grandes empresas em funcionamento
-        </h3>
-      </div>
-    </div>
-
+  <div class="kt-portlet" *ngFor="let location of datasets.locations">
     <div class="kt-portlet__body">
 
-      <div class="row">
-        <div class="col-lg-12 text">
-          Apoiemos os negócios locais e a economia do país.<br />
-          Podemos querer parar o virus, não podemos parar o país.
-        </div>
-      </div>
-
-      <div class="row" *ngFor="let location of datasets.locations">
+      <div class="row custom-card">
         <div class="col-lg-3">
           <h4>{{location.store}}</h4>
           <p class="small">Setor, Localidade</p>
@@ -38,17 +29,18 @@
           <p>{{location.zipCode}} {{location.parish}}</p>
         </div>
         <div class="col-lg-3">
-          <h5><b>Horário de Funcionamento</b></h5>
+          <h5>Horário de Funcionamento</h5>
           <div class="row" *ngFor="let number of [1,2,3]">
-            <!-- <div class="col-5"><p>{{ formatWeekdaysListProperty(location['schedule' + {{number}} + 'Dow']) }}:</p></div>
-            <div class="col-7"><p>{{ formatScheduleProperty(location['schedule' + {{number}}]) }}</p></div> -->
+            <div class="col-5"><p>{{ location['schedule' + number + 'DowFormatted'] }}</p></div>
+            <div class="col-7"><p>{{ location['schedule' + number + 'Formatted'] }}</p></div>
           </div>
         </div>
         <div class="col-lg-3">
-          <h5><b>Entregas</b></h5>
+          <h5>Entregas</h5>
           <p>{{location.typeOfService}}</p>
         </div>
         <div class="col-lg-3">
+          <h5>Observações</h5>
           <p>{{location.obs}}</p>
         </div>
       </div>
