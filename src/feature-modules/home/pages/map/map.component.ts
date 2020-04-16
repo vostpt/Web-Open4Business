@@ -34,15 +34,12 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
     this.subscriptions.push(this.mapService.getMarkers().subscribe(
       (result: { data: { locations: object[] } }) => {
         markers =
-          this.mapService.parseResponsoToGeoJSON(result.data.locations);
+          this.mapService.parseResponseToGeoJSON(result.data.locations);
         this.loadMapbox(markers);
       },
       (error) => {
         this.loader.hide('app-map');
         this.logger.error('Error fetching map markers', error);
-        // TODO: remove this after tests!
-        markers = this.mapService.getMarkersMockup();
-        this.loadMapbox(markers);
       }));
 
     this.draw();

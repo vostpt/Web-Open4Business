@@ -93,13 +93,7 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
             error => {
               this.loader.hide('pageLoader');
               this.notification.error('Ocorreu um erro ao registar. Tente mais tarde ou contacte os nossos serviços de apoio.');
-              // if ((err.error.data || {}).errors) {
-              //   this.formGeneralErrors.messages =
-              //   err.error.data.errors;
-              // } else {
-              //   this.formGeneralErrors.messages.push(err.error.resultMessage);
-              // }
-              // this.formGeneralErrors.visible = true;
+              this.logger.error('Locations insertion unsuccessful', error);
             }));
     }
     else {

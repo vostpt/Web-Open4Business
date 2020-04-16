@@ -14,7 +14,7 @@ export class BusinessesService {
 
 
   getLocations() {
-    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations').buildUrl();
+    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations').buildUrl();
     return this.http.get(url);
   }
 
@@ -28,15 +28,10 @@ export class BusinessesService {
       dataFile: string
     }
   ) {
-    const url = new UrlModel(this.apiUrl).setPath('/insights/v1/business');
+    const url = new UrlModel(this.apiUrl).setPath('/businesses/v1/file');
 
     return this.http.post(url.buildUrl(), body);
   }
 
 
 }
-
-// POST ('/buzinesses/v1/locations') ->
-// GET ('/buzinesses/v1/locations') -> listagem de
-//  POST    /buzinesses/v1//file
-// POST buzinesses/v1/logo

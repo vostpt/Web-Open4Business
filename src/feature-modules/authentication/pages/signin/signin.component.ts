@@ -57,7 +57,7 @@ export class SigninComponent extends BasePageComponent implements OnInit, AfterV
 
               this.loader.hide('pageLoader');
               this.notification.success('O login foi efetuado com sucesso.');
-              this.router.navigateByUrl('businesses');
+              this.router.navigateByUrl('businesses/locations/new');
             },
             () => {
               this.loader.hide('pageLoader');

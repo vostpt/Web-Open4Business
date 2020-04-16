@@ -17,15 +17,13 @@ export class AuthenticationGuard implements CanActivate {
 
     const token = localStorage.getItem('token');
 
-    return true;
-
     if (token) {
       return this.authenticationService.verifySession().pipe(map(
         () => {
           return true;
         }
       ), catchError(() => {
-        // localStorage.removeItem('token');
+        localStorage.removeItem('token');
         this.router.navigateByUrl('/auth/signin');
         return of(false);
       }));
