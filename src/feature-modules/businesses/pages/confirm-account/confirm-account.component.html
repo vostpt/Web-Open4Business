@@ -1,0 +1,20 @@
+<app-catalog-loader name="pageLoader"></app-catalog-loader>
+
+<div class="content-section" *ngIf="contentReady">
+  <div class="container center-block">
+    <p class="title message" *ngIf="success">
+      A empresa foi confirmada com sucesso.<br />
+      Será enviado um email ao responsácel com as credenciais de acesso.
+    </p>
+    
+    <p class="title message" *ngIf="!success">
+      Não foi possível confirmar a empresa.
+    </p>
+
+    <a href="/"><img class="logo" src="assets/images/logos/o4b.png"></a>
+
+    <h3 class="brand">#OPEN4BUSINESS</h3>
+
+    <button class="btn btn-primary btn-goto-list" routerLink="/">Ir para o início</button>
+  </div>
+</div>

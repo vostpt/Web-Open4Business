@@ -6,6 +6,7 @@ import { BaseLayoutComponent } from '@core-modules/main-layout';
 import { SigninComponent } from '@authentication-feature-module/pages/signin/signin.component';
 import { SignupComponent } from '@authentication-feature-module/pages/signup/signup.component';
 import { SignupSuccessSubmissionComponent } from '@authentication-feature-module/pages/signup/success-submission.component';
+import { SignoutComponent } from './pages/signout/signout.component';
 
 
 const routes: Routes = [
@@ -16,6 +17,11 @@ const routes: Routes = [
       {
         path: 'signin',
         component: SigninComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'signout',
+        component: SignoutComponent,
         pathMatch: 'full',
       },
       {

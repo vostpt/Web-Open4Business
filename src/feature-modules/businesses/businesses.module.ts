@@ -12,6 +12,7 @@ import { LocationsListComponent } from '@businesses-feature-module/pages/locatio
 import { LocationsSuccessSubmissionComponent } from '@businesses-feature-module/pages/locations/success-submission.component';
 
 import { BusinessesService } from './services/businesses.service';
+import { ConfirmAccountComponent } from './pages/confirm-account/confirm-account.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { BusinessesService } from './services/businesses.service';
   declarations: [
     LocationsInsertComponent,
     LocationsListComponent,
-    LocationsSuccessSubmissionComponent
+    LocationsSuccessSubmissionComponent,
+    ConfirmAccountComponent
   ],
   providers: [
     BusinessesService

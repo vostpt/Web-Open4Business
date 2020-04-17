@@ -5,8 +5,11 @@
   <div class="kt-mt-50 h-100 px-4">
     <!-- <ng-content select="[content]"></ng-content> -->
     <div content class="h-100">
+      <div class="user-info">{{ email }}</div>
+
       <ul class="navbar-nav text-uppercase">
-        <li class="nav-item"><a routerLink="/auth/signin" class="nav-link">Entrada</a></li>
+        <li class="nav-item" *ngIf="session"><a routerLink="/auth/signout" class="nav-link">Sair</a></li>
+        <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signin" class="nav-link">Entrada</a></li>
         <li class="nav-item"><a routerLink="/businesses/locations" class="nav-link">Lista de Empresas</a></li>
         <!-- <li class="nav-item"><a routerLink="/small-medium-companies" class="nav-link">Formulário para pequenas e médias empresas</a></li> -->
         <li class="nav-item"><a routerLink="/businesses/locations/new" class="nav-link">Formulário para grandes empresas e cadeias</a></li>

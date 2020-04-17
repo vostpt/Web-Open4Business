@@ -12,6 +12,7 @@ import { SignupComponent } from '@authentication-feature-module/pages/signup/sig
 import { SignupSuccessSubmissionComponent } from '@authentication-feature-module/pages/signup/success-submission.component';
 
 import { AuthenticationService } from './services/authentication.service';
+import { SignoutComponent } from './pages/signout/signout.component';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import { AuthenticationService } from './services/authentication.service';
   ],
   declarations: [
     SigninComponent,
+    SignoutComponent,
     SignupComponent,
     SignupSuccessSubmissionComponent
   ],

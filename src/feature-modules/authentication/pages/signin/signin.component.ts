@@ -23,6 +23,14 @@ export class SigninComponent extends BasePageComponent implements OnInit, AfterV
 
   ) {
     super();
+
+    // If already signedIn goto companies list
+    if (localStorage.getItem('email')) {
+      this.router.navigate(['/businesses/locations']);
+    } else {
+      localStorage.removeItem('token');
+      localStorage.removeItem('email');
+    }
   }
 
   ngOnInit() {
@@ -41,7 +49,7 @@ export class SigninComponent extends BasePageComponent implements OnInit, AfterV
 
   onFormSubmit() {
     this.loader.show('pageLoader');
-    this.logger.info(this.form.value);
+
     if (this.form.valid) {
 
       const bodyPayload = {

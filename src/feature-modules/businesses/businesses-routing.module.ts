@@ -6,6 +6,7 @@ import { BaseLayoutComponent } from '@core-modules/main-layout';
 import { LocationsInsertComponent } from '@businesses-feature-module/pages/locations/locations-insert.component';
 import { LocationsListComponent } from '@businesses-feature-module/pages/locations/locations-list.component';
 import { LocationsSuccessSubmissionComponent } from '@businesses-feature-module/pages/locations/success-submission.component';
+import { ConfirmAccountComponent } from './pages/confirm-account/confirm-account.component';
 
 
 const routes: Routes = [
@@ -13,6 +14,11 @@ const routes: Routes = [
     path: '',
     component: BaseLayoutComponent,
     children: [
+      {
+        path: 'confirm',
+        component: ConfirmAccountComponent,
+        pathMatch: 'full'
+      },
       {
         path: 'locations',
         children: [

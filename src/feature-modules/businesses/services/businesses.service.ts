@@ -12,6 +12,10 @@ export class BusinessesService {
     private http: HttpClient
   ) { }
 
+  confirmAccount(token, confirmationCode) {
+    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/confirm').buildUrl();
+    return this.http.post(url, {token, confirmationCode});
+  }
 
   getLocations() {
     const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations').buildUrl();
@@ -28,7 +32,7 @@ export class BusinessesService {
       dataFile: string
     }
   ) {
-    const url = new UrlModel(this.apiUrl).setPath('/businesses/v1/file');
+    const url = new UrlModel(this.apiUrl).setPath('/businesses/v1/locations');
 
     return this.http.post(url.buildUrl(), body);
   }

@@ -10,6 +10,9 @@ import { OffcanvasOptions } from '../../../main-layout/directives/offcanvas.dire
 export class AsideRightComponent {
   @Output() closeEvent: EventEmitter<{ type: string, data: any }> = new EventEmitter();
 
+  public email : string;
+  public session : boolean;
+
   offcanvasOptions: OffcanvasOptions = {
     overlay: true,
     baseClass: 'kt-quick-panel',
@@ -17,7 +20,15 @@ export class AsideRightComponent {
     toggleBy: 'kt_quick_panel_toggler_btn'
   };
 
-  constructor() { }
+  constructor() { 
+    if (localStorage.getItem('email')) {
+      this.email = `${localStorage.getItem('email')}`;
+      this.session = true;
+    } else {
+      this.email = '';
+      this.session = false;
+    }
+  }
 
   open() {
     document.getElementById('kt_quick_panel_toggler_btn').click();

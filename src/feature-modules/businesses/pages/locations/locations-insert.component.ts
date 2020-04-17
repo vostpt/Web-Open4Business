@@ -30,7 +30,7 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
             <div class="result-success dz-success-mark"><i class="fa fa-check text-success"></i></div>
             <div class="result-error dz-error-mark pl-2"> <i class="fa fa-times text-danger"></i> </div> &nbsp;
             <span data-dz-name class="result-success pl-2"></span><span class="result-success pl-2" data-dz-size></span>
-            <div class="result-success actions h-100"><a href="javascript:;" title="Remover" data-dz-remove><i class="fa fa-trash"></i></a></div
+            <div class="result-success actions h-100"><a href="javascript:;" title="Remover" data-dz-remove><i class="fa fa-trash"></i></a></div>
             <div class="result-error dz-error-message">Ocorreu um erro. Tente novamente ou contacte-nos para apoio.</div>
           </div>
         </div>
@@ -42,7 +42,8 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
     ...this.defaultUploadConfiguration,
     ...{
       dictDefaultMessage: 'Pressione ou arraste um ficheiro .csv',
-      url: `${environment.apiUrl}/insights/v1/file`,
+      headers: {'authorization': 'Bearer ' + localStorage.getItem('token')},
+      url: `${environment.apiUrl}/businesses/v1/file`,
       acceptedFiles: '.csv',
       previewsContainer: '#dataUploadPreview'
     }
