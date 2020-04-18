@@ -35,7 +35,7 @@ export class AuthenticationGuard implements CanActivate {
         localStorage.removeItem('email');
         localStorage.removeItem('isA');
         if (route.queryParams.token && route.queryParams.activationCode) {
-          this.notification.warning('If trying to execute administration actions, make sure you are logged in.')
+          this.notification.warning('If trying to execute administration actions, make sure you are logged in.');
         }
         this.router.navigateByUrl('/auth/signin');
         return of(false);
@@ -43,7 +43,7 @@ export class AuthenticationGuard implements CanActivate {
     }
 
     if (route.queryParams.token && route.queryParams.confirmationCode) {
-      this.notification.warning('If trying to execute administration actions, make sure you are logged in.')
+      this.notification.warning('If trying to execute administration actions, make sure you are logged in.');
     }
     this.router.navigateByUrl('/auth/signin');
     return of(false);

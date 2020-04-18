@@ -1,0 +1,26 @@
+:host {
+  width: 80%;
+  align-self: center;
+
+}
+
+.title {
+  color: #000;
+  font-size: 1.2rem !important;
+}
+
+.text {
+  color: #000;
+  font-weight: 400;
+  text-align: justify;
+}
+
+hr {
+  color: transparent;
+  margin-top: 2rem;
+  border-top: 1px solid rgba(170, 170, 170);
+}
+
+.kt-portlet__foot {
+  border: 0;
+}

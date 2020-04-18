@@ -39,7 +39,7 @@ export class SmallMediumCompaniesComponent extends BasePageComponent implements 
     });
 
     this.loader.hide('pageLoader');
-  
+
   }
 
   onFormSubmit() {

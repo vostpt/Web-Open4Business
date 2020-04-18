@@ -12,8 +12,8 @@ export class ApiOutInterceptor implements HttpInterceptor {
     request = request.clone({
       setHeaders: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'authorization': 'Bearer ' + localStorage.getItem('token')
+        Accept: 'application/json',
+        authorization: 'Bearer ' + localStorage.getItem('token')
       }
     });
 

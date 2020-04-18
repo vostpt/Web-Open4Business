@@ -5,6 +5,7 @@ import { CatalogModule } from '@core-modules/catalog';
 
 import { UsersRoutingModule } from './users-routing.module';
 
+import { UserUpdateInfoComponent } from '@users-feature-module/pages/user-update-info.component';
 import { UsersListComponent } from '@users-feature-module/pages/users-list.component';
 
 import { UsersService } from './services/users.service';
@@ -18,6 +19,7 @@ import { UsersService } from './services/users.service';
     UsersRoutingModule
   ],
   declarations: [
+    UserUpdateInfoComponent,
     UsersListComponent
   ],
   providers: [

@@ -42,7 +42,7 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
     ...this.defaultUploadConfiguration,
     ...{
       dictDefaultMessage: 'Pressione ou arraste um ficheiro .csv',
-      headers: {'authorization': 'Bearer ' + localStorage.getItem('token')},
+      headers: { authorization: 'Bearer ' + localStorage.getItem('token') },
       url: `${environment.apiUrl}/businesses/v1/file`,
       acceptedFiles: '.csv',
       previewsContainer: '#dataUploadPreview'
@@ -108,7 +108,6 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
   onFileRemoved(event) { }
 
   onUploadSuccess(formField, event) {
-    console.log('onUploadSuccess', event);
 
     const file = event[0];
     const response = event[1];
@@ -124,7 +123,6 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
   }
 
   onUploadError(event) {
-    console.log('onUploadError', event, event[0].previewElement);
 
     const file = event[0];
     const response = event[1];

@@ -30,9 +30,8 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
 
     this.subscriptions.push(this.businessesService.getLocations().subscribe(
       (result: { data: { locations: object[] } }) => {
-        console.log(result.data);
-        this.datasets.locations = result.data.locations.map(item => {
 
+        this.datasets.locations = result.data.locations.map(item => {
           for (let i = 1; i <= 3; i++) {
             if (item[`schedule${i}Dow`]) {
               item[`schedule${i}DowFormatted`] = this.formatWeekdaysListProperty(item[`schedule${i}Dow`]);
@@ -42,7 +41,7 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
           return item;
 
         });
-        console.log(this.datasets.locations);
+
         this.contentReady = true;
         this.loader.hide('pageLoader');
       },

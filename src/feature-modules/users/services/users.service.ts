@@ -13,13 +13,38 @@ export class UsersService {
   ) { }
 
   getUsers(search?: string) {
-    let url = new UrlModel(this.apiUrl).setPath('api/auth/v1/users');
+    const url = new UrlModel(this.apiUrl).setPath('api/auth/v1/users');
 
-    if(search) {
-      url.setQueryParams({search: search})
+    if (search) {
+      url.setQueryParams({ search });
     }
 
     return this.http.get(url.buildUrl());
+  }
+
+  getUser(search?: string) {
+    const url = new UrlModel(this.apiUrl).setPath('api/auth/v1/info');
+    return this.http.get(url.buildUrl());
+  }
+
+  saveUserInfo(body:
+    {
+      company: string,
+      name: string,
+      email: string,
+      phone: string
+    }) {
+    const url = new UrlModel(this.apiUrl).setPath('api/auth/v1/info');
+    return this.http.put(url.buildUrl(), body);
+  }
+
+  saveUserPassword(body:
+    {
+      currentPassword: string,
+      password: string
+    }) {
+    const url = new UrlModel(this.apiUrl).setPath('api/auth/v1/password');
+    return this.http.put(url.buildUrl(), body);
   }
 
 }
