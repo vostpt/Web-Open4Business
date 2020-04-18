@@ -49,18 +49,27 @@ export class SignupComponent extends BasePageComponent implements OnInit, AfterV
 
       const bodyPayload = this.form.value;
       this.subscriptions.push(
-        this.authenticationService.signup(bodyPayload)
-          .subscribe(
-            () => {
-              this.loader.hide('pageLoader');
-              this.notification.success('O registo foi criado e irá para aprovação. Será notificado brevemente...');
-              this.router.navigateByUrl('auth/signup/success');
-            },
-            error => {
-              this.loader.hide('pageLoader');
+        this.authenticationService.signup(bodyPayload).subscribe(
+          () => {
+            this.loader.hide('pageLoader');
+            this.notification.success('O registo foi criado e irá para aprovação. Será notificado brevemente...');
+            this.router.navigateByUrl('auth/signup/success');
+          },
+          error => {
+
+            this.loader.hide('pageLoader');
+
+            if (error.status === 409) { // Duplicated
+              this.notification.error('A sua empresa já se encontra registada. Por favor, faça login.');
+              this.router.navigateByUrl('auth/signin');
+            }
+            else {
               this.notification.error('Ocorreu um erro ao registar. Tente mais tarde ou contacte os nossos serviços de apoio.');
               this.logger.error('Signup unsuccessful', error);
-            }));
+            }
+          }
+        )
+      );
     }
     else {
       this.loader.hide('pageLoader');

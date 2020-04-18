@@ -21,8 +21,6 @@ export class LocationsSuccessSubmissionComponent extends BasePageComponent imple
 
   ngAfterViewInit() {
     this.loader.hide('pageLoader');
-
-    document.getElementById('kt_quick_panel_close_btn').click();
   }
 
   dismissInformationBanner() {

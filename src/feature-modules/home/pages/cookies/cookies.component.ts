@@ -19,7 +19,5 @@ export class CookiesComponent extends BasePageComponent implements OnInit, After
 
   ngAfterViewInit() {
     this.loader.hide('pageLoader');
-
-    document.getElementById('kt_quick_panel_close_btn').click();
   }
 }

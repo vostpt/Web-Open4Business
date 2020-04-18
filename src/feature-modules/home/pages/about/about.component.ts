@@ -18,8 +18,6 @@ export class AboutComponent extends BasePageComponent implements OnInit, AfterVi
 
   ngAfterViewInit() {
     this.loader.hide('pageLoader');
-
-    document.getElementById('kt_quick_panel_close_btn').click();
   }
 
 }
