@@ -137,4 +137,8 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
     });
   }
 
+  downloadTemplate() {
+    window.open('/assets/templates/O4B_Template.csv');
+  }
+
 }

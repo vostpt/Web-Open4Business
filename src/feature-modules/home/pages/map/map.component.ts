@@ -51,7 +51,7 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
     const map = new Map({
       accessToken: this.environment.variables.mapbox,
       container: 'map-container',
-      style: 'mapbox://styles/mapbox/outdoors-v11',
+      style: 'mapbox://styles/vostpt/ck94io81o3y4k1iqpfzjvz0vu',
       center: [-7.8536599, 39.557191],  // [lng, lat]
       zoom: 7
     });

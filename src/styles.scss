@@ -20,6 +20,14 @@ div.kt-content {
 }
 
 
+.primary-color {
+  color: var(--base-color-01);
+}
+
+.secondary-color {
+  color: var(--base-color-02);
+}
+
 // Theme overrides.
 .kt-portlet {
   box-shadow: none;

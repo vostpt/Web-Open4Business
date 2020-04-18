@@ -15,6 +15,11 @@ const routes: Routes = [
     component: BaseLayoutComponent,
     children: [
       {
+        path: '',
+        redirectTo: 'locations/new',
+        pathMatch: 'full'
+      },
+      {
         path: 'confirm',
         component: ConfirmAccountComponent,
         pathMatch: 'full'

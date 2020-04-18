@@ -1,15 +1,16 @@
 <!-- begin:: Header Mobile -->
 <div id="kt_header_mobile" class="kt-header-mobile kt-header-mobile--fixed">
-	<div class="kt-header-mobile__logo">
+    <div class="kt-header-mobile__logo">
     <a routerLink="/">
       <img alt="logo" [attr.src]="headerLogo" class="logo" />
     </a>
     <span class="logo-primary">#Open</span><span class="logo-secondary">4Business</span>
-	</div>
-	<div class="kt-header-mobile__toolbar">
-		<button [hidden]="!asideDisplay" class="kt-header-mobile__toolbar-toggler kt-header-mobile__toolbar-toggler--left" id="kt_aside_mobile_toggler"><span></span></button>
-		<button class="kt-header-mobile__toolbar-toggler" id="kt_header_mobile_toggler"><span></span></button>
-		<button ktToggle [options]="toggleOptions" class="kt-header-mobile__toolbar-topbar-toggler" id="kt_header_mobile_topbar_toggler"><i class="flaticon-more"></i></button>
-	</div>
+  </div>
+  <div class="kt-header-mobile__toolbar">
+    <button [hidden]="!asideDisplay" class="kt-header-mobile__toolbar-toggler kt-header-mobile__toolbar-toggler--left"
+      id="kt_aside_mobile_toggler"><span></span></button>
+    <!-- <button class="kt-header-mobile__toolbar-toggler" id="kt_header_mobile_toggler"><span></span></button> -->
+    <span class="" id="kt_quick_panel_toggler_btn">ACEDER AO MENU &nbsp; <i class="fas fa-bars"></i></span>
+  </div>
 </div>
 <!-- end:: Header Mobile -->

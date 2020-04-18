@@ -1,4 +1,16 @@
 .logo {
   width: 40px;
   height: auto;
+  padding-right: 10px;
+}
+
+.kt-header-mobile__toolbar {
+  min-width: 200px;
+  font-size: large;
+  font-weight: 500;
+}
+
+#kt_quick_panel_toggler_btn {
+  color: #4eaa4f;
+  cursor: pointer;
 }
