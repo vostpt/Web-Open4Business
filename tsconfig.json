@@ -17,6 +17,9 @@
       ],
       "@businesses-feature-module/*": [
         "src/feature-modules/businesses/*"
+      ],
+      "@users-feature-module/*": [
+        "src/feature-modules/users/*"
       ]
     },
     "outDir": "./dist/out-tsc",

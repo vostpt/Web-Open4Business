@@ -12,7 +12,7 @@ export class MapService {
   ) { }
 
   getMarkers() {
-    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations').buildUrl();
+    const url = new UrlModel(this.apiUrl).setPath('api/insights/v1/locations').buildUrl();
     return this.http.get(url);
   }
 

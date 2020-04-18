@@ -22,6 +22,7 @@ export class AuthenticationGuard implements CanActivate {
         (response) => {
           if (response && response['data']) {
             localStorage.setItem('email', response['data'].authId);
+            localStorage.setItem('isA', response['data'].isAdmin);
           }
           
           return true;
@@ -29,6 +30,7 @@ export class AuthenticationGuard implements CanActivate {
       ), catchError(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('email');
+        localStorage.removeItem('isA');
         this.router.navigateByUrl('/auth/signin');
         return of(false);
       }));

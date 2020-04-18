@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { OffcanvasOptions } from '../../../main-layout/directives/offcanvas.directive';
 
@@ -7,27 +7,35 @@ import { OffcanvasOptions } from '../../../main-layout/directives/offcanvas.dire
   templateUrl: './aside-right.component.html',
   styleUrls: ['./aside-right.component.scss']
 })
-export class AsideRightComponent {
+export class AsideRightComponent implements OnInit {
+  @Input() toggleBy: string;
   @Output() closeEvent: EventEmitter<{ type: string, data: any }> = new EventEmitter();
 
-  public email : string;
-  public session : boolean;
+  email: string;
+  session: boolean;
+  isAdmin: boolean;
 
-  offcanvasOptions: OffcanvasOptions = {
-    overlay: true,
-    baseClass: 'kt-quick-panel',
-    closeBy: 'kt_quick_panel_close_btn',
-    toggleBy: 'kt_quick_panel_toggler_btn'
-  };
+  offcanvasOptions: OffcanvasOptions;
 
-  constructor() { 
+  constructor() {
     if (localStorage.getItem('email')) {
       this.email = `${localStorage.getItem('email')}`;
       this.session = true;
+      this.isAdmin = (localStorage.getItem('token') && localStorage.getItem('email') && localStorage.getItem('isA') === 'true' ? true : false);
     } else {
       this.email = '';
       this.session = false;
+      this.isAdmin = false;
     }
+  }
+
+  ngOnInit() {
+    this.offcanvasOptions = {
+      overlay: true,
+      baseClass: 'kt-quick-panel',
+      closeBy: this.toggleBy + '-close-btn',
+      toggleBy: this.toggleBy || 'kt_quick_panel_toggler_btn'
+    };
   }
 
   open() {

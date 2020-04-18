@@ -14,13 +14,18 @@ const routes: Routes = [
     loadChildren: () => import('@home-feature-module/home.module').then(m => m.HomeModule)
   },
   {
+    path: 'auth',
+    loadChildren: () => import('@authentication-feature-module/authentication.module').then(m => m.AuthenticationModule)
+  },
+  {
     path: 'businesses',
     canActivate: [AuthenticationGuard],
     loadChildren: () => import('@businesses-feature-module/businesses.module').then(m => m.BusinessesModule)
   },
   {
-    path: 'auth',
-    loadChildren: () => import('@authentication-feature-module/authentication.module').then(m => m.AuthenticationModule)
+    path: 'users',
+    canActivate: [AuthenticationGuard],
+    loadChildren: () => import('@users-feature-module/users.module').then(m => m.UsersModule)
   },
   {
     path: '**',

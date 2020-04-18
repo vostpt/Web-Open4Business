@@ -1,12 +1,11 @@
 <div ktOffcanvas [options]="offcanvasOptions" id="kt_quick_panel" class="kt-quick-panel" [ngStyle]="{'overflow': 'hidden'}">
-  <a href="javascript:;" class="kt-quick-panel__close" id="kt_quick_panel_close_btn" (click)="onClose()">
+  <a href="javascript:;" class="kt-quick-panel__close" [id]="this.toggleBy + '-close-btn'" (click)="onClose()">
     <i class="flaticon2-delete"></i>
   </a>
   <div class="kt-mt-50 h-100 px-4">
     <!-- <ng-content select="[content]"></ng-content> -->
     <div content class="h-100">
-      <div class="user-info">{{ email }}</div>
-
+      <a routerLink="/users"><div class="user-info" *ngIf="isAdmin">{{ email }}</div></a>
       <ul class="navbar-nav text-uppercase">
         <li class="nav-item" *ngIf="session"><a routerLink="/auth/signout" class="nav-link">Sair</a></li>
         <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signin" class="nav-link">Entrada</a></li>

@@ -13,12 +13,12 @@ export class BusinessesService {
   ) { }
 
   confirmAccount(token, confirmationCode) {
-    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/confirm').buildUrl();
+    const url = new UrlModel(this.apiUrl).setPath('api/businesses/v1/confirm').buildUrl();
     return this.http.post(url, {token, confirmationCode});
   }
 
   getLocations() {
-    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations').buildUrl();
+    const url = new UrlModel(this.apiUrl).setPath('api/businesses/v1/locations').buildUrl();
     return this.http.get(url);
   }
 
@@ -32,7 +32,7 @@ export class BusinessesService {
       dataFile: string
     }
   ) {
-    const url = new UrlModel(this.apiUrl).setPath('/businesses/v1/locations');
+    const url = new UrlModel(this.apiUrl).setPath('api/businesses/v1/locations/file');
 
     return this.http.post(url.buildUrl(), body);
   }

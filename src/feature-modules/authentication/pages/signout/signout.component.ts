@@ -6,10 +6,10 @@ import { Router } from '@angular/router';
 })
 export class SignoutComponent {
   constructor(private router: Router
-
   ) {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
+    localStorage.removeItem('isA');
 
     this.router.navigateByUrl('/auth/signin');
   }

@@ -39,13 +39,6 @@ export function initializeLayoutConfig(appConfig: LayoutConfigService) {
   return () => { appConfig.loadConfiguration(new LayoutConfig().configs); };
 }
 
-// // Initialize Translations.
-// export function httpLoaderFactory(http: HttpClient) {
-//   const url = new UrlModel(environment.apiUrl).setPath('utils/v1/translations').buildUrl();
-//   return new TranslateHttpLoader(http, url + '/');
-// }
-
-
 @NgModule({
   declarations: [],
   imports: [
@@ -54,8 +47,6 @@ export function initializeLayoutConfig(appConfig: LayoutConfigService) {
     LoggerModule.forRoot({
       level: environment.logLevel,  // TRACE|DEBUG|INFO|LOG|WARN|ERROR|FATAL|OFF
       timestampFormat: 'mediumTime'
-      // serverLoggingUrl: '/api/logs',
-      // serverLogLevel: NgxLoggerLevel.ERROR
     }),
 
     // NgxSpinnerModule,
@@ -66,13 +57,6 @@ export function initializeLayoutConfig(appConfig: LayoutConfigService) {
 
     TranslateModule.forRoot({})
 
-    // TranslateModule.forRoot({
-    //   loader: {
-    //     provide: TranslateLoader,
-    //     useFactory: httpLoaderFactory,
-    //     deps: [HttpClient]
-    //   }
-    // })
   ],
   exports: [],
   providers: [
