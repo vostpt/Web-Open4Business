@@ -4,8 +4,10 @@
   <ul class="breadcrumbs">
     <li><a routerLink="/">OPEN4BUSINESS</a></li>
     <li>/</li>
+    <li *ngIf="isAdmin"><a routerLink="/users/list">Lista de Utilizadores</a></li>
+    <li *ngIf="isAdmin">/</li>
     <li class="current">
-      <span>A sua conta</span>
+      <span>{{title}}</span>
     </li>
   </ul>
 </div>
@@ -74,16 +76,16 @@
     <div class="kt-portlet__body">
       <fieldset [disabled]="!formPasswordOnEditMode">
         <div class="form-group row">
-          <div class="col-lg-4">
-            <app-catalog-form-input [formControlField]="fUserPassword.currentPassword" formControlName="currentPassword"
-              label="Password atual" [required]="true"></app-catalog-form-input>
+          <div class="col-lg-4" *ngIf="!authId">
+            <app-catalog-form-input [formControlField]="fUserPassword.currentPassword" formControlName="currentPassword" type="password"
+              label="Password atual" [required]="!authId"></app-catalog-form-input>
           </div>
           <div class="col-lg-4">
-            <app-catalog-form-input [formControlField]="fUserPassword.password" formControlName="password"
+            <app-catalog-form-input [formControlField]="fUserPassword.password" formControlName="password" type="password"
               label="Nova Password" [required]="true"></app-catalog-form-input>
           </div>
           <div class="col-lg-4">
-            <app-catalog-form-input [formControlField]="fUserPassword.confirmPassword" formControlName="confirmPassword"
+            <app-catalog-form-input [formControlField]="fUserPassword.confirmPassword" formControlName="confirmPassword" type="password"
               label="Confirme a nova password" [required]="true"></app-catalog-form-input>
           </div>
         </div>

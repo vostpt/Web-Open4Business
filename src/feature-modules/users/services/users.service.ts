@@ -22,13 +22,19 @@ export class UsersService {
     return this.http.get(url.buildUrl());
   }
 
-  getUser(search?: string) {
+  getUser(authId?: string) {
     const url = new UrlModel(this.apiUrl).setPath('auth/v1/info');
+
+    if (authId) {
+      url.setQueryParams({authId});
+    }
+
     return this.http.get(url.buildUrl());
   }
 
   saveUserInfo(body:
     {
+      authId?: string,
       company: string,
       name: string,
       email: string,
@@ -40,7 +46,7 @@ export class UsersService {
 
   saveUserPassword(body:
     {
-      currentPassword: string,
+      currentPassword?: string,
       password: string
     }) {
     const url = new UrlModel(this.apiUrl).setPath('auth/v1/password');

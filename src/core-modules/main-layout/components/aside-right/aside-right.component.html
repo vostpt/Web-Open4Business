@@ -6,13 +6,13 @@
     <!-- <ng-content select="[content]"></ng-content> -->
     <div content class="h-100">
       <div class="user-info-ct" *ngIf="session">
-        <a routerLink="/users/my-info">
+        <a routerLink="/users/my-info" onclick="document.getElementById('kt_quick_panel_toggler_btn-close-btn').click();">
           <span class="user-info">{{ name }}</span>
         </a>
         <br />
         <span class="user-email">{{ email }}</span>
         <br />
-        <button class="btn btn-outline-secondary logout"><a routerLink="/auth/signout">Logout</a></button>
+        <button class="btn btn-outline-secondary logout" onclick="document.getElementById('kt_quick_panel_toggler_btn-close-btn').click();"><a routerLink="/auth/signout">Logout</a></button>
       </div>
       
       <ul class="navbar-nav text-uppercase" onclick="document.getElementById('kt_quick_panel_toggler_btn-close-btn').click();">
