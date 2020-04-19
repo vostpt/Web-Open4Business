@@ -6,7 +6,7 @@
     <li><a routerLink="/">OPEN4BUSINESS</a></li>
     <li>/</li>
     <li class="current">
-      <span>Lista de utilizadores (empresas)</span>
+      <span>Lista de utilizadores (Contas de acesso)</span>
     </li>
   </ul>
 
@@ -23,19 +23,32 @@
     </div>
   </form>
 
-  <div class="kt-portlet" >
-    <div class="kt-portlet__body">
-
-      <div class="row">
-        <div class="col-lg-3 custom-card" *ngFor="let user of datasets.users">
-        <h5>{{user.authId}}</h5>
-        {{user.name}} <br />
-        {{user.phone}}fg
+  <div class="kt-portlet" *ngFor="let user of datasets.users">
+    <div class="kt-portlet__body" *ngIf="!user.isAdmin">
+      <div class="row custom-card">
+        <div class="col-lg-3">
+          <h4>{{user.name}}</h4>
+          <p>{{user.authId}}</p>
+        </div>
+        <div class="col-lg-3">
+          <h5>Telefone</h5>
+          <p>{{user.phone}}</p>
+        </div>
+        <div class="col-lg-3">
+          <h5>Estado</h5>
+          <p [ngClass]="{'text-danger': !user.isActive, 'text-primary': user.isActive}">{{ user.isActive?'Ativo':'Inativo' }}</p>
+        </div>
+        <div class="col-lg-3">
+          <h5>Logins</h5>
+          <p>{{user.numberOfLogins}}</p>
         </div>
       </div>
-
+      <div class="row justify-content-between confirm-account" *ngIf="!user.isActive">
+        <div class="col">
+          <a target="_blank" [routerLink]="['/businesses/confirm']" [queryParams]="{ token: user.activationToken, confirmationCode: user.confirmationCode}">Confirmar Conta</a>
+        </div>
+      </div>
     </div>
-
   </div>
 </div>
 

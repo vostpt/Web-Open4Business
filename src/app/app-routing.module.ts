@@ -28,6 +28,10 @@ const routes: Routes = [
     loadChildren: () => import('@users-feature-module/users.module').then(m => m.UsersModule)
   },
   {
+    path: 'not-found',
+    component: NotFoundComponent
+  },
+  {
     path: '**',
     component: NotFoundComponent
   }

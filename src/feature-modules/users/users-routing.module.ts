@@ -23,7 +23,7 @@ const routes: Routes = [
         pathMatch: 'full'
       },
       {
-        path: 'admin',
+        path: 'list',
         component: UsersListComponent,
         pathMatch: 'full'
       }

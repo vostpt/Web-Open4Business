@@ -20,7 +20,15 @@
 }
 
 .custom-card {
-  border: 1px solid #000000;
-  padding: 20px;
-  margin: 5px;
+  border-bottom: .07rem dashed #ebedf2;
+  color:  black;
+  padding: 15px 0;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.confirm-account {
+  padding-top: 10px;
 }
