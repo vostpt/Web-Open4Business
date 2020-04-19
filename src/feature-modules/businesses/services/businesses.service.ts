@@ -32,7 +32,7 @@ export class BusinessesService {
       dataFile: string
     }
   ) {
-    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations/file');
+    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations');
 
     return this.http.post(url.buildUrl(), body);
   }
