@@ -55,9 +55,11 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
       { validator: passwordFieldsMatchValidator });
 
     this.subscriptions.push(this.usersService.getUser().subscribe(
-      (result: { data: { info: object } }) => {
+      (result: { data: { company: object, info: object } }) => {
 
         this.datasets.user = result.data.info;
+        this.datasets.user['company'] = result.data.company['company'];
+
         this.fUserInfo.company.setValue(this.datasets.user['company']);
         this.fUserInfo.name.setValue(this.datasets.user['name']);
         this.fUserInfo.email.setValue(this.datasets.user['email']);
