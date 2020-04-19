@@ -35,6 +35,9 @@
   <div *ngIf="copyToClipboard" class="input-group-append">
     <a [id]="clipboardId" href="javascript:;" class="btn btn-secondary clipboardId" data-clipboard="true"><i class="la la-copy"></i></a>
   </div>
+  <div *ngIf="appendButton" class="input-group-append">
+    <button class="btn btn-primary" type="submit"><i class="{{appendButtonIcon}}"></i></button>
+  </div>
   <div *ngFor="let action of actions" class="input-group-prepend">
     <span *ngIf="action.type === 'label' && action.orientation === 'right'" class="input-group-text">
       {{ action.title }}

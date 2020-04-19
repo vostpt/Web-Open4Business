@@ -14,7 +14,7 @@ export class AuthenticationService {
   ) { }
 
   verifySession() {
-    const url = new UrlModel(this.url).setPath('api/auth/v1/session').buildUrl();
+    const url = new UrlModel(this.url).setPath('auth/v1/session').buildUrl();
     return this.http.get(url);
   }
 

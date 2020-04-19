@@ -13,7 +13,7 @@ export class UsersService {
   ) { }
 
   getUsers(search?: string) {
-    const url = new UrlModel(this.apiUrl).setPath('api/auth/v1/users');
+    const url = new UrlModel(this.apiUrl).setPath('auth/v1/users');
 
     if (search) {
       url.setQueryParams({ search });
@@ -23,7 +23,7 @@ export class UsersService {
   }
 
   getUser(search?: string) {
-    const url = new UrlModel(this.apiUrl).setPath('api/auth/v1/info');
+    const url = new UrlModel(this.apiUrl).setPath('auth/v1/info');
     return this.http.get(url.buildUrl());
   }
 
@@ -34,7 +34,7 @@ export class UsersService {
       email: string,
       phone: string
     }) {
-    const url = new UrlModel(this.apiUrl).setPath('api/auth/v1/info');
+    const url = new UrlModel(this.apiUrl).setPath('auth/v1/info');
     return this.http.put(url.buildUrl(), body);
   }
 
@@ -43,7 +43,7 @@ export class UsersService {
       currentPassword: string,
       password: string
     }) {
-    const url = new UrlModel(this.apiUrl).setPath('api/auth/v1/password');
+    const url = new UrlModel(this.apiUrl).setPath('auth/v1/password');
     return this.http.put(url.buildUrl(), body);
   }
 

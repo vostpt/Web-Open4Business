@@ -42,6 +42,9 @@ export class InputComponent implements ControlValueAccessor, OnInit, AfterViewIn
 
   @Input() tooltip: string;
   @Input() icon: string;
+  
+  @Input() appendButton: string;
+  @Input() appendButtonIcon: string;
 
   @Input() hideMessages: boolean;
 
@@ -81,7 +84,7 @@ export class InputComponent implements ControlValueAccessor, OnInit, AfterViewIn
     this.hideMessages = this.hideMessages || false;
     this.label        = upperFirst(this.label) || '';
 
-    if (this.copyToClipboard || this.actions || this.prependedContent.nativeElement.childNodes.length !== 0) {
+    if (this.copyToClipboard || this.actions || this.prependedContent.nativeElement.childNodes.length !== 0 || this.appendButton) {
       this.isInputGroup = true;
     }
   }

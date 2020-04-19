@@ -13,7 +13,7 @@ export class AuthenticationService {
   ) { }
 
   signin(body: { authId: string, password: string }) {
-    const url = new UrlModel(this.apiUrl).setPath('api/auth/v1/signin').buildUrl();
+    const url = new UrlModel(this.apiUrl).setPath('auth/v1/signin').buildUrl();
     return this.http.post(url, body);
   }
 
@@ -25,7 +25,7 @@ export class AuthenticationService {
       phone: string
     }
   ) {
-    const url = new UrlModel(this.apiUrl).setPath('api/insights/v1/business');
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/business');
 
     return this.http.post(url.buildUrl(), body);
   }

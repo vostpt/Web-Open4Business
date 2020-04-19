@@ -11,9 +11,14 @@ export class MapService {
     private http: HttpClient
   ) { }
 
-  getMarkers() {
-    const url = new UrlModel(this.apiUrl).setPath('api/insights/v1/locations').buildUrl();
-    return this.http.get(url);
+  getMarkers(search: string) {
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations')
+
+    if (search) {
+      url.setQueryParams({search});
+    }
+
+    return this.http.get(url.buildUrl());
   }
 
   parseResponseToGeoJSON(items) {

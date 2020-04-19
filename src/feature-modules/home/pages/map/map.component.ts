@@ -1,37 +1,48 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Map, Popup } from 'mapbox-gl';
-
-import { split, replace } from 'lodash';
-
-
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormsService } from '@core-modules/catalog/modules/forms';
 import { BasePageComponent } from '@core-modules/main-layout';
-
-import { MapService } from '@home-feature-module/services/map.service';
-
 import { MapboxMarkerProperties } from '@home-feature-module/models/mapbox-marker-properties.model';
+import { MapService } from '@home-feature-module/services/map.service';
+import { LngLat, Map, Popup } from 'mapbox-gl';
 
 @Component({
   selector: 'app-home-map',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.scss']
 })
-export class MapComponent extends BasePageComponent implements OnInit, OnDestroy {
+export class MapComponent extends BasePageComponent implements OnInit,
+                                                               OnDestroy {
+  public showCookieWarning =
+      (JSON.parse(localStorage.getItem('dismissedCookieWarning')) ? false :
+                                                                    true);
+  public showInformationBanner =
+      (JSON.parse(localStorage.getItem('dismissedInformationBanner')) ? false :
+                                                                        true);
+  public searchPlaceholder = 'Pesquise locais';
 
-  public showCookieWarning = (JSON.parse(localStorage.getItem('dismissedCookieWarning')) ? false : true);
-  public showInformationBanner = (JSON.parse(localStorage.getItem('dismissedInformationBanner')) ? false : true);
+  private map : Map;
+
+  form: FormGroup;
+  get f() {
+    return this.form.controls;
+  }
 
   constructor(
-    private readonly mapService: MapService
-  ) {
+      private readonly formBuilder: FormBuilder,
+      private readonly formsService: FormsService,
+      private readonly mapService: MapService) {
     super();
   }
 
   ngOnInit() {
     this.loader.show('app-map');
 
+    this.form = this.formBuilder.group({search: [null, null]});
+
     let markers: GeoJSON.FeatureCollection;
 
-    this.subscriptions.push(this.mapService.getMarkers().subscribe(
+    this.subscriptions.push(this.mapService.getMarkers(null).subscribe(
       (result: { data: { locations: object[] } }) => {
         markers =
           this.mapService.parseResponseToGeoJSON(result.data.locations);
@@ -43,11 +54,38 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
       }));
 
     this.draw();
+  }
 
+  search() {
+    this.loader.show('app-map');
+
+    const search = this.form.get('search').value;
+    let markers: GeoJSON.FeatureCollection;
+
+    this.subscriptions.push(this.mapService.getMarkers(search).subscribe(
+        (result: {data: {locations: object[]}}) => {
+          try {
+            if (result.data.locations.length > 0) {
+              markers = this.mapService.parseResponseToGeoJSON(result.data.locations);
+              
+              this.map.getSource('businesses')['setData'](markers);
+              const point = new LngLat(markers.features[0].geometry['coordinates'][0], markers.features[0].geometry['coordinates'][1]);
+              this.map.panTo(point);
+            } 
+          } catch (error) {
+            console.error(error);  
+          }
+
+          this.loader.hide('app-map');
+        },
+        (error) => {
+          this.loader.hide('app-map');
+          this.logger.error('Error fetching map markers', error);
+        }));
   }
 
   loadMapbox(markers: GeoJSON.FeatureCollection) {
-    const map = new Map({
+    this.map = new Map({
       accessToken: this.environment.variables.mapbox,
       container: 'map-container',
       style: 'mapbox://styles/vostpt/ck94io81o3y4k1iqpfzjvz0vu',
@@ -56,16 +94,16 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
     });
 
     // Load markers image
-    map.loadImage('assets/images/mapbox/pin.png', (error, image) => {
+    this.map.loadImage('assets/images/mapbox/pin.png', (error, image) => {
       if (error) {
         throw error;
       }
-      map.addImage('pin', image);
+      this.map.addImage('pin', image);
     });
 
 
-    map.on('load', () => {
-      map.addSource('businesses', {
+    this.map.on('load', () => {
+      this.map.addSource('businesses', {
         type: 'geojson',
         data: markers,
         cluster: true,
@@ -74,7 +112,7 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
         // (defaults to 50)
       });
 
-      map.addLayer({
+      this.map.addLayer({
         id: 'clusters',
         type: 'circle',
         source: 'businesses',
@@ -91,11 +129,11 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
             '#f28cb1'
           ],
           'circle-radius':
-            ['step', ['get', 'point_count'], 20, 100, 30, 750, 40]
+              ['step', ['get', 'point_count'], 20, 100, 30, 750, 40]
         }
       });
 
-      map.addLayer({
+      this.map.addLayer({
         id: 'cluster-count',
         type: 'symbol',
         source: 'businesses',
@@ -107,7 +145,7 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
         }
       });
 
-      map.addLayer({
+      this.map.addLayer({
         id: 'unclustered-point',
         type: 'symbol',
         source: 'businesses',
@@ -120,35 +158,37 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
       });
 
       // Events.
-      map.on('mouseenter', 'clusters', () => {
-        map.getCanvas().style.cursor = 'pointer';
+      this.map.on('mouseenter', 'clusters', () => {
+        this.map.getCanvas().style.cursor = 'pointer';
       });
-      map.on('mouseleave', 'clusters', () => {
-        map.getCanvas().style.cursor = '';
-      });
-
-      map.on('mouseenter', 'unclustered-point', () => {
-        map.getCanvas().style.cursor = 'pointer';
-      });
-      map.on('mouseleave', 'unclustered-point', () => {
-        map.getCanvas().style.cursor = '';
+      this.map.on('mouseleave', 'clusters', () => {
+        this.map.getCanvas().style.cursor = '';
       });
 
-      map.on('click', 'unclustered-point', (e) => {
+      this.map.on('mouseenter', 'unclustered-point', () => {
+        this.map.getCanvas().style.cursor = 'pointer';
+      });
+      this.map.on('mouseleave', 'unclustered-point', () => {
+        this.map.getCanvas().style.cursor = '';
+      });
+
+      this.map.on('click', 'unclustered-point', (e) => {
         const element = new MapboxMarkerProperties(e.features[0].properties);
         const coordinates = e.lngLat;
 
-        map.flyTo({ center: coordinates, offset: [0, 225] });
+        this.map.flyTo({center: coordinates, offset: [0, 225]});
 
-        new Popup({ offset: 25 })
-          .setLngLat(coordinates)
-          .setHTML(this.getPopupHTML(element, coordinates))
-          .addTo(map);
+        new Popup({offset: 25})
+            .setLngLat(coordinates)
+            .setHTML(this.getPopupHTML(element, coordinates))
+            .addTo(this.map);
       });
 
-      map.resize();
+      this.map.resize();
     });
   }
+
+  addLocations() {}
 
   draw() {
     this.logger.debug('App ready!');
@@ -164,43 +204,56 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
       <p>${properties.zipCode} ${properties.parish}</p>
       <br />`;
 
-    html += (properties.schedule1Dow || properties.schedule2Dow || properties.schedule3Dow ? `<h5><b>Horário de Funcionamento</b></h5>` : '');
+    html +=
+        (properties.schedule1Dow || properties.schedule2Dow ||
+                 properties.schedule3Dow ?
+             `<h5><b>Horário de Funcionamento</b></h5>` :
+             '');
 
     for (let i = 1; i <= 3; i++) {
-      const dayOfWeekPeriods = this.formatWeekdaysListProperty(properties[`schedule${i}Dow`]);
+      const dayOfWeekPeriods =
+          this.formatWeekdaysListProperty(properties[`schedule${i}Dow`]);
       const schedule = this.formatScheduleProperty(properties[`schedule${i}`]);
-      html += (dayOfWeekPeriods ? `
+      html +=
+          (dayOfWeekPeriods ? `
           <div class="row">
             <div class="col-5"><p>${dayOfWeekPeriods}:</p></div>
             <div class="col-7"><p>${schedule}</p></div>
-          </div>` : '');
+          </div>` :
+                              '');
     }
 
-    html += (properties.typeOfService ? `<br /><h5><b>Entregas</b></h5><p>${properties.typeOfService}</p>` : '');
-    html += (properties.obs ? `<br /><p class="notes">${properties.obs}</p>` : '');
+    html +=
+        (properties.typeOfService ? `<br /><h5><b>Entregas</b></h5><p>${
+                                        properties.typeOfService}</p>` :
+                                    '');
+    html +=
+        (properties.obs ? `<br /><p class="notes">${properties.obs}</p>` : '');
 
-    html += `<br /><br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.pt/maps/search/${coordinates.lat},${coordinates.lng}" target="_blank" class="btn btn-primary link">Navegar para...</a></div></div>`;
+    html += `<br /><br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.pt/maps/search/${
+        coordinates.lat},${
+        coordinates
+            .lng}" target="_blank" class="btn btn-primary link">Navegar para...</a></div></div>`;
 
     return html;
-
   }
 
   formatWeekdaysListProperty(weekdays: string) {
-    return weekdays
-      .replace(/ /g, '')
-      .split(',')
-      .map((day, i, arr) => (i === 0 || arr.length - 1 === i ? day.substring(0, 3) : null))
-      .filter(n => n)
-      .join(' a ');
+    return weekdays.replace(/ /g, '')
+        .split(',')
+        .map(
+            (day, i, arr) =>
+                (i === 0 || arr.length - 1 === i ? day.substring(0, 3) : null))
+        .filter(n => n)
+        .join(' a ');
   }
 
 
   formatScheduleProperty(property: string) {
-    return property
-      .replace(/ /g, '')
-      .split('-')
-      .map(day => day.substring(0, 5))
-      .join(' às ');
+    return property.replace(/ /g, '')
+        .split('-')
+        .map(day => day.substring(0, 5))
+        .join(' às ');
   }
 
   ngOnDestroy() {
@@ -215,5 +268,16 @@ export class MapComponent extends BasePageComponent implements OnInit, OnDestroy
   dismissInformationBanner() {
     this.showInformationBanner = false;
     localStorage.setItem('dismissedInformationBanner', 'true');
+  }
+
+  onFormSubmit() {
+    this.loader.show('app-map');
+
+    if (this.form.valid) {
+      this.search();
+    } else {
+      this.loader.hide('app-map');
+      this.formsService.showErrors(this.form);
+    }
   }
 }

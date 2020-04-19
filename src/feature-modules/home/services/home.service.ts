@@ -23,7 +23,7 @@ export class HomeService {
       phone: string,
     }
   ) {
-    const url = new UrlModel(this.apiUrl).setPath('api/insights/v1/business');
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/business');
 
     return this.http.post(url.buildUrl(), body);
   }

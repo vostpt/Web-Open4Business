@@ -20,5 +20,16 @@
 
 <div class="map-container">
   <app-catalog-loader name="app-map"></app-catalog-loader>
+  <div>
+    <form [formGroup]="form" class="kt-form kt-form--label-right" (ngSubmit)="onFormSubmit()">
+      <div class="kt-portlet__body">
+        <div class="form-group row">
+          <div class="col-lg-6 input-ct">
+            <app-catalog-form-input [formControlField]="f.search" formControlName="search" [placeholder]="searchPlaceholder" [appendButton]="search" [appendButtonIcon]="'fa fa-search'"></app-catalog-form-input>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
   <div id="map-container"></div>
 </div>
