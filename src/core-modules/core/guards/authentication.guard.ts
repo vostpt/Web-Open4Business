@@ -25,6 +25,7 @@ export class AuthenticationGuard implements CanActivate {
         (response) => {
           if (response && response['data']) {
             localStorage.setItem('email', response['data'].authId);
+            localStorage.setItem('name', response['data'].name);
             localStorage.setItem('isA', response['data'].isAdmin);
           }
 
@@ -33,6 +34,7 @@ export class AuthenticationGuard implements CanActivate {
       ), catchError(() => {
         localStorage.removeItem('token');
         localStorage.removeItem('email');
+        localStorage.removeItem('name');
         localStorage.removeItem('isA');
         if (route.queryParams.token && route.queryParams.activationCode) {
           this.notification.warning('If trying to execute administration actions, make sure you are logged in.');

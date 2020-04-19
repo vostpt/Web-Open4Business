@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 import { FormsService } from '@core-modules/catalog/modules/forms';
 import { BasePageComponent } from '@core-modules/main-layout';
 import { MapboxMarkerProperties } from '@home-feature-module/models/mapbox-marker-properties.model';
@@ -21,7 +22,7 @@ export class MapComponent extends BasePageComponent implements OnInit,
                                                                         true);
   public searchPlaceholder = 'Pesquise locais';
 
-  private map : Map;
+  private map: Map;
 
   form: FormGroup;
   get f() {
@@ -31,7 +32,7 @@ export class MapComponent extends BasePageComponent implements OnInit,
   constructor(
       private readonly formBuilder: FormBuilder,
       private readonly formsService: FormsService,
-      private readonly mapService: MapService) {
+      private readonly mapService: MapService, private route: ActivatedRoute) {
     super();
   }
 
@@ -40,20 +41,28 @@ export class MapComponent extends BasePageComponent implements OnInit,
 
     this.form = this.formBuilder.group({search: [null, null]});
 
-    let markers: GeoJSON.FeatureCollection;
 
-    this.subscriptions.push(this.mapService.getMarkers(null).subscribe(
-      (result: { data: { locations: object[] } }) => {
-        markers =
-          this.mapService.parseResponseToGeoJSON(result.data.locations);
-        this.loadMapbox(markers);
-      },
-      (error) => {
-        this.loader.hide('app-map');
-        this.logger.error('Error fetching map markers', error);
-      }));
+    this.route.queryParams.subscribe(params => {
+      const search = params['search'];
+      if (search) {
+        this.form.setValue({search});
+      }
 
-    this.draw();
+      let markers: GeoJSON.FeatureCollection;
+
+      this.subscriptions.push(this.mapService.getMarkers(search).subscribe(
+          (result: {data: {locations: object[]}}) => {
+            markers =
+                this.mapService.parseResponseToGeoJSON(result.data.locations);
+            this.loadMapbox(markers);
+          },
+          (error) => {
+            this.loader.hide('app-map');
+            this.logger.error('Error fetching map markers', error);
+          }));
+
+      this.draw();
+    });
   }
 
   search() {
@@ -65,15 +74,18 @@ export class MapComponent extends BasePageComponent implements OnInit,
     this.subscriptions.push(this.mapService.getMarkers(search).subscribe(
         (result: {data: {locations: object[]}}) => {
           try {
+            markers =
+                this.mapService.parseResponseToGeoJSON(result.data.locations);
+            this.map.getSource('businesses')['setData'](markers);
+
             if (result.data.locations.length > 0) {
-              markers = this.mapService.parseResponseToGeoJSON(result.data.locations);
-              
-              this.map.getSource('businesses')['setData'](markers);
-              const point = new LngLat(markers.features[0].geometry['coordinates'][0], markers.features[0].geometry['coordinates'][1]);
+              const point = new LngLat(
+                  markers.features[0].geometry['coordinates'][0],
+                  markers.features[0].geometry['coordinates'][1]);
               this.map.panTo(point);
-            } 
+            }
           } catch (error) {
-            console.error(error);  
+            console.error(error);
           }
 
           this.loader.hide('app-map');

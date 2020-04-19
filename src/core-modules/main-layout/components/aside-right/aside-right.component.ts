@@ -12,6 +12,7 @@ export class AsideRightComponent implements OnInit {
   @Output() closeEvent: EventEmitter<{ type: string, data: any }> = new EventEmitter();
 
   email: string;
+  name: string;
   session: boolean;
   isAdmin: boolean;
 
@@ -20,6 +21,7 @@ export class AsideRightComponent implements OnInit {
   constructor() {
     if (localStorage.getItem('email')) {
       this.email = `${localStorage.getItem('email')}`;
+      this.name = `${localStorage.getItem('name')}`;
       this.session = true;
       this.isAdmin = (localStorage.getItem('token') && localStorage.getItem('email') && localStorage.getItem('isA') === 'true' ? true : false);
     } else {

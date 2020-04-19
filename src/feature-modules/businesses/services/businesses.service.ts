@@ -17,9 +17,14 @@ export class BusinessesService {
     return this.http.post(url, {token, confirmationCode});
   }
 
-  getLocations() {
-    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations').buildUrl();
-    return this.http.get(url);
+  getLocations(search) {
+    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations');
+
+    if (search) {
+      url.setQueryParams({search});
+    }
+
+    return this.http.get(url.buildUrl());
   }
 
   sendNewLocationsFile(body:

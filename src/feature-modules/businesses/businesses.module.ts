@@ -13,6 +13,7 @@ import { LocationsSuccessSubmissionComponent } from '@businesses-feature-module/
 
 import { BusinessesService } from './services/businesses.service';
 import { ConfirmAccountComponent } from './pages/confirm-account/confirm-account.component';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   imports: [
@@ -20,7 +21,7 @@ import { ConfirmAccountComponent } from './pages/confirm-account/confirm-account
     CatalogModule,
 
     DropzoneModule,
-
+    MomentModule,
     BusinessesRoutingModule
   ],
   declarations: [

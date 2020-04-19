@@ -30,6 +30,7 @@ export class SigninComponent extends BasePageComponent implements OnInit, AfterV
     } else {
       localStorage.removeItem('token');
       localStorage.removeItem('email');
+      localStorage.removeItem('name');
     }
   }
 
@@ -65,7 +66,7 @@ export class SigninComponent extends BasePageComponent implements OnInit, AfterV
 
               this.loader.hide('pageLoader');
               this.notification.success('O login foi efetuado com sucesso.');
-              this.router.navigateByUrl('businesses/locations/new');
+              this.router.navigateByUrl('businesses/locations');
             },
             () => {
               this.loader.hide('pageLoader');

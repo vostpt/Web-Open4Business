@@ -5,13 +5,24 @@
   <div class="kt-mt-50 h-100 px-4">
     <!-- <ng-content select="[content]"></ng-content> -->
     <div content class="h-100">
-      <a routerLink="/users"><div class="user-info" *ngIf="isAdmin">{{ email }}</div></a>
-      <ul class="navbar-nav text-uppercase">
-        <li class="nav-item" *ngIf="session"><a routerLink="/auth/signout" class="nav-link">Sair</a></li>
-        <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signin" class="nav-link">Entrada</a></li>
-        <li class="nav-item"><a routerLink="/businesses/locations" class="nav-link">Lista de Empresas</a></li>
+      <div class="user-info-ct" *ngIf="session">
+        <a routerLink="/users/my-info">
+          <span class="user-info">{{ name }}</span>
+        </a>
+        <br />
+        <span class="user-email">{{ email }}</span>
+        <br />
+        <button class="btn btn-outline-secondary logout"><a routerLink="/auth/signout">Logout</a></button>
+      </div>
+      
+      <ul class="navbar-nav text-uppercase" onclick="document.getElementById('kt_quick_panel_toggler_btn-close-btn').click();">
+        
+        <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signin" class="nav-link">Login</a></li>
+        <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations" class="nav-link">Lista de Empresas</a></li>
+        <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations/new" class="nav-link">Adicionar de Empresas</a></li>
+        <li class="nav-item"><a routerLink="/" class="nav-link">Mapa</a></li>
         <!-- <li class="nav-item"><a routerLink="/small-medium-companies" class="nav-link">Formulário para pequenas e médias empresas</a></li> -->
-        <li class="nav-item"><a routerLink="/businesses/locations/new" class="nav-link">Formulário para grandes empresas e cadeias</a></li>
+        <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signup" class="nav-link">Formulário para grandes empresas e cadeias</a></li>
         <li class="nav-item"><a routerLink="/about" class="nav-link">Sobre</a></li>
         <li class="nav-item"><a routerLink="/cookies" class="nav-link">Política de Privacidade e Política de Cookies</a></li>
       </ul>

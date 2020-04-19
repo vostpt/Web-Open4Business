@@ -26,11 +26,30 @@
   line-height: 22px
 }
 
-.user-info {
+.user-info-ct {
   background-color: rgba(70, 153, 71, 0.3);
-  color: yellow;
   text-align: right;
-  font-size: larger;
   padding: 23px 80px;
   margin-top: 70px;
+}
+.user-info {
+  color: yellow;
+  font-size: larger;
+}
+
+.user-email {
+  color: #FFFFFF;
+}
+
+.logout {
+  margin-top: 15px;
+  
+  a {
+    color: #FFFFFF;
+
+    &:hover {
+      color: var(--base-color-02);
+    }
+  }
+  
 }

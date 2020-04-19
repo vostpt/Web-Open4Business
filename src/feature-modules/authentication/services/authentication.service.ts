@@ -30,6 +30,9 @@ export class AuthenticationService {
     return this.http.post(url.buildUrl(), body);
   }
 
-
+  signout() {
+    const url = new UrlModel(this.apiUrl).setPath('auth/v1/logout').buildUrl();
+    return this.http.get(url);
+  }
 
 }

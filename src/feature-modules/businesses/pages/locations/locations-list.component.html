@@ -17,9 +17,23 @@
     </div>
   </div>
 
+  <div>
+    <form [formGroup]="form" class="kt-form kt-form--label-right" (ngSubmit)="onSearch()">
+      <div class="kt-portlet__body">
+        <div class="form-group row">
+          <div class="col-lg-6 input-ct">
+            <app-catalog-form-input [formControlField]="f.search" formControlName="search" [placeholder]="searchPlaceholder" [appendButton]="true" [appendButtonIcon]="'fa fa-search'"></app-catalog-form-input>
+          </div>
+          <div class="col input-ct">
+            <button class="btn btn-outline-secondary" routerLink="/businesses/locations/new"><i class="fa fa-plus"></i>Adicionar Empresas</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
   <div class="kt-portlet" *ngFor="let location of datasets.locations">
     <div class="kt-portlet__body">
-
       <div class="row custom-card">
         <div class="col-lg-3">
           <h4>{{location.store}}</h4>
@@ -44,8 +58,14 @@
           <p>{{location.obs}}</p>
         </div>
       </div>
-
+      <div class="row justify-content-between go-to-map">
+        <div class="col">
+          <a target="_blank" [routerLink]="['/']" [queryParams]="{ search: location.store}"><i class="fa fa-map"></i>&nbsp;Ver no Mapa</a>
+        </div>
+        <div class="col audit">
+          <span title="{{location.audit.personEmail}}">{{location.audit.personName}}<span class="font-italic">&nbsp;{{location.audit.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</span></span>
+        </div>
+      </div>
     </div>
-
   </div>
 </div>

@@ -3,6 +3,8 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { BasePageComponent } from '@core-modules/main-layout';
 
 import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
+import { FormsService } from '@core-modules/catalog/modules/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 
 @Component({
@@ -12,23 +14,39 @@ import { BusinessesService } from '@businesses-feature-module/services/businesse
 })
 export class LocationsListComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  public searchPlaceholder = "Pesquisar Empresas";
   contentReady = false;
   datasets = {
     locations: []
   };
 
+  form: FormGroup;
+  get f() {
+    return this.form.controls;
+  }
+
   constructor(
-    private readonly businessesService: BusinessesService,
+    private readonly formBuilder: FormBuilder,
+    private readonly formsService: FormsService,
+    private readonly businessesService: BusinessesService
   ) {
     super();
   }
 
-
   ngOnInit() {
+    this.form = this.formBuilder.group({search: [null, null]});
 
+    this.getLocations();
+  }
+
+  ngAfterViewInit() { }
+
+  getLocations() {
     this.loader.show('pageLoader');
 
-    this.subscriptions.push(this.businessesService.getLocations().subscribe(
+    const search = this.form.get('search').value;
+
+    this.subscriptions.push(this.businessesService.getLocations(search).subscribe(
       (result: { data: { locations: object[] } }) => {
 
         this.datasets.locations = result.data.locations.map(item => {
@@ -38,6 +56,7 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
               item[`schedule${i}Formatted`] = this.formatScheduleProperty(item[`schedule${i}`]);
             }
           }
+          
           return item;
 
         });
@@ -49,10 +68,7 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
         this.loader.hide('pageLoader');
         this.logger.error('Error fetching map markers', error);
       }));
-
   }
-
-  ngAfterViewInit() { }
 
   formatWeekdaysListProperty(weekdays: string) {
     return weekdays
@@ -70,6 +86,12 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
       .split('-')
       .map(day => day.substring(0, 5))
       .join(' às ');
+  }
+
+  onSearch() {
+    this.loader.show('app-map');
+
+    this.getLocations();
   }
 
 }
