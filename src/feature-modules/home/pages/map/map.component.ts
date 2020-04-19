@@ -1,11 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { FormsService } from '@core-modules/catalog/modules/forms';
-import { BasePageComponent } from '@core-modules/main-layout';
-import { MapboxMarkerProperties } from '@home-feature-module/models/mapbox-marker-properties.model';
-import { MapService } from '@home-feature-module/services/map.service';
-import { LngLat, Map, Popup } from 'mapbox-gl';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {FormsService} from '@core-modules/catalog/modules/forms';
+import {BasePageComponent} from '@core-modules/main-layout';
+import {MapboxMarkerProperties} from '@home-feature-module/models/mapbox-marker-properties.model';
+import {MapService} from '@home-feature-module/services/map.service';
+import {LngLat, Map, Popup} from 'mapbox-gl';
 
 @Component({
   selector: 'app-home-map',
@@ -136,8 +136,9 @@ export class MapComponent extends BasePageComponent implements OnInit,
           // Blue, 20px circles when point count is less than 100
           // Yellow, 30px circles when point count is between 100 and 750
           // Pink, 40px circles when point count is greater than or equal to 750
+          // 51bbd6
           'circle-color': [
-            'step', ['get', 'point_count'], '#51bbd6', 100, '#f1f075', 750,
+            'step', ['get', 'point_count'], '#4eaa4f', 100, '#f1f075', 750,
             '#f28cb1'
           ],
           'circle-radius':
@@ -153,8 +154,9 @@ export class MapComponent extends BasePageComponent implements OnInit,
         layout: {
           'text-field': '{point_count_abbreviated}',
           'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
-          'text-size': 12
-        }
+          'text-size': 12,
+        },
+        paint: {'text-color': '#ffffff'}
       });
 
       this.map.addLayer({
@@ -166,6 +168,19 @@ export class MapComponent extends BasePageComponent implements OnInit,
           'icon-image': 'pin',
           'icon-size': 0.8,
           'icon-allow-overlap': true,
+        }
+      });
+
+      this.map.addLayer({
+        id: 'poi-labels',
+        type: 'symbol',
+        source: 'businesses',
+        layout: {
+          'text-field': ['get', 'store'],
+          'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+          'text-radial-offset': 2,
+          'text-justify': 'center',
+          'text-size': 12
         }
       });
 
@@ -184,6 +199,22 @@ export class MapComponent extends BasePageComponent implements OnInit,
         this.map.getCanvas().style.cursor = '';
       });
 
+      this.map.on('wheel', event => {
+        if (event.originalEvent.ctrlKey) {
+          return;
+        }
+
+        if (event.originalEvent.metaKey) {
+          return;
+        }
+
+        if (event.originalEvent.altKey) {
+          return;
+        }
+
+        event.preventDefault();
+      });
+
       this.map.on('click', 'unclustered-point', (e) => {
         const element = new MapboxMarkerProperties(e.features[0].properties);
         const coordinates = e.lngLat;
@@ -196,11 +227,50 @@ export class MapComponent extends BasePageComponent implements OnInit,
             .addTo(this.map);
       });
 
+      let that = this;
+      this.map.on('click', 'clusters', function(e) {
+        const cluster =
+            that.map.queryRenderedFeatures(e.point, {layers: ['clusters']});
+        console.log(cluster);
+        const coordinates = cluster[0].geometry['coordinates'];
+        const currentZoom = that.map.getZoom();
+
+        that.flyIntoCluster(coordinates, currentZoom);
+      });
+
       this.map.resize();
     });
   }
 
-  addLocations() {}
+  flyIntoCluster(coordinates, currentZoom) {
+    console.log('currentZoom', currentZoom);
+    /*
+    in my case, I don't care about currentZoom instead I just hardcode max zoom
+    which I know will reveal all the icons since the user can only zoom in this
+    close but you may want to use currentZoom
+    */
+    const maxZoom = currentZoom + 3;
+
+    this.map.flyTo({
+      // These options control the ending camera position: centered at
+      // the target, at zoom level 16, and north up.
+      center: coordinates,
+      zoom: maxZoom,
+      bearing: 0,
+
+      // These options control the flight curve, making it move
+      // slowly and zoom out almost completely before starting
+      // to pan.
+      speed: 2,  // make the flying slow
+      curve: 1,  // change the speed at which it zooms out
+
+      // This can be any easing function: it takes a number between
+      // 0 and 1 and returns another number between 0 and 1.
+      easing: function(t) {
+        return t;
+      }
+    });
+  }
 
   draw() {
     this.logger.debug('App ready!');
@@ -210,7 +280,7 @@ export class MapComponent extends BasePageComponent implements OnInit,
   getPopupHTML(properties: MapboxMarkerProperties, coordinates) {
     let html = `
       <h4>${properties.store}</h4>
-      <p class="small">Setor, Localidade</p>
+      <p class="small">${properties.sector},&nbsp;${properties.parish}</p>
       <p>Telf.: ${properties.phone}</p>
       <p>${properties.address}</p>
       <p>${properties.zipCode} ${properties.parish}</p>
@@ -242,7 +312,7 @@ export class MapComponent extends BasePageComponent implements OnInit,
     html +=
         (properties.obs ? `<br /><p class="notes">${properties.obs}</p>` : '');
 
-    html += `<br /><br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.pt/maps/search/${
+    html += `<br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.pt/maps/search/${
         coordinates.lat},${
         coordinates
             .lng}" target="_blank" class="btn btn-primary link">Navegar para...</a></div></div>`;

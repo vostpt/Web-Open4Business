@@ -14,6 +14,7 @@ import { LocationsSuccessSubmissionComponent } from '@businesses-feature-module/
 import { BusinessesService } from './services/businesses.service';
 import { ConfirmAccountComponent } from './pages/confirm-account/confirm-account.component';
 import { MomentModule } from 'ngx-moment';
+import { LocationsConfirmComponent } from './pages/locations/locations-confirm.component';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import { MomentModule } from 'ngx-moment';
   declarations: [
     LocationsInsertComponent,
     LocationsListComponent,
+    LocationsConfirmComponent,
     LocationsSuccessSubmissionComponent,
     ConfirmAccountComponent
   ],

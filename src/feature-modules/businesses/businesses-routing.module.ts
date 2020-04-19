@@ -7,6 +7,7 @@ import { LocationsInsertComponent } from '@businesses-feature-module/pages/locat
 import { LocationsListComponent } from '@businesses-feature-module/pages/locations/locations-list.component';
 import { LocationsSuccessSubmissionComponent } from '@businesses-feature-module/pages/locations/success-submission.component';
 import { ConfirmAccountComponent } from './pages/confirm-account/confirm-account.component';
+import { LocationsConfirmComponent } from './pages/locations/locations-confirm.component';
 
 
 const routes: Routes = [
@@ -40,6 +41,11 @@ const routes: Routes = [
           {
             path: 'success',
             component: LocationsSuccessSubmissionComponent,
+            pathMatch: 'full'
+          },
+          {
+            path: 'review',
+            component: LocationsConfirmComponent,
             pathMatch: 'full'
           }
         ]

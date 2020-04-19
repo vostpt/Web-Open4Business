@@ -86,9 +86,10 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
       this.subscriptions.push(
         this.businessesService.sendNewLocationsFile(bodyPayload)
           .subscribe(
-            () => {
+            (response) => {
               this.loader.hide('pageLoader');
               this.notification.success('A informação foi enviada com sucesso');
+              localStorage.setItem('lastImportStatus', JSON.stringify(response['data']));
               this.router.navigateByUrl('businesses/locations/success');
             },
             error => {
@@ -138,5 +139,4 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
   downloadTemplate() {
     window.open('/assets/templates/O4B_Template.csv');
   }
-
 }

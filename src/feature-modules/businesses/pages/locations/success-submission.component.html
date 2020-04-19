@@ -1,17 +1,53 @@
 <app-catalog-loader name="pageLoader"></app-catalog-loader>
 
-<div class="banner-section" *ngIf="showInformationBanner">
+<div class="banner-section" *ngIf="showInformationBanner"
+  [ngClass]="{'bg-success': importResult.totalRows == importResult.successCount, 'bg-warning': importResult.totalRows > importResult.successCount}">
   <i class="fa fa-times close-icon" (click)="dismissInformationBanner()"></i>
-  <div class="container">
-    <p class="title">A tua contribuição foi enviada com sucesso.</p>
-    Será devidamente validada antes de ficar online. Agradecemos o teu contributo neste periodo excepcional.
+  <div class="container" [ngClass]="{'text-dark': importResult.totalRows > importResult.successCount}">
+    <p *ngIf="importResult.totalRows == importResult.successCount" class="title">A tua contribuição foi enviada com
+      sucesso.</p>
+    <p *ngIf="importResult.totalRows > importResult.successCount" class="title">A tua contribuição foi parcialmente
+      enviada com sucesso, por favor corrige os erros abaixo e submete outro ficheiro APENAS com as linhas corrigidas.
+    </p>
+
+    <p>Será devidamente validada antes de ficar online. Agradecemos o teu contributo neste periodo excepcional.</p>
+  </div>
+</div>
+
+<div class="errors">
+  <div class="kt-portlet">
+    <div class="kt-portlet__body">
+      <h4>Resultado</h4>
+      <ul>
+        <li>
+          <span>Total: {{importResult.totalRows}}</span>
+        </li>
+        <li>
+          <span>Imprtadas: {{importResult.successCount}}</span>
+        </li>
+        <li>
+          <span>Ignoradas: {{importResult.errorCount}}</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="kt-portlet" *ngFor="let error of importResult.errors">
+    <div class="kt-portlet__body">
+      <h4>Linha #{{error.row}}</h4>
+      <ul>
+        <li *ngFor="let detail of error.list">
+          <span>{{detail}}</span>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
 
 <div class="content-section">
   <div class="container center-block">
     <a href="/"><img class="logo" src="assets/images/logos/o4b.png"></a>
-    
+
     <h3 class="brand">#OPEN4BUSINESS</h3>
 
     <button class="btn btn-primary btn-goto-list" routerLink="/businesses/locations">Ir para Lista de Empresas</button>

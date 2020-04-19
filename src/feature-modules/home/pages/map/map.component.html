@@ -20,7 +20,10 @@
 
 <div class="map-container">
   <app-catalog-loader name="app-map"></app-catalog-loader>
-  <div>
+  
+  <div id="map-container"></div>
+
+  <div id="map-search">
     <form [formGroup]="form" class="kt-form kt-form--label-right" (ngSubmit)="onFormSubmit()">
       <div class="kt-portlet__body">
         <div class="form-group row">
@@ -31,5 +34,4 @@
       </div>
     </form>
   </div>
-  <div id="map-container"></div>
 </div>

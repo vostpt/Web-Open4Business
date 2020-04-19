@@ -6,7 +6,7 @@
     <li><a routerLink="/">OPEN4BUSINESS</a></li>
     <li>/</li>
     <li class="current">
-      <span>Lista de localizações</span>
+      <span>As Minhas Lojas</span>
     </li>
   </ul>
 
@@ -25,7 +25,9 @@
             <app-catalog-form-input [formControlField]="f.search" formControlName="search" [placeholder]="searchPlaceholder" [appendButton]="true" [appendButtonIcon]="'fa fa-search'"></app-catalog-form-input>
           </div>
           <div class="col input-ct">
-            <button class="btn btn-outline-secondary" routerLink="/businesses/locations/new"><i class="fa fa-plus"></i>Adicionar Empresas</button>
+            <button class="btn btn-outline-secondary" (click)="addStore()"><i class="fa fa-plus"></i>Adicionar Empresa</button>
+            &nbsp;
+            <button class="btn btn-outline-secondary" routerLink="/businesses/locations/new"><i class="fa fa-upload"></i>Importar Empresas</button>
           </div>
         </div>
       </div>
@@ -34,10 +36,10 @@
 
   <div class="kt-portlet" *ngFor="let location of datasets.locations">
     <div class="kt-portlet__body">
-      <div class="row custom-card">
+      <div class="row custom-card" *ngIf="!location.editing">
         <div class="col-lg-3">
           <h4>{{location.store}}</h4>
-          <p class="small">Setor, Localidade</p>
+          <p class="small">{{location.sector}},&nbsp;{{location.parish}}</p>
           <p>Telf.: {{location.phone}}</p>
           <p>{{location.address}}</p>
           <p>{{location.zipCode}} {{location.parish}}</p>
@@ -58,8 +60,20 @@
           <p>{{location.obs}}</p>
         </div>
       </div>
+      <div class="row custom-card" *ngIf="location.editing">
+        <div class="row"></div>
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-outline-secondary" (click)="discardStoreChanges(location)">Cancel</button>
+            &nbsp;
+            <button class="btn btn-primary" (click)="saveStoreChanges(location)">Save</button>
+          </div>
+        </div>
+      </div>
       <div class="row justify-content-between go-to-map">
         <div class="col">
+          <a href="javascript:void(0);" (click)="editStore(location)" ><i class="fa fa-edit"></i>&nbsp;Editar</a>
+          &nbsp;&nbsp;
           <a target="_blank" [routerLink]="['/']" [queryParams]="{ search: location.store}"><i class="fa fa-map"></i>&nbsp;Ver no Mapa</a>
         </div>
         <div class="col audit">

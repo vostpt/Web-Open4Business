@@ -18,7 +18,7 @@
       <ul class="navbar-nav text-uppercase" onclick="document.getElementById('kt_quick_panel_toggler_btn-close-btn').click();">
         
         <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signin" class="nav-link">Login</a></li>
-        <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations" class="nav-link">Lista de Empresas</a></li>
+        <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations" class="nav-link">As Minhas Lojas</a></li>
         <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations/new" class="nav-link">Adicionar de Empresas</a></li>
         <li class="nav-item" *ngIf="session && isAdmin"><a routerLink="/users/list" class="nav-link">Lista de Utilizadores</a></li>
         <li class="nav-item"><a routerLink="/" class="nav-link">Mapa</a></li>

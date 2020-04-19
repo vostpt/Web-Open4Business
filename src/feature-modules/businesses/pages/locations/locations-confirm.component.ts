@@ -5,38 +5,41 @@ import { BasePageComponent } from '@core-modules/main-layout';
 import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
 import { FormsService } from '@core-modules/catalog/modules/forms';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
-  selector: 'app-businesses-locations-list',
-  templateUrl: './locations-list.component.html',
-  styleUrls: ['./locations-list.component.scss']
+  selector: 'app-businesses-locations-confirm',
+  templateUrl: './locations-confirm.component.html',
+  styleUrls: ['./locations-confirm.component.scss']
 })
-export class LocationsListComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
+export class LocationsConfirmComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
 
-  public searchPlaceholder = "Pesquisar Empresas";
+  public batchId :string;
+  public email :string;
+
   contentReady = false;
   datasets = {
     locations: []
   };
 
-  form: FormGroup;
-  get f() {
-    return this.form.controls;
-  }
-
   constructor(
-    private readonly formBuilder: FormBuilder,
-    private readonly formsService: FormsService,
-    private readonly businessesService: BusinessesService
+    private readonly businessesService: BusinessesService,
+    private route: ActivatedRoute
   ) {
     super();
   }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({search: [null, null]});
+    this.route.queryParams.subscribe(params => {
+
+      this.batchId = params['batchId'];
+      this.email = params['email'];
 
     this.getLocations();
+    });
+
+    
   }
 
   ngAfterViewInit() { }
@@ -44,9 +47,9 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
   getLocations() {
     this.loader.show('pageLoader');
 
-    const search = this.form.get('search').value;
+    const filter = {batchId: this.batchId};
 
-    this.subscriptions.push(this.businessesService.getLocations(search).subscribe(
+    this.subscriptions.push(this.businessesService.getLocations(filter).subscribe(
       (result: { data: { locations: object[] } }) => {
 
         this.datasets.locations = result.data.locations.map(item => {
@@ -88,29 +91,22 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
       .join(' às ');
   }
 
-  onSearch() {
-    this.loader.show('app-map');
+  save(confirm) {
+    console.log('save', confirm);
+    const data = {
+      email: this.email,
+      batchId: this.batchId,
+      confirm
+    };
 
-    this.getLocations();
-  }
-
-  addStore() {
-    console.log('addStore');
-  }
-  
-  editStore(store) {
-    console.log('editStore', store);
-    store.editing = true;
-  }
-  
-  discardStoreChanges(store) {
-    console.log('discardStoreChanges', store);
-    store.editing = false;
-  }
-  
-  saveStoreChanges(store) {
-    console.log('saveStoreChanges', store);
-    store.editing = false;
+    this.subscriptions.push(this.businessesService.confirmLocations(data).subscribe(
+      (result: { data: { locations: object[] } }) => {
+        this.router.navigateByUrl('/businesses/locations');
+      },
+      (error) => {
+        this.loader.hide('pageLoader');
+        this.logger.error('Error confirming locations', error);
+      }));
   }
 
 }

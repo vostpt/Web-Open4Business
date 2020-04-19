@@ -1,5 +1,4 @@
 .banner-section {
-  background-color: var(--base-color-01);
   color: #fff;
   font-size: 1.1rem;
   margin: 0 -25px;
@@ -20,18 +19,17 @@
 
 }
 
-
 .content-section {
   background-color: var(--base-color-02);
   margin: 0 -25px -32px -25px;
 
   .logo {
-    width: 230px;
-    padding: 20px 0;
+    height: 60px;
+    margin-top: 24px;
   }
 
   .brand {
-    font-size: 3rem;
+    font-size: 2rem;
     color: white;
     padding: 20px 0;
   }
@@ -48,17 +46,8 @@
   }
 }
 
-
-
-
-
 .center-block {
   text-align: center;
-}
-
-.logo {
-  width: 300px;
-  margin-top: 24px;
 }
 
 .main-text {
@@ -77,3 +66,10 @@
   }
 }
 
+.banner-section.bg-success {
+  background-color: var(--base-color-01) !important;
+}
+
+.errors {
+  padding-top: 20px;;
+}

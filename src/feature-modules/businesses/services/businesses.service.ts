@@ -41,6 +41,17 @@ export class BusinessesService {
 
     return this.http.post(url.buildUrl(), body);
   }
+  
+  confirmLocations(body:
+    {
+      email: string,
+      batchId: string,
+      confirm: boolean
+    }
+  ) {
+    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations/confirm');
 
+    return this.http.post(url.buildUrl(), body);
+  }
 
 }

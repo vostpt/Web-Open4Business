@@ -1,0 +1,53 @@
+<app-catalog-loader name="pageLoader"></app-catalog-loader>
+
+<div *ngIf="contentReady" class="container">
+
+  <ul class="breadcrumbs">
+    <li><a routerLink="/">OPEN4BUSINESS</a></li>
+    <li>/</li>
+    <li class="current">
+      <span>Confirmar Lojas</span>
+    </li>
+  </ul>
+
+  <div class="row filters-section">
+    <div class="col-lg-12 text">
+      <p>Batch: <span class="font-weight-bold">#{{batchId}}</span></p>
+      <p>Email: <span class="font-weight-bold">#{{email}}</span></p>
+    </div>
+    <div class="col-lg-12 text">
+      <button class="btn btn-outline-secondary" (click)="save(false)">Rejeitar</button>
+      &nbsp;
+      <button class="btn btn-primary" (click)="save(true)">Aprovar</button>
+    </div>
+  </div>
+
+  <div class="kt-portlet" *ngFor="let location of datasets.locations">
+    <div class="kt-portlet__body">
+      <div class="row custom-card">
+        <div class="col-lg-3">
+          <h4>{{location.store}}</h4>
+          <p class="small">{{location.sector}},&nbsp;{{location.parish}}</p>
+          <p>Telf.: {{location.phone}}</p>
+          <p>{{location.address}}</p>
+          <p>{{location.zipCode}} {{location.parish}}</p>
+        </div>
+        <div class="col-lg-3">
+          <h5>Horário de Funcionamento</h5>
+          <div class="row" *ngFor="let number of [1,2,3]">
+            <div class="col-5"><p>{{ location['schedule' + number + 'DowFormatted'] }}</p></div>
+            <div class="col-7"><p>{{ location['schedule' + number + 'Formatted'] }}</p></div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <h5>Entregas</h5>
+          <p>{{location.typeOfService}}</p>
+        </div>
+        <div class="col-lg-3">
+          <h5>Observações</h5>
+          <p>{{location.obs}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -38,13 +38,13 @@ export class MapService {
       //   className: 'dot'
       // };
 
-
       const item: GeoJSON.Feature = {
         type: 'Feature',
         geometry: {
           type: 'Point',
           coordinates: [element.longitude, element.latitude]
         },
+        
         properties: element
       };
 
