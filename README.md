@@ -41,11 +41,11 @@ npm start:prod
 
 ### Build
 ```
-docker build --target publishStage --tag baldasman/open4business-web-client:latest .
+docker build --target publishStage --tag vostpt/open4business-web-client:latest .
 ```
 
 ### Publish
 ```
 echo "PASS" | docker login --username USER --password-stdin docker.io
-docker push baldasman/open4business-web-client:latest
+docker push vostpt/open4business-web-client:latest
 ```
