@@ -2,9 +2,9 @@ import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {BusinessesService} from '@businesses-feature-module/services/businesses.service';
 import {FormsService} from '@core-modules/catalog/modules/forms';
+import {CheckboxComponent} from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
+import {SelectComponent} from '@core-modules/catalog/modules/forms/components/select/select.component';
 import {BasePageComponent} from '@core-modules/main-layout';
-import { SelectComponent } from '@core-modules/catalog/modules/forms/components/select/select.component';
-import { CheckboxComponent } from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
 
 
 @Component({
@@ -153,7 +153,7 @@ export class LocationsListComponent extends BasePageComponent implements
       this.editForm.reset();
     }
 
-    setTimeout(() => {document.getElementById("edit-company-in").focus()}, 100);
+    setTimeout(() => {document.getElementById('edit-company-in').focus()}, 100);
   }
 
   discardStoreChanges() {
@@ -167,17 +167,35 @@ export class LocationsListComponent extends BasePageComponent implements
     this.loader.show('pageLoader');
 
     this.subscriptions.push(
-        this.businessesService.updateLocation(this.editForm.value).subscribe(
-            (result: {data: {locations: object[]}}) => {
-              this.loader.hide('pageLoader');
-              this.editing = false;
+        this.businessesService.updateLocation(this.editForm.value)
+            .subscribe(
+                (result: {
+                  resultCode: number,
+                  resultMessage: string,
+                  resultTimestamp: number,
+                  data: any,
+                  service: string,
+                  traceId: string
+                }) => {
+                  this.loader.hide('pageLoader');
 
-              this.getLocations();
-            },
-            (error) => {
-              this.loader.hide('pageLoader');
-              this.logger.error('Error fetching map markers', error);
-            }));
+                  if (result.resultCode == 200) {
+                    this.editing = false;
+                    this.notification.success(
+                        'Empresa atualizada com sucesso.');
+                        
+                    this.getLocations();
+                  } else {
+                    this.notification.error(
+                        `Não foi possível atualizar a Loja. [${
+                            result.resultCode}] => ${result.resultMessage}`);
+                  }
+                },
+                (error) => {
+                  this.loader.hide('pageLoader');
+                  this.notification.error(`Não foi possível atualizar a Loja.`);
+                  this.logger.error('Error fetching map markers', error);
+                }));
   }
 
   deleteStore(location) {
@@ -192,15 +210,26 @@ export class LocationsListComponent extends BasePageComponent implements
     this.subscriptions.push(
         this.businessesService.deleteLocation(location.locationId)
             .subscribe(
-                (result: {data: {locations: object[]}}) => {
+                (result: any) => {
                   this.loader.hide('pageLoader');
-                  console.log(result);
 
-                  this.getLocations();
+                  if (result.resultCode == 200) {
+                    this.editing = false;
+
+                    this.notification.success('Empresa apagada com sucesso.');
+
+                    this.getLocations();
+                  } else {
+                    this.notification.error(
+                        `Não foi possível apagar a Loja '${location.store}'. [${
+                            result.resultCode}] => ${result.resultMessage}`);
+                  }
                 },
                 (error) => {
                   this.loader.hide('pageLoader');
-                  this.logger.error('Error fetching map markers', error);
+                  this.notification.error(
+                      `Não foi possível apagar a Loja '${location.store}'`);
+                  this.logger.error('Error deleting location', error);
                 }));
   }
 }
