@@ -178,18 +178,18 @@ export class MapComponent extends BasePageComponent implements OnInit,
         }
       });
 
-      this.map.addLayer({
-        id: 'poi-labels',
-        type: 'symbol',
-        source: 'businesses',
-        layout: {
-          'text-field': ['get', 'store'],
-          'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
-          'text-radial-offset': 2,
-          'text-justify': 'center',
-          'text-size': 12
-        }
-      });
+      // this.map.addLayer({
+      //   id: 'poi-labels',
+      //   type: 'symbol',
+      //   source: 'businesses',
+      //   layout: {
+      //     'text-field': ['get', 'store'],
+      //     'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
+      //     'text-radial-offset': 2,
+      //     'text-justify': 'center',
+      //     'text-size': 12
+      //   }
+      // });
 
       // Events.
       this.map.on('mouseenter', 'clusters', () => {
