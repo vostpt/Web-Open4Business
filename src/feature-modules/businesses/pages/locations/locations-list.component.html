@@ -221,6 +221,28 @@
     </form>
   </div>
 
+  <div class="row">
+    <div class="col-auto mr-auto"><p class="counter"><strong>{{total}}</strong> Lojas</p></div>
+
+    <div class="col-auto">
+      <nav aria-label="Pagination" class="">
+        <ul class="pagination">
+          <li class="page-item" (click)="goto(page-1)">
+            <a class="page-link disabled" href="javascript:void(0)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="javascript:void(0)">{{page}}&nbsp;/&nbsp;{{pages}}</a></li>
+          <li class="page-item" (click)="goto(page+1)">
+            <a class="page-link" href="javascript:void(0)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
   <div class="kt-portlet" *ngFor="let location of datasets.locations">
     <div class="kt-portlet__body">
       <div class="row">
@@ -278,6 +300,28 @@
               class="font-italic">&nbsp;{{location.audit.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</span></span>
         </div>
       </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="total > 10">
+    <div class="col-auto mr-auto"><p class="counter"><strong>{{total}}</strong> Lojas</p></div>
+
+    <div class="col-auto">
+      <nav aria-label="Pagination" class="">
+        <ul class="pagination">
+          <li class="page-item" (click)="goto(page-1)">
+            <a class="page-link disabled" href="javascript:void(0)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="javascript:void(0)">{{page}}&nbsp;/&nbsp;{{pages}}</a></li>
+          <li class="page-item" (click)="goto(page+1)">
+            <a class="page-link" href="javascript:void(0)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </div>

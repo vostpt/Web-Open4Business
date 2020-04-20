@@ -16,6 +16,9 @@ export class LocationsListComponent extends BasePageComponent implements
     OnInit, AfterViewInit, OnDestroy {
   public searchPlaceholder = 'Pesquisar Empresas';
   public editing: boolean = false;
+  public total: number = 0;
+  public pages: number = 1;
+  public page: number = 1;
 
   contentReady = false;
   datasets = {locations: []};
@@ -81,35 +84,68 @@ export class LocationsListComponent extends BasePageComponent implements
 
   ngAfterViewInit() {}
 
+  goto(page: number) {
+    if (page < 1) {
+      this.page = 1;
+    } else if (page > this.pages) {
+      this.page = this.pages;
+    } else {
+      this.page = page;
+    }
+
+    this.getLocations();
+  }
+
   getLocations() {
     this.loader.show('pageLoader');
 
     const search = this.form.get('search').value;
+    let filter = {};
+
+    if (search) {
+      filter = {search};
+    }
 
     this.subscriptions.push(
-        this.businessesService.getLocations(search).subscribe(
-            (result: {data: {locations: object[]}}) => {
-              this.datasets.locations = result.data.locations.map(item => {
-                for (let i = 1; i <= 3; i++) {
-                  if (item[`schedule${i}Dow`]) {
-                    item[`schedule${i}DowFormatted`] =
-                        this.formatWeekdaysListProperty(
-                            item[`schedule${i}Dow`]);
-                    item[`schedule${i}Formatted`] =
-                        this.formatScheduleProperty(item[`schedule${i}`]);
+        this.businessesService.getLocations(filter, 50, (this.page - 1) * 50)
+            .subscribe(
+                (result: {
+                  data: {
+                    total,
+                    limit,
+                    offset,
+                    locations: object[]
                   }
-                }
+                }) => {
+                  this.datasets.locations = result.data.locations.map(item => {
+                    for (let i = 1; i <= 3; i++) {
+                      if (item[`schedule${i}Dow`]) {
+                        item[`schedule${i}DowFormatted`] =
+                            this.formatWeekdaysListProperty(
+                                item[`schedule${i}Dow`]);
+                        item[`schedule${i}Formatted`] =
+                            this.formatScheduleProperty(item[`schedule${i}`]);
+                      }
+                    }
 
-                return item;
-              });
+                    return item;
+                  });
 
-              this.contentReady = true;
-              this.loader.hide('pageLoader');
-            },
-            (error) => {
-              this.loader.hide('pageLoader');
-              this.logger.error('Error fetching map markers', error);
-            }));
+                  this.total = parseInt(result.data.total);
+                  this.pages = Math.ceil(this.total / 50);
+                  const offset = parseInt(result.data.offset);
+                  this.page = offset > 0 ?
+                      Math.round(offset / 50) + 1 :
+                      1;
+                  
+                  this.contentReady = true;
+                  this.loader.hide('pageLoader');
+                  document.getElementById('kt_scrolltop').click();
+                },
+                (error) => {
+                  this.loader.hide('pageLoader');
+                  this.logger.error('Error fetching map markers', error);
+                }));
   }
 
   formatWeekdaysListProperty(weekdays: string) {
@@ -132,7 +168,7 @@ export class LocationsListComponent extends BasePageComponent implements
 
   onSearch() {
     this.loader.show('app-map');
-
+    this.page = 1;
     this.getLocations();
   }
 
@@ -183,7 +219,7 @@ export class LocationsListComponent extends BasePageComponent implements
                     this.editing = false;
                     this.notification.success(
                         'Empresa atualizada com sucesso.');
-                        
+
                     this.getLocations();
                   } else {
                     this.notification.error(

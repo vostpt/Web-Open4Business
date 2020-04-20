@@ -17,12 +17,13 @@ export class BusinessesService {
     return this.http.post(url, {token, confirmationCode});
   }
 
-  getLocations(search) {
+  getLocations(filter: any, limit?: number, offset?: number) {
     const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations');
+    let params = filter || {};
 
-    if (search) {
-      url.setQueryParams({search});
-    }
+    params = {...params, limit: limit || 999999, offset: offset || 0};
+
+    url.setQueryParams(params);
 
     return this.http.get(url.buildUrl());
   }
