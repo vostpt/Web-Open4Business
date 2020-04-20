@@ -68,6 +68,13 @@ export class MapComponent extends BasePageComponent implements OnInit,
   search() {
     this.loader.show('app-map');
 
+    try {
+      document.getElementsByClassName('mapboxgl-popup-close-button')[0]['click']();  
+    } catch (error) {
+      
+    }
+    
+
     const search = this.form.get('search').value;
     let markers: GeoJSON.FeatureCollection;
 
@@ -296,19 +303,35 @@ export class MapComponent extends BasePageComponent implements OnInit,
       const dayOfWeekPeriods =
           this.formatWeekdaysListProperty(properties[`schedule${i}Dow`]);
       const schedule = this.formatScheduleProperty(properties[`schedule${i}`]);
+
+      if (dayOfWeekPeriods) {
+        html += `<span>${properties[`schedule${i}Type`] || ''}`;
+        
+        if (properties[`schedule${i}Period`]) {
+          html += `:&nbsp;<span class="font-italic">${properties[`schedule${i}Period`]}</span>`;
+        }
+        
+        html += `</span>`;
+      }
+
       html +=
           (dayOfWeekPeriods ? `
           <div class="row">
             <div class="col-5"><p>${dayOfWeekPeriods}:</p></div>
             <div class="col-7"><p>${schedule}</p></div>
-          </div>` :
-                              '');
+          </div>` : '');
     }
 
     html +=
         (properties.typeOfService ? `<br /><h5><b>Entregas</b></h5><p>${
                                         properties.typeOfService}</p>` :
                                     '');
+
+    if (properties.byAppointment == 'Sim') {
+      html += `<br /><h5><b>Por Marcação</b></h5>`;
+      html += `<p>${properties.contactForSchedule || ''}<p>`;
+    }
+
     html +=
         (properties.obs ? `<br /><p class="notes">${properties.obs}</p>` : '');
 
@@ -316,6 +339,11 @@ export class MapComponent extends BasePageComponent implements OnInit,
         coordinates.lat},${
         coordinates
             .lng}" target="_blank" class="btn btn-primary link">Navegar para...</a></div></div>`;
+
+
+    // tipo de horário,
+    // Por Marcação(if Sim)
+    // Contacto Agendamento(if Marcação = Sim)
 
     return html;
   }

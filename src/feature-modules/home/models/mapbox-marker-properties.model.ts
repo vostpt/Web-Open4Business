@@ -15,13 +15,18 @@ export class MapboxMarkerProperties {
   schedule1: string;
   schedule1Dow: string;
   schedule1Type: string;
+  schedule1Period: string;
   schedule2: string;
   schedule2Dow: string;
   schedule2Type: string;
+  schedule2Period: string;
   schedule3: string;
   schedule3Dow: string;
   schedule3Type: string;
+  schedule3Period: string;
   typeOfService: string;
+  byAppointment: string;
+  contactForSchedule: string;
   obs: string;
 
   constructor(data: object) {
@@ -42,13 +47,18 @@ export class MapboxMarkerProperties {
     this.schedule1  = data['schedule1'];
     this.schedule1Dow = data['schedule1Dow'];
     this.schedule1Type  = data['schedule1Type'];
+    this.schedule1Period  = data['schedule1Period'];
     this.schedule2  = data['schedule2'];
     this.schedule2Dow = data['schedule2Dow'];
     this.schedule2Type  = data['schedule2Type'];
+    this.schedule2Period  = data['schedule2Period'];
     this.schedule3  = data['schedule3'];
     this.schedule3Dow = data['schedule3Dow'];
     this.schedule3Type  = data['schedule3Type'];
+    this.schedule3Period  = data['schedule3Period'];
     this.typeOfService  = data['typeOfService'];
+    this.byAppointment  = data['byAppointment'];
+    this.contactForSchedule  = data['contactForSchedule'];
     this.obs  = data['obs'];
   }
 }

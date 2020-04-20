@@ -53,5 +53,19 @@ export class BusinessesService {
 
     return this.http.post(url.buildUrl(), body);
   }
+  
+  updateLocation(location:any) {
+    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations');
+
+    return this.http.put(url.buildUrl(), location);
+  }
+
+  deleteLocation(locationId: string) {
+    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations');
+
+    url.setQueryParams({locationId});
+
+    return this.http.delete(url.buildUrl());
+  }
 
 }
