@@ -11,6 +11,12 @@ export class MapService {
     private http: HttpClient
   ) { }
 
+  getBusinesses() {
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations/businesses')
+
+    return this.http.get(url.buildUrl());
+  }
+
   getMarkers(search: string) {
     const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations')
 
@@ -44,10 +50,8 @@ export class MapService {
           type: 'Point',
           coordinates: [element.longitude, element.latitude]
         },
-        
         properties: element
       };
-
 
       geoJSON.features.push(item);
     });

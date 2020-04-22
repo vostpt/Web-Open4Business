@@ -22,6 +22,8 @@ export class MapComponent extends BasePageComponent implements OnInit,
                                                                         true);
   public searchPlaceholder = 'Pesquise locais';
 
+  public imageLib = [{name: 'pin', path: 'assets/images/mapbox/pin.png'}];
+
   private map: Map;
 
   form: FormGroup;
@@ -49,6 +51,33 @@ export class MapComponent extends BasePageComponent implements OnInit,
       }
 
       let markers: GeoJSON.FeatureCollection;
+
+      this.subscriptions.push(this.mapService.getBusinesses().subscribe(
+        (result: {data: {businesses: []}}) => {
+          this.imageLib = [{name: 'pin', path: 'assets/images/mapbox/pin.png'}];
+          
+          result.data.businesses.forEach((b) => {
+            this.imageLib.push({name: b['businessId'], path: `${this.environment.variables.apiUrl}/insights/v1/marker?businessId=${b['businessId']}`});
+          });
+          
+          console.log('custom markers loaded', this.imageLib);
+
+          if (this.map) {
+            console.log('MAP alerady loaded: load image lib', this.imageLib);
+            this.imageLib.forEach((img) => {
+              this.map.loadImage(img.path, (error, image) => {
+                if (error) {
+                  throw error;
+                }
+                this.map.addImage(img.name, image);
+              });
+            });
+          }
+        },
+        (error) => {
+          this.loader.hide('app-map');
+          this.logger.error('Error fetching map custom markers', error);
+        }));
 
       this.subscriptions.push(this.mapService.getMarkers(search).subscribe(
           (result: {data: {locations: object[]}}) => {
@@ -113,13 +142,15 @@ export class MapComponent extends BasePageComponent implements OnInit,
     });
 
     // Load markers image
-    this.map.loadImage('assets/images/mapbox/pin.png', (error, image) => {
-      if (error) {
-        throw error;
-      }
-      this.map.addImage('pin', image);
+    console.log('add custom markers to map', this.imageLib);
+    this.imageLib.forEach((img) => {
+      this.map.loadImage(img.path, (error, image) => {
+        if (error) {
+          throw error;
+        }
+        this.map.addImage(img.name, image);
+      });
     });
-
 
     this.map.on('load', () => {
       this.map.addSource('businesses', {
@@ -171,17 +202,20 @@ export class MapComponent extends BasePageComponent implements OnInit,
         type: 'symbol',
         source: 'businesses',
         filter: ['!', ['has', 'point_count']],
+        paint: {},
         layout: {
-          'icon-image': 'pin',
+          'icon-image': '{businessId}',
           'icon-size': 0.8,
           'icon-allow-overlap': true,
         }
       });
+      
 
       // this.map.addLayer({
       //   id: 'poi-labels',
       //   type: 'symbol',
       //   source: 'businesses',
+      //   filter: ['!', ['has', 'point_count']],
       //   layout: {
       //     'text-field': ['get', 'store'],
       //     'text-variable-anchor': ['top', 'bottom', 'left', 'right'],
@@ -195,6 +229,7 @@ export class MapComponent extends BasePageComponent implements OnInit,
       this.map.on('mouseenter', 'clusters', () => {
         this.map.getCanvas().style.cursor = 'pointer';
       });
+
       this.map.on('mouseleave', 'clusters', () => {
         this.map.getCanvas().style.cursor = '';
       });
