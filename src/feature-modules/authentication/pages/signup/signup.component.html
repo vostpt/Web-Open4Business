@@ -5,7 +5,7 @@
     <li><a routerLink="/">OPEN4BUSINESS</a></li>
     <li>/</li>
     <li class="current">
-      <span>Registo para grandes empresas</span>
+      <span>Registo para empresas</span>
     </li>
   </ul>
 </div>
@@ -14,7 +14,7 @@
   <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
       <h3 class="kt-portlet__head-title title">
-        Registo para grandes empresas
+        Junte-se nós
       </h3>
     </div>
   </div>
@@ -24,11 +24,52 @@
 
       <div class="form-group row">
         <div class="col-lg-12 text">
-          Nesta área pode pode fazer o registo da sua empresa. 
-          Após o registo irá receber um e-mail com os seus dados, e após validação pela equipa do “Open4Business” 
-          irá receber um segundo e-mail a informar que a sua conta já se encontra ativa. 
-          Não partilhe estes dados de login com ninguém externo à sua organização. 
+          Nesta área pode pode fazer o registo da sua empresa.
+          Após o registo irá receber um e-mail com os seus dados, e após validação pela equipa do “Open4Business”
+          irá receber um segundo e-mail a informar que a sua conta já se encontra ativa.
+          Não partilhe estes dados de login com ninguém externo à sua organização.
           Para qualquer questão contacte a equipa de suporte via este <a href="mailto:o4b@vost.pt">e-mail</a>.
+        </div>
+      </div>
+
+      <div class="row vertical-padding">
+        <div class="col-lg-6">
+          <label class="kt-option">
+            <span class="kt-option__control">
+              <span class="kt-radio">
+                <input formControlName="companyType" type="radio" value="small">
+                <span></span>
+              </span>
+            </span>
+            <span class="kt-option__label">
+              <span class="kt-option__head">
+                <span class="kt-option__title">
+                  Pequenas empresas
+                </span>
+              </span>
+              <span class="kt-option__body">
+                <b>Para gestão manual de localizações</b>
+              </span>
+            </span>
+          </label>
+        </div>
+        <div class="col-lg-6">
+          <label class="kt-option">
+            <span class="kt-option__control">
+              <span class="kt-radio">
+                <input  formControlName="companyType" type="radio" value="big">
+                <span></span>
+              </span>
+            </span>
+            <span class="kt-option__label">
+              <span class="kt-option__head">
+                <span class="kt-option__title">Grandes empresas</span>
+              </span>
+              <span class="kt-option__body">
+                <b>Para carregamento e gestão automatizada de muitas localizações</b>
+              </span>
+            </span>
+          </label>
         </div>
       </div>
 
@@ -52,6 +93,7 @@
             [required]="true"></app-catalog-form-input>
         </div>
       </div>
+
     </div>
     <div class="kt-portlet__foot">
       <div class="kt-form__actions">

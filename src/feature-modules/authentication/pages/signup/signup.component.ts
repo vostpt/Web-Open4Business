@@ -30,6 +30,7 @@ export class SignupComponent extends BasePageComponent implements OnInit, AfterV
     this.loader.show('pageLoader');
 
     this.form = this.formBuilder.group({
+      companyType: ['small', Validators.required],
       company: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       name: [null, Validators.required],
