@@ -370,10 +370,7 @@ export class MapComponent extends BasePageComponent implements OnInit,
     html +=
         (properties.obs ? `<br /><p class="notes">${properties.obs}</p>` : '');
 
-    html += `<br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.pt/maps/search/${
-        coordinates.lat},${
-        coordinates
-            .lng}" target="_blank" class="btn btn-primary link">Navegar para...</a></div></div>`;
+    html += `<br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.com/maps/search/?api=1&query=${properties.latitude},${properties.longitude}" target="_blank" class="btn btn-primary link">Navegar para...</a></div></div>`;
 
 
     // tipo de horário,
