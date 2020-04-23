@@ -14,6 +14,7 @@ import { HomeService } from './services/home.service';
 import { MapService } from './services/map.service';
 import { CookiesComponent } from './pages/cookies/cookies.component';
 import { AboutComponent } from './pages/about/about.component';
+import { SimpleMapComponent } from './pages/simple-map/simple-map.component';
 
 @NgModule({
   imports: [
@@ -26,6 +27,7 @@ import { AboutComponent } from './pages/about/about.component';
   ],
   declarations: [
     MapComponent,
+    SimpleMapComponent,
     SmallMediumCompaniesComponent,
     CookiesComponent,
     AboutComponent

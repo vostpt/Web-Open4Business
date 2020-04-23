@@ -48,6 +48,7 @@ import { ScrollTopDirective } from './directives/scroll-top.directive';
 // Pipes.
 import { FirstLetterPipe } from './pipes/first-letter.pipe';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { MapLayoutComponent } from './base/map-layout/map-layout.component';
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -61,6 +62,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 @NgModule({
   declarations: [
     BaseLayoutComponent,
+    MapLayoutComponent,
     NotFoundComponent,
 
     HeaderComponent,
@@ -124,6 +126,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgbTooltipModule,
 
     BaseLayoutComponent,
+    MapLayoutComponent,
 
     HeaderComponent,
     HeaderMobileComponent,

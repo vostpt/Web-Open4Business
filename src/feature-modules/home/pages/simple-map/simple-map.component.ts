@@ -1,19 +1,27 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {FormsService} from '@core-modules/catalog/modules/forms';
 import {BasePageComponent} from '@core-modules/main-layout';
 import {MapboxMarkerProperties} from '@home-feature-module/models/mapbox-marker-properties.model';
 import {MapService} from '@home-feature-module/services/map.service';
-import {GeolocateControl, LngLat, Map, NavigationControl, Popup} from 'mapbox-gl';
+import {GeolocateControl, LngLat, Map, NavigationControl, Popup, LngLatBounds} from 'mapbox-gl';
+import { lang } from 'moment';
 
 @Component({
-  selector: 'app-home-map',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.scss']
+  selector: 'app-home-simple-map',
+  templateUrl: './simple-map.component.html',
+  styleUrls: ['./simple-map.component.scss']
 })
-export class MapComponent extends BasePageComponent implements OnInit,
-                                                               OnDestroy {
+export class SimpleMapComponent extends BasePageComponent implements OnInit,
+                                                                     OnDestroy {
+  @HostListener('document:keyup', ['$event'])
+  handleDeleteKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      document.getElementsByClassName(
+          'mapboxgl-popup-close-button')[0]['click']();
+    }
+  }
   public showCookieWarning =
       (JSON.parse(localStorage.getItem('dismissedCookieWarning')) ? false :
                                                                     true);
@@ -23,6 +31,9 @@ export class MapComponent extends BasePageComponent implements OnInit,
   public searchPlaceholder = 'Pesquise locais';
 
   public imageLib = [{name: 'pin', path: 'assets/images/mapbox/pin.png'}];
+
+  public count = 0;
+  public searchInfo = 'lojas já estão abertas!';
 
   private map: Map;
 
@@ -90,6 +101,9 @@ export class MapComponent extends BasePageComponent implements OnInit,
           (result: {data: {locations: object[]}}) => {
             markers =
                 this.mapService.parseResponseToGeoJSON(result.data.locations);
+            this.count = markers.features.length;
+            this.searchInfo = search ? 'lojas correspondem à tua pesquisa.' :
+                                       'lojas já estão abertas!';
             this.loadMapbox(markers);
           },
           (error) => {
@@ -121,12 +135,20 @@ export class MapComponent extends BasePageComponent implements OnInit,
                 this.mapService.parseResponseToGeoJSON(result.data.locations);
             this.map.getSource('businesses')['setData'](markers);
 
-            if (result.data.locations.length > 0) {
-              const point = new LngLat(
-                  markers.features[0].geometry['coordinates'][0],
-                  markers.features[0].geometry['coordinates'][1]);
-              this.map.panTo(point);
+            this.count = markers.features.length;
+            this.searchInfo = search ? 'lojas correspondem à tua pesquisa.' :
+                                       'lojas já estão abertas!';
+
+            // Calculate bounds
+            const bounds = new LngLatBounds();
+
+            for (let i = 0; i < markers.features.length; i++) {
+              const marker = markers.features[i];
+              bounds.extend(marker.geometry['coordinates']);
             }
+
+            console.log('bounds', bounds);
+            this.map.fitBounds(bounds);
           } catch (error) {
             console.error(error);
           }
@@ -230,8 +252,21 @@ export class MapComponent extends BasePageComponent implements OnInit,
           'text-justify': 'center',
           'text-size': 12
         },
-        minzoom: 12,
+        minzoom: 12
       });
+
+      // Add zoom and rotation controls to the map.
+      this.map.addControl(
+          new NavigationControl(
+              {showCompass: true, showZoom: true, visualizePitch: true}),
+          'bottom-right');
+
+      this.map.addControl(
+          new GeolocateControl({
+            positionOptions: {enableHighAccuracy: true},
+            trackUserLocation: true
+          }),
+          'bottom-right');
 
       // Events.
       this.map.on('mouseenter', 'clusters', () => {
@@ -249,21 +284,21 @@ export class MapComponent extends BasePageComponent implements OnInit,
         this.map.getCanvas().style.cursor = '';
       });
 
-      this.map.on('wheel', event => {
-        if (event.originalEvent.ctrlKey) {
-          return;
-        }
+      // this.map.on('wheel', event => {
+      //   if (event.originalEvent.ctrlKey) {
+      //     return;
+      //   }
 
-        if (event.originalEvent.metaKey) {
-          return;
-        }
+      //   if (event.originalEvent.metaKey) {
+      //     return;
+      //   }
 
-        if (event.originalEvent.altKey) {
-          return;
-        }
+      //   if (event.originalEvent.altKey) {
+      //     return;
+      //   }
 
-        event.preventDefault();
-      });
+      //   event.preventDefault();
+      // });
 
       this.map.on('click', 'unclustered-point', (e) => {
         const element = new MapboxMarkerProperties(e.features[0].properties);
@@ -287,15 +322,6 @@ export class MapComponent extends BasePageComponent implements OnInit,
 
         that.flyIntoCluster(coordinates, currentZoom);
       });
-
-      // Add zoom and rotation controls to the map.
-      this.map.addControl(new NavigationControl(
-          {showCompass: true, showZoom: true, visualizePitch: true}));
-
-      this.map.addControl(new GeolocateControl({
-        positionOptions: {enableHighAccuracy: true},
-        trackUserLocation: true
-      }));
 
       this.map.resize();
     });
@@ -403,13 +429,17 @@ export class MapComponent extends BasePageComponent implements OnInit,
   }
 
   formatWeekdaysListProperty(weekdays: string) {
-    return weekdays.replace(/ /g, '')
-        .split(',')
-        .map(
-            (day, i, arr) =>
-                (i === 0 || arr.length - 1 === i ? day.substring(0, 3) : null))
-        .filter(n => n)
-        .join(' a ');
+    try {
+      return weekdays.replace(/ /g, '')
+          .split(',')
+          .map(
+              (day, i, arr) => (
+                  i === 0 || arr.length - 1 === i ? day.substring(0, 3) : null))
+          .filter(n => n)
+          .join(' a ');
+    } catch (error) {
+      return '';
+    }
   }
 
 

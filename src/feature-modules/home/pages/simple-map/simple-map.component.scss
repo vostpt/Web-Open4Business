@@ -1,0 +1,143 @@
+.form-group {
+  margin-bottom: 0;
+}
+
+.fa.fa-search {
+  color: #FFFFFF !important;
+}
+
+.section--primary {
+  background-color: #4eaa4f;
+  color: #fff;
+  margin: 0 -25px;
+
+
+  .cookies-warn {
+    background-color: #267327;
+    line-height: 3em;
+    text-align: center;
+
+    p {
+      margin-bottom: 0px;
+    }
+
+    a {
+      color: yellow;
+    }
+  }
+
+
+  .lead {
+    font-weight: 200;
+    font-size: 1.8rem;
+    text-align: center;
+    padding-top: 10px;
+  }
+
+  a.warn-link {
+    color: #4eaa4f;
+  }
+
+  i.warn-close {
+    cursor: pointer;
+  }
+
+  .button__wrapper {
+    text-align: center;
+    padding: .5rem 0 2rem;
+  }
+
+  .button--secondary {
+    background-color: #43348b;
+    color: #fff;
+    margin: 0 15px;
+  }
+
+  .button {
+    font-family: Lato, sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 1.4;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: .04rem;
+    text-align: center;
+    padding: 1rem;
+    display: inline-block;
+  }
+
+
+  .close-icon {
+    position: relative;
+    float: right;
+    padding: 12px 50px;
+    cursor: pointer;
+  }
+}
+
+.section--primary {
+  position: absolute;
+  background-color: transparent;
+
+  .call-to-action {
+    background-color: #4eaa4f;
+  }
+
+  min-width: 392px;
+}
+
+.section-full { 
+  right: 0;
+  left: 0;
+}
+
+#map-container {
+  position: fixed;
+  top: 80px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+#map-search {
+  margin-top: 10px;
+  margin-left: 35px;
+  margin-right: 35px;
+  max-width: 392px;
+  
+  .input-group {
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
+  }
+}
+
+.map-info {
+  margin-top: 5px;
+  background-color: #FFFFFF; 
+  color: var(--base-color-02); 
+  padding: 10px 10px 1px 10px;
+
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2), 0 -1px 0px rgba(0,0,0,0.02);
+  
+}
+
+@media (max-width: 1024px) {
+  #map-container {
+    top: 50px;
+  }
+
+  .section--primary {
+    position: relative;
+  }
+
+  #map-search {
+    margin-top: 0px;
+    margin-left: 11px;
+    margin-right: 0px;
+    border-top: solid 1px #ccc;
+    max-width: 100%;
+  }
+
+  .map-info {
+    margin-top: -5px;
+  }
+}
