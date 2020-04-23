@@ -31,6 +31,17 @@ export class BusinessesService {
     return this.http.get(url.buildUrl());
   }
 
+  getBatch(batchId: string) {
+    const url =
+        new UrlModel(this.apiUrl).setPath('businesses/v1/locations/batch/:batchId');
+
+    if (batchId) {
+      url.setPathParams({batchId});
+    }
+
+    return this.http.get(url.buildUrl());
+  }
+
   getBatches(status?: string) {
     const url =
         new UrlModel(this.apiUrl).setPath('businesses/v1/locations/batch');

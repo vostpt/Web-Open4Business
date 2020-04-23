@@ -139,7 +139,7 @@ export class SelectComponent implements ControlValueAccessor, OnInit, AfterViewI
         _value = e.map((a: any) => a[this.bindValue]);
       }
     }
-
+    console.log(_value);
     this.onChange(_value);
   }
 

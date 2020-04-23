@@ -15,6 +15,7 @@ import { BusinessesService } from './services/businesses.service';
 import { ConfirmAccountComponent } from './pages/confirm-account/confirm-account.component';
 import { MomentModule } from 'ngx-moment';
 import { LocationsConfirmComponent } from './pages/locations/locations-confirm.component';
+import { LocationsBatchesComponent } from './pages/locations/locations-batches.component';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { LocationsConfirmComponent } from './pages/locations/locations-confirm.c
     LocationsInsertComponent,
     LocationsListComponent,
     LocationsConfirmComponent,
+    LocationsBatchesComponent,
     LocationsSuccessSubmissionComponent,
     ConfirmAccountComponent
   ],

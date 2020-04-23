@@ -12,7 +12,6 @@ import { BasePageComponent } from '@core-modules/main-layout';
 export class LocationsConfirmComponent extends BasePageComponent implements
     OnInit, AfterViewInit, OnDestroy {
   public batchId: string;
-  public email: string;
 
   public total: number = 0;
   public pages: number = 1;
@@ -20,6 +19,7 @@ export class LocationsConfirmComponent extends BasePageComponent implements
 
   contentReady = false;
   datasets = {locations: []};
+  public batch: {batchId: string, status: string, personName: string, personEmail : string, personPhone: string, updatedAt: number, stats: {total: number, sucess: number, ignored: number}} = null;
 
   constructor(
       private readonly businessesService: BusinessesService,
@@ -30,9 +30,12 @@ export class LocationsConfirmComponent extends BasePageComponent implements
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
       this.batchId = params['batchId'];
-      this.email = params['email'];
 
-      this.getLocations();
+      if (this.batchId) {
+        this.getLocations();
+      } else {
+        location.href = '/businesses/locations/batches';
+      }
     });
   }
 
@@ -54,6 +57,17 @@ export class LocationsConfirmComponent extends BasePageComponent implements
     this.loader.show('pageLoader');
 
     const filter = {batchId: this.batchId};
+
+    this.subscriptions.push(
+      this.businessesService.getBatch(this.batchId)
+          .subscribe(
+              (result: {data: {batch: {batchId: string, status: string, personName: string, personEmail : string, personPhone: string, updatedAt: number, stats: {total: number, sucess: number, ignored: number}}}}) => {
+                    this.batch = result.data.batch;
+              },
+              (error) => {
+                this.loader.hide('pageLoader');
+                this.logger.error('Error fetching batch', error);
+              }));
 
     this.subscriptions.push(
         this.businessesService.getLocations(filter, 50, (this.page - 1) * 50)
@@ -118,7 +132,7 @@ export class LocationsConfirmComponent extends BasePageComponent implements
 
   save(confirm) {
     console.log('save', confirm);
-    const data = {email: this.email, batchId: this.batchId, confirm};
+    const data = {email: this.batch.personEmail, batchId: this.batchId, confirm};
 
     this.subscriptions.push(
         this.businessesService.confirmLocations(data).subscribe(

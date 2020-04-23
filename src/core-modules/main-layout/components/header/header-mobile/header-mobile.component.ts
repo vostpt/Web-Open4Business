@@ -11,7 +11,8 @@ import { ToggleOptions } from '../../../directives/toggle.directive';
   styleUrls: ['./header-mobile.component.scss']
 })
 export class HeaderMobileComponent implements OnInit {
-
+  
+  session: boolean;
   headerLogo: string;
   asideDisplay: boolean;
 
@@ -26,6 +27,12 @@ export class HeaderMobileComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if (localStorage.getItem('email')) {
+      this.session = true;
+    } else {
+      this.session = false;
+    }
+
     // this.headerLogo = this.layoutConfigService.getStickyLogo();
     this.headerLogo = this.layoutConfigService.getLogo();
     this.asideDisplay = this.layoutConfigService.getConfig('aside.self.display');

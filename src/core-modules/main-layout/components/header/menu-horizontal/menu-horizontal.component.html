@@ -6,9 +6,7 @@
   <div id="kt_header_menu" class="kt-header-menu kt-header-menu-mobile" [ngClass]="htmlClassService.getClasses('header_menu', true)">
     <ul class="kt-menu__nav">
       <li routerLinkActive="kt-menu__item--here" class="kt-menu__item kt-menu__item--submenu">
-        <a routerLink="/businesses/locations/new" class="kt-menu__link kt-menu__toggle">
-          <span class="kt-menu__link-text">Registe a sua empresa</span>
-        </a>
+        <button [hidden]="session" type="button" class="btn btn-primary" routerLink="/auth/signup">Registar a minha empresa</button>
       </li>
     </ul>
   </div>

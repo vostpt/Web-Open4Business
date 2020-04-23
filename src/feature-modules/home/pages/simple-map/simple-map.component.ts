@@ -33,7 +33,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
   public imageLib = [{name: 'pin', path: 'assets/images/mapbox/pin.png'}];
 
   public count = 0;
-  public searchInfo = 'lojas já estão abertas!';
+  public searchInfo = 'lojas já estão registadas.';
 
   private map: Map;
 
@@ -103,7 +103,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
                 this.mapService.parseResponseToGeoJSON(result.data.locations);
             this.count = markers.features.length;
             this.searchInfo = search ? 'lojas correspondem à tua pesquisa.' :
-                                       'lojas já estão abertas!';
+                                       'lojas já estão registadas.';
             this.loadMapbox(markers);
           },
           (error) => {
@@ -137,7 +137,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
 
             this.count = markers.features.length;
             this.searchInfo = search ? 'lojas correspondem à tua pesquisa.' :
-                                       'lojas já estão abertas!';
+                                       'lojas já estão registadas.';
 
             // Calculate bounds
             const bounds = new LngLatBounds();

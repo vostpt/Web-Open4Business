@@ -8,6 +8,7 @@ import { LocationsListComponent } from '@businesses-feature-module/pages/locatio
 import { LocationsSuccessSubmissionComponent } from '@businesses-feature-module/pages/locations/success-submission.component';
 import { ConfirmAccountComponent } from './pages/confirm-account/confirm-account.component';
 import { LocationsConfirmComponent } from './pages/locations/locations-confirm.component';
+import { LocationsBatchesComponent } from './pages/locations/locations-batches.component';
 
 
 const routes: Routes = [
@@ -41,6 +42,11 @@ const routes: Routes = [
           {
             path: 'success',
             component: LocationsSuccessSubmissionComponent,
+            pathMatch: 'full'
+          },
+          {
+            path: 'batches',
+            component: LocationsBatchesComponent,
             pathMatch: 'full'
           },
           {

@@ -4,6 +4,17 @@
 
 }
 
+// .title {
+//   color: #000;
+//   font-size: 1.2rem !important;
+// }
+
+// .text {
+//   color: #000;
+//   font-weight: 400;
+//   text-align: justify;
+// }
+
 .filters-section {
   padding: 0 0 25px 0;
 }
@@ -28,6 +39,16 @@
 
 .audit {
   text-align: right;
+}
+
+.second-line {
+  font-size: 0.8rem;
+  font-weight: lighter;
+}
+
+.separator {
+  margin-top: 15px;
+  clear: both;
 }
 
 .kt-portlet__head {

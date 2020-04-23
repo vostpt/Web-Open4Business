@@ -5,20 +5,70 @@
   <ul class="breadcrumbs">
     <li><a routerLink="/">OPEN4BUSINESS</a></li>
     <li>/</li>
+    <li><a routerLink="/businesses/locations">As Minhas Lojas</a></li>
+    <li>/</li>
+    <li><a routerLink="/businesses/locations/batches">Submissões</a></li>
+    <li>/</li>
     <li class="current">
       <span>Confirmar Lojas</span>
     </li>
   </ul>
 
-  <div class="row filters-section">
-    <div class="col-lg-12 text">
-      <p>Batch: <span class="font-weight-bold">{{batchId}}</span></p>
-      <p>Email: <span class="font-weight-bold">{{email}}</span></p>
+  <div>
+    <h3>Batch</h3>
+  </div>
+
+  <div class="kt-portlet">
+    <div class="kt-portlet__body">
+      <div class="row">
+        <div class="col-4">
+          <dt>Status</dt>
+          <dd [ngClass]="{'text-success': batch.status == 'APPROVED', 'text-danger': batch.status == 'REJECTED', 'text-warning': batch.status == 'WAITING_FOR_APPROVAL'}">{{batch.status}}</dd>
+        </div>
+
+        <div class="col-4">
+          <dt>Nome</dt>
+          <dd>{{batch.personName}}</dd>
+        </div>
+
+        <div class="col-4">
+          <dt>Email</dt>
+          <dd>{{batch.personEmail}}</dd>
+        </div>
+
+        <div class="col-4">
+          <dt>Telefone</dt>
+          <dd>{{batch.personPhone}}</dd>
+        </div>
+
+        <div class="col-4">
+          <dt>Atualizado em</dt>
+          <dd>{{batch.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</dd>
+        </div>
+
+        <div class="col-4">
+          <dt>Total de Lojas</dt>
+          <dd>{{batch.stats.total}}</dd>
+        </div>
+
+        <div class="col-4">
+          <dt>Lojas Importadas</dt>
+          <dd>{{batch.stats.sucess}}</dd>
+        </div>
+
+        <div class="col-4">
+          <dt>Lojas Ignoradas</dt>
+          <dd>{{batch.stats.ignored}}</dd>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="batch.status == 'WAITING_FOR_APPROVAL'">
+      <div class="col-lg-12">
+        <button class="btn btn-outline-secondary" (click)="save(false)">Rejeitar</button>
+        &nbsp;
+        <button class="btn btn-primary" (click)="save(true)">Aprovar</button>
+      </div>
     </div>
-    <div class="col-lg-12 text">
-      <button class="btn btn-outline-secondary" (click)="save(false)">Rejeitar</button>
-      &nbsp;
-      <button class="btn btn-primary" (click)="save(true)">Aprovar</button>
     </div>
   </div>
 
@@ -45,27 +95,55 @@
   </div>
 
   <div class="kt-portlet" *ngFor="let location of datasets.locations">
+    <div _ngcontent-cqf-c174="" class="kt-portlet__head">
+      <div _ngcontent-cqf-c174="" class="kt-portlet__head-label">
+        <h3 _ngcontent-cqf-c174="" class="kt-portlet__head-title title">{{location.company}}<br /><span
+            class="second-line">{{location.businessId}}</span></h3>
+      </div>
+      <div _ngcontent-cqf-c174="" class="kt-portlet__head-label">
+        <h3 _ngcontent-cqf-c174="" class="kt-portlet__head-title title-date">
+          <span *ngIf="!location.isActive"><span class="text-warning font-weight-bold">&nbsp;PENDENTE</span></span>
+          <span *ngIf="location.isActive && location.isOpen"><span
+              class="text-success font-weight-bold">&nbsp;ABERTO</span></span>
+          <span *ngIf="location.isActive && !location.isOpen"><span
+              class="text-danger font-weight-bold">&nbsp;FECHADO</span></span>
+        </h3>
+
+      </div>
+    </div>
     <div class="kt-portlet__body">
       <div class="row custom-card">
         <div class="col-lg-3">
           <h4>{{location.store}}</h4>
-          <p class="small">{{location.sector}},&nbsp;{{location.parish}}</p>
+          <p class="second-line">{{location.locationId}}</p>
+          <p class="">{{location.sector}}</p>
           <p>Telf.: {{location.phone}}</p>
+          <p class="separator"><a href="https://www.google.com/maps/search/?api=1&query={{location.latitude}},{{location.longitude}}" target="_blank" class="link">{{location.longitude}},&nbsp;{{location.latitude}}</a></p>
+        </div>
+        <div class="col-lg-3">
+          <h5>Morada</h5>
           <p>{{location.address}}</p>
           <p>{{location.zipCode}} {{location.parish}}</p>
         </div>
         <div class="col-lg-3">
           <h5>Horário de Funcionamento</h5>
           <div class="row" *ngFor="let number of [1,2,3]">
-            <div class="col-5"><p>{{ location['schedule' + number + 'DowFormatted'] }}</p></div>
-            <div class="col-7"><p>{{ location['schedule' + number + 'Formatted'] }}</p></div>
+            <div class="col-5">
+              <p>{{ location['schedule' + number + 'DowFormatted'] }}</p>
+            </div>
+            <div class="col-7">
+              <p>{{ location['schedule' + number + 'Formatted'] }}</p>
+            </div>
           </div>
         </div>
         <div class="col-lg-3">
           <h5>Entregas</h5>
           <p>{{location.typeOfService}}</p>
+          <h5 class="separator">Por Marcação?</h5>
+          <p>{{location.byAppointment}}.&nbsp;<span
+              *ngIf="location.contactForSchedule">Contaco:&nbsp;</span>{{location.contactForSchedule}}</p>
         </div>
-        <div class="col-lg-3">
+        <div class="col-lg-12 separator">
           <h5>Observações</h5>
           <p>{{location.obs}}</p>
         </div>

@@ -34,6 +34,7 @@ import { OffcanvasOptions } from '../../../directives/offcanvas.directive';
 })
 export class MenuHorizontalComponent implements OnInit, AfterViewInit {
 
+  session: boolean;
   currentRouteUrl: any = '';
 
   rootArrowEnabled: boolean;
@@ -91,6 +92,12 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
    * On init
    */
   ngOnInit(): void {
+    if (localStorage.getItem('email')) {
+      this.session = true;
+    } else {
+      this.session = false;
+    }
+
     this.rootArrowEnabled = this.layoutConfigService.getConfig('header.menu.self.root-arrow');
 
     this.currentRouteUrl = this.router.url;

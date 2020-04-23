@@ -32,6 +32,9 @@
             &nbsp;
             <button *ngIf="companyTypeBig" class="btn btn-outline-secondary" routerLink="/businesses/locations/new">
               <i class="fa fa-upload"></i>Importar Lojas</button>
+            &nbsp;
+            <button class="btn btn-outline-secondary" routerLink="/businesses/locations/batches">
+              <i class="fa fa-paper-plane"></i>Submissões</button>
           </div>
         </div>
 
@@ -39,8 +42,8 @@
 
         <div class="row" *ngIf="datasets.batches.length > 0">
           <div class="col">
-            <button class="badge" *ngFor="let b of datasets.batches" type="button"
-              (click)="filterBatch(b)" [ngClass]="{'badge-dark': batch && batch.batchId == b.batchId, 'badge-light': !batch || batch.batchId != b.batchId}">
+            <button class="badge" *ngFor="let b of datasets.batches" type="button" (click)="filterBatch(b)"
+              [ngClass]="{'badge-dark': batch && batch.batchId == b.batchId, 'badge-light': !batch || batch.batchId != b.batchId}">
               {{b.batchId}}
             </button>
           </div>
@@ -56,37 +59,37 @@
           <dt>Status</dt>
           <dd>{{batch.status}}</dd>
         </div>
-    
+
         <div class="col-4">
           <dt>Nome</dt>
           <dd>{{batch.personName}}</dd>
         </div>
-    
+
         <div class="col-4">
           <dt>Email</dt>
           <dd>{{batch.personEmail}}</dd>
         </div>
-    
+
         <div class="col-4">
           <dt>Telefone</dt>
           <dd>{{batch.personPhone}}</dd>
         </div>
-    
+
         <div class="col-4">
           <dt>Atualizado em</dt>
           <dd>{{batch.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</dd>
         </div>
-    
+
         <div class="col-4">
           <dt>Total de Lojas</dt>
           <dd>{{batch.stats.total}}</dd>
         </div>
-    
+
         <div class="col-4">
           <dt>Lojas Importadas</dt>
           <dd>{{batch.stats.sucess}}</dd>
         </div>
-    
+
         <div class="col-4">
           <dt>Lojas Ignoradas</dt>
           <dd>{{batch.stats.ignored}}</dd>
@@ -106,7 +109,7 @@
     </div>
   </div>
 
-  
+
 
   <div class="separator"></div>
 
@@ -410,7 +413,9 @@
           <p class="second-line">{{location.locationId}}</p>
           <p class="">{{location.sector}}</p>
           <p>Telf.: {{location.phone}}</p>
-          <p class="separator"><a href="https://www.google.com/maps/search/?api=1&query={{location.latitude}},{{location.longitude}}" target="_blank" class="link">{{location.longitude}},&nbsp;{{location.latitude}}</a></p>
+          <p class="separator"><a
+              href="https://www.google.com/maps/search/?api=1&query={{location.latitude}},{{location.longitude}}"
+              target="_blank" class="link">{{location.longitude}},&nbsp;{{location.latitude}}</a></p>
         </div>
         <div class="col-lg-3">
           <h5>Morada</h5>

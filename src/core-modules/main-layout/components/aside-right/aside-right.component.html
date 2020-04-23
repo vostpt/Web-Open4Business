@@ -20,6 +20,7 @@
         <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signin" class="nav-link">Login</a></li>
         <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations" class="nav-link">As Minhas Lojas</a></li>
         <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations/new" class="nav-link">Adicionar Lojas</a></li>
+        <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations/batches" class="nav-link">Submissões</a></li>
         <li class="nav-item" *ngIf="session && isAdmin"><a routerLink="/users/list" class="nav-link">Lista de Utilizadores</a></li>
         <li class="nav-item"><a routerLink="/" class="nav-link">Mapa</a></li>
         <!-- <li class="nav-item"><a routerLink="/small-medium-companies" class="nav-link">Formulário para pequenas e médias empresas</a></li> -->

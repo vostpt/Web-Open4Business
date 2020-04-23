@@ -48,7 +48,7 @@
           <a [routerLink]="['/users/my-info']" [queryParams]="{ email: user.authId}"><i class="fa fa-edit"></i>&nbsp;Editar Conta</a>
         </div>
         <div class="col" *ngIf="!user.isActive">
-          <a target="_blank" [routerLink]="['/businesses/confirm']" [queryParams]="{ token: user.activationToken, confirmationCode: user.confirmationCode}"><i class="fa fa-check"></i>&nbsp;Confirmar Conta</a>
+          <a [routerLink]="['/businesses/confirm']" [queryParams]="{ token: user.activationToken, confirmationCode: user.confirmationCode}"><i class="fa fa-check"></i>&nbsp;Confirmar Conta</a>
         </div>
       </div>
     </div>
