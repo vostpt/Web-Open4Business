@@ -39,10 +39,24 @@
   clear: both;
 }
 
+.pending-batch {
+  cursor: pointer;
+  padding: 10px;
+}
+
 p.counter {
   line-height: 32px;
 }
 
 .additional-spacing > label{
   margin-left: 10px;
+}
+
+.kt-portlet__head {
+  border-bottom: 1px solid #4eaa4f;
+}
+
+.second-line {
+  font-size: 0.8rem;
+  font-weight: lighter;
 }

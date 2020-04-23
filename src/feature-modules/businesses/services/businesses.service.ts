@@ -1,16 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
+import { Injectable } from '@angular/core';
 import { environment, UrlModel } from '@core-modules/core';
 
 @Injectable()
 export class BusinessesService {
-
   private apiUrl = `${environment.apiUrl}`;
 
-  constructor(
-    private http: HttpClient
-  ) { }
+  constructor(private http: HttpClient) {}
 
 
   getUser() {
@@ -19,7 +15,8 @@ export class BusinessesService {
   }
 
   confirmAccount(token, confirmationCode) {
-    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/confirm').buildUrl();
+    const url =
+        new UrlModel(this.apiUrl).setPath('businesses/v1/confirm').buildUrl();
     return this.http.post(url, {token, confirmationCode});
   }
 
@@ -34,34 +31,44 @@ export class BusinessesService {
     return this.http.get(url.buildUrl());
   }
 
-  sendNewLocationsFile(body:
-    {
-      company: string,
-      name: string,
-      lastName: string,
-      email: string,
-      phone: string,
-      dataFile: string
+  getBatches(status?: string) {
+    const url =
+        new UrlModel(this.apiUrl).setPath('businesses/v1/locations/batch');
+
+    if (status) {
+      url.setQueryParams({status});
     }
-  ) {
+
+    return this.http.get(url.buildUrl());
+  }
+
+  submitBatch(batchId: string, submit: boolean) {
+    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations/batch');
+
+    return this.http.post(url.buildUrl(), {batchId, submit});
+  }
+
+  sendNewLocationsFile(body: {
+    company: string,
+    name: string,
+    lastName: string,
+    email: string,
+    phone: string,
+    dataFile: string
+  }) {
     const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations');
 
     return this.http.post(url.buildUrl(), body);
   }
-  
-  confirmLocations(body:
-    {
-      email: string,
-      batchId: string,
-      confirm: boolean
-    }
-  ) {
-    const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations/confirm');
+
+  confirmLocations(body: {email: string, batchId: string, confirm: boolean}) {
+    const url =
+        new UrlModel(this.apiUrl).setPath('businesses/v1/locations/confirm');
 
     return this.http.post(url.buildUrl(), body);
   }
-  
-  updateLocation(location:any) {
+
+  updateLocation(location: any) {
     const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations');
 
     return this.http.put(url.buildUrl(), location);
@@ -74,5 +81,4 @@ export class BusinessesService {
 
     return this.http.delete(url.buildUrl());
   }
-
 }

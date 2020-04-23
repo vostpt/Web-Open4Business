@@ -101,10 +101,19 @@ export class LocationsConfirmComponent extends BasePageComponent implements
 
 
   formatScheduleProperty(property: string) {
-    return property.replace(/ /g, '')
-        .split('-')
-        .map(day => day.substring(0, 5))
-        .join(' às ');
+    if(!property) {
+      return '';
+    }
+    
+    try {
+      return property.replace(/ /g, '')
+      .split('-')
+      .map(day => day.substring(0, 5))
+      .join(' às ');  
+    } catch (error) {
+      console.log('formatScheduleProperty', property, error);
+      return '';
+    }
   }
 
   save(confirm) {

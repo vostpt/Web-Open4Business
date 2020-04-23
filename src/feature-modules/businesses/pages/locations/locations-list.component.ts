@@ -22,6 +22,7 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
   public total: number = 0;
   public pages: number = 1;
   public page: number = 1;
+  public batch: {batchId: string, status: string, personName: string, personEmail : string, personPhone: string, updatedAt: number, stats: {total: number, sucess: number, ignored: number}} = null;
 
   contentReady = false;
   datasets = {
@@ -29,6 +30,7 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
       companyType: ''
     },
     locations: [],
+    batches: [],
     hourOfDays: [{ id: '00:00' }, { id: '00:30' }, { id: '01:00' }],
     daysOfWeek: ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado', 'Domingo']
   };
@@ -127,10 +129,15 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
       filter = { search };
     }
 
+    if (this.batch) {
+      filter = { ...filter, batchId: this.batch.batchId };
+    }
+
     this.subscriptions.push(
       forkJoin([
         this.businessesService.getUser(),
-        this.businessesService.getLocations(filter, 50, (this.page - 1) * 50)
+        this.businessesService.getLocations(filter, 50, (this.page - 1) * 50),
+        this.businessesService.getBatches('WAITING_FOR_APPROVAL'),
       ]).subscribe(
         result => {
           this.datasets.user.companyType = result[0]['data'].company.companyType || 'small'; // TODO: TMP!
@@ -153,9 +160,13 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
           const offset = parseInt(resultData['data'].offset);
           this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
 
+          // Load batches
+          const batchesData = result[2];
+          this.datasets.batches = batchesData['data'].batches;
+
           this.contentReady = true;
           this.loader.hide('pageLoader');
-          document.getElementById('kt_scrolltop').click();
+          // document.getElementById('kt_scrolltop').click();
         },
         (error) => {
           this.loader.hide('pageLoader');
@@ -175,10 +186,19 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
 
 
   formatScheduleProperty(property: string) {
-    return property.replace(/ /g, '')
+    if(!property) {
+      return '';
+    }
+
+    try {
+      return property.replace(/ /g, '')
       .split('-')
       .map(day => day.substring(0, 5))
-      .join(' às ');
+      .join(' às ');  
+    } catch (error) {
+      console.log('formatScheduleProperty', property, error);
+      return '';
+    }
   }
 
   onSearch() {
@@ -332,5 +352,43 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
             `Não foi possível apagar a Loja '${location.store}'`);
           this.logger.error('Error deleting location', error);
         }));
+  }
+
+  filterBatch(batch: {batchId: string, status: string, personName: string, personEmail : string, personPhone: string, updatedAt: number, stats: {total: number, sucess: number, ignored: number}}) {
+    this.batch = batch;
+
+    this.onSearch();
+  }
+
+  cancelBatch() {
+    this.batch = null;
+
+    this.onSearch();
+  }
+
+  submitBatch(batchId: string, submit: boolean) {
+    this.loader.show('pageLoader');
+
+    this.subscriptions.push(
+      this.businessesService.submitBatch(batchId, submit)
+          .subscribe(
+              (result: {resultCode}) => {
+                if (result.resultCode == 200) {
+                  this.editing = false;
+                  this.notification.success('Batch submetido com sucesso.');
+                  
+                  this.batch = null;
+                  this.onSearch();
+                } else {
+                  this.notification.error(`Não foi possível submeter o batch selecionado.`);
+                }
+
+                this.loader.hide('pageLoader');
+              },
+              (error) => {
+                this.loader.hide('pageLoader');
+                this.logger.error('Error submiting batch', error);
+                this.notification.error(`Não foi possível submeter o batch selecionado.`);
+              }));
   }
 }
