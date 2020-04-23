@@ -27,11 +27,11 @@
             </app-catalog-form-input>
           </div>
           <div class="col input-ct">
-            <button class="btn btn-outline-secondary" (click)="editStore(null)"><i class="fa fa-plus"></i>Adicionar
-              Loja</button>
+            <button class="btn btn-outline-secondary" (click)="editStore(null)">
+              <i class="fa fa-plus"></i>Adicionar Loja</button>
             &nbsp;
-            <button class="btn btn-outline-secondary" routerLink="/businesses/locations/new"><i
-                class="fa fa-upload"></i>Importar Lojas</button>
+            <button *ngIf="companyTypeBig" class="btn btn-outline-secondary" routerLink="/businesses/locations/new">
+              <i class="fa fa-upload"></i>Importar Lojas</button>
           </div>
         </div>
       </div>
@@ -120,14 +120,36 @@
             <h5>Horário 1</h5>
           </div>
 
-          <div class="col-lg-3 input-ct">
+          <div *ngIf="companyTypeBig" class="col-lg-3 input-ct">
             <app-catalog-form-input [formControlField]="ef.schedule1" formControlName="schedule1" [required]="true"
               type="text" label="Horário 1"></app-catalog-form-input>
           </div>
 
-          <div class="col-lg-3 input-ct">
-            <app-catalog-form-input [formControlField]="ef.schedule1Dow" formControlName="schedule1Dow" [required]="true"
-              type="text" label="Dias da Semana"></app-catalog-form-input>
+          <div *ngIf="companyTypeBig" class="col-lg-3 input-ct">
+            <app-catalog-form-input [formControlField]="ef.schedule1Dow" formControlName="schedule1Dow"
+              [required]="true" label="Dias da Semana"></app-catalog-form-input>
+          </div>
+
+          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
+            <app-catalog-form-select [formControlField]="ef.schedule1StartHour" formControlName="schedule1StartHour"
+              [required]="true" bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+            </app-catalog-form-select>
+          </div>
+          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct" style="text-align: center; margin-top: 15px">
+            às
+          </div>
+          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
+            <app-catalog-form-select [formControlField]="ef.schedule1EndHour" formControlName="schedule1EndHour"
+              bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+            </app-catalog-form-select>
+          </div>
+
+          <div *ngIf="companyTypeSmall" class="col-lg-9 input-ct additional-spacing" style="margin-top: 15px">
+            <label *ngFor="let day of datasets.daysOfWeek" class="kt-checkbox kt-checkbox--solid mb-0">
+              <input type="checkbox" [value]="day" (change)="onCheckboxChange($event, 'schedule1DowChoices')">
+              <span></span>
+              <label class="mb-0">{{day}}</label>
+            </label>
           </div>
 
           <div class="col-lg-3 input-ct">
@@ -144,19 +166,42 @@
             </app-catalog-form-select>
           </div>
 
+
           <!-- Schedule 2 -->
           <div class="col-lg-12 input-ct separator">
             <h5>Horário 2</h5>
           </div>
 
-          <div class="col-lg-3 input-ct">
-            <app-catalog-form-input [formControlField]="ef.schedule2" formControlName="schedule2"
-              type="text" label="Horário 2"></app-catalog-form-input>
+          <div *ngIf="companyTypeBig" class="col-lg-3 input-ct">
+            <app-catalog-form-input [formControlField]="ef.schedule2" formControlName="schedule2" type="text"
+              label="Horário 2"></app-catalog-form-input>
           </div>
 
-          <div class="col-lg-3 input-ct">
-            <app-catalog-form-input [formControlField]="ef.schedule2Dow" formControlName="schedule2Dow"
-              type="text" label="Dias da Semana"></app-catalog-form-input>
+          <div *ngIf="companyTypeBig" class="col-lg-3 input-ct">
+            <app-catalog-form-input [formControlField]="ef.schedule2Dow" formControlName="schedule2Dow" type="text"
+              label="Dias da Semana"></app-catalog-form-input>
+          </div>
+
+          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
+            <app-catalog-form-select [formControlField]="ef.schedule2StartHour" formControlName="schedule2StartHour"
+              [required]="true" bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+            </app-catalog-form-select>
+          </div>
+          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct" style="text-align: center; margin-top: 15px">
+            às
+          </div>
+          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
+            <app-catalog-form-select [formControlField]="ef.schedule2EndHour" formControlName="schedule2EndHour"
+              bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+            </app-catalog-form-select>
+          </div>
+
+          <div *ngIf="companyTypeSmall" class="col-lg-9 input-ct additional-spacing" style="margin-top: 15px">
+            <label *ngFor="let day of datasets.daysOfWeek" class="kt-checkbox kt-checkbox--solid mb-0">
+              <input type="checkbox" [value]="day" (change)="onCheckboxChange($event, 'schedule2DowChoices')">
+              <span></span>
+              <label class="mb-0">{{day}}</label>
+            </label>
           </div>
 
           <div class="col-lg-3 input-ct">
@@ -172,20 +217,42 @@
               [items]="[{id:'manhã', name:'manhã'}, {id:'tarde', name:'tarde'}, {id:'dia completo', name:'dia completo'}]">
             </app-catalog-form-select>
           </div>
-          
+
           <!-- Schedule 3 -->
           <div class="col-lg-12 input-ct separator">
             <h5>Horário 3</h5>
           </div>
 
-          <div class="col-lg-3 input-ct">
-            <app-catalog-form-input [formControlField]="ef.schedule3" formControlName="schedule3"
-              type="text" label="Horário 3"></app-catalog-form-input>
+          <div *ngIf="companyTypeBig" class="col-lg-3 input-ct">
+            <app-catalog-form-input [formControlField]="ef.schedule3" formControlName="schedule3" type="text"
+              label="Horário 3"></app-catalog-form-input>
           </div>
 
-          <div class="col-lg-3 input-ct">
-            <app-catalog-form-input [formControlField]="ef.schedule3Dow" formControlName="schedule3Dow"
-              type="text" label="Dias da Semana"></app-catalog-form-input>
+          <div *ngIf="companyTypeBig" class="col-lg-3 input-ct">
+            <app-catalog-form-input [formControlField]="ef.schedule3Dow" formControlName="schedule3Dow" type="text"
+              label="Dias da Semana"></app-catalog-form-input>
+          </div>
+
+          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
+            <app-catalog-form-select [formControlField]="ef.schedule3StartHour" formControlName="schedule3StartHour"
+              [required]="true" bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+            </app-catalog-form-select>
+          </div>
+          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct" style="text-align: center; margin-top: 15px">
+            às
+          </div>
+          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
+            <app-catalog-form-select [formControlField]="ef.schedule3EndHour" formControlName="schedule3EndHour"
+              bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+            </app-catalog-form-select>
+          </div>
+
+          <div *ngIf="companyTypeSmall" class="col-lg-9 input-ct additional-spacing" style="margin-top: 15px">
+            <label *ngFor="let day of datasets.daysOfWeek" class="kt-checkbox kt-checkbox--solid mb-0">
+              <input type="checkbox" [value]="day" (change)="onCheckboxChange($event, 'schedule3DowChoices')">
+              <span></span>
+              <label class="mb-0">{{day}}</label>
+            </label>
           </div>
 
           <div class="col-lg-3 input-ct">
@@ -201,18 +268,19 @@
               [items]="[{id:'manhã', name:'manhã'}, {id:'tarde', name:'tarde'}, {id:'dia completo', name:'dia completo'}]">
             </app-catalog-form-select>
           </div>
-          
+
           <div class="col-lg-12 input-ct separator">
             <app-catalog-form-textarea [formControlField]="ef.obs" formControlName="obs" type="text"
               label="Informação Adicional"></app-catalog-form-textarea>
           </div>
 
           <div class="col-lg-3 input-ct">
-            <app-catalog-form-checkbox [formControlField]="ef.isOpen" formControlName="isOpen" label="Aberto"></app-catalog-form-checkbox>
+            <app-catalog-form-checkbox [formControlField]="ef.isOpen" formControlName="isOpen" label="Aberto">
+            </app-catalog-form-checkbox>
           </div>
 
           <div class="col-lg-12 input-ct separator">
-            <button class="btn btn-outline-secondary" type="button"  (click)="discardStoreChanges()">Cancel</button>
+            <button class="btn btn-outline-secondary" type="button" (click)="discardStoreChanges()">Cancel</button>
             &nbsp;
             <button class="btn btn-primary" type="submit">Save</button>
           </div>
@@ -222,7 +290,9 @@
   </div>
 
   <div class="row">
-    <div class="col-auto mr-auto"><p class="counter"><strong>{{total}}</strong> Lojas</p></div>
+    <div class="col-auto mr-auto">
+      <p class="counter"><strong>{{total}}</strong> Lojas</p>
+    </div>
 
     <div class="col-auto" *ngIf="total > 0">
       <nav aria-label="Pagination" class="">
@@ -232,7 +302,8 @@
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li class="page-item active"><a class="page-link" href="javascript:void(0)">{{page}}&nbsp;/&nbsp;{{pages}}</a></li>
+          <li class="page-item active"><a class="page-link" href="javascript:void(0)">{{page}}&nbsp;/&nbsp;{{pages}}</a>
+          </li>
           <li class="page-item" (click)="goto(page+1)">
             <a class="page-link" href="javascript:void(0)" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>
@@ -249,12 +320,14 @@
         <div class="col">
           <p>ID <span class="font-italic">{{location.locationId}}</span></p>
         </div>
-        <div class="col text-right" >
+        <div class="col text-right">
           <p *ngIf="!location.isActive"><span class="text-warning font-weight-bold">&nbsp;PENDENTE</span></p>
-          <p *ngIf="location.isActive && location.isOpen"><span class="text-success font-weight-bold">&nbsp;ABERTO</span></p>
-          <p *ngIf="location.isActive && !location.isOpen"><span class="text-danger font-weight-bold">&nbsp;FECHADO</span></p>
+          <p *ngIf="location.isActive && location.isOpen"><span
+              class="text-success font-weight-bold">&nbsp;ABERTO</span></p>
+          <p *ngIf="location.isActive && !location.isOpen"><span
+              class="text-danger font-weight-bold">&nbsp;FECHADO</span></p>
         </div>
-        
+
       </div>
 
       <div class="row custom-card">
@@ -304,7 +377,9 @@
   </div>
 
   <div class="row" *ngIf="total > 10">
-    <div class="col-auto mr-auto"><p class="counter"><strong>{{total}}</strong> Lojas</p></div>
+    <div class="col-auto mr-auto">
+      <p class="counter"><strong>{{total}}</strong> Lojas</p>
+    </div>
 
     <div class="col-auto">
       <nav aria-label="Pagination" class="">
@@ -314,7 +389,8 @@
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li class="page-item active"><a class="page-link" href="javascript:void(0)">{{page}}&nbsp;/&nbsp;{{pages}}</a></li>
+          <li class="page-item active"><a class="page-link" href="javascript:void(0)">{{page}}&nbsp;/&nbsp;{{pages}}</a>
+          </li>
           <li class="page-item" (click)="goto(page+1)">
             <a class="page-link" href="javascript:void(0)" aria-label="Next">
               <span aria-hidden="true">&raquo;</span>

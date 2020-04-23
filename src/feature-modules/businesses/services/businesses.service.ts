@@ -12,6 +12,12 @@ export class BusinessesService {
     private http: HttpClient
   ) { }
 
+
+  getUser() {
+    const url = new UrlModel(this.apiUrl).setPath('auth/v1/info');
+    return this.http.get(url.buildUrl());
+  }
+
   confirmAccount(token, confirmationCode) {
     const url = new UrlModel(this.apiUrl).setPath('businesses/v1/confirm').buildUrl();
     return this.http.post(url, {token, confirmationCode});
