@@ -26,14 +26,16 @@
               [placeholder]="searchPlaceholder" [appendButton]="true" [appendButtonIcon]="'fa fa-search'">
             </app-catalog-form-input>
           </div>
-          <div class="col input-ct">
-            <button class="btn btn-outline-secondary" (click)="editStore(null)">
-              <i class="fa fa-plus"></i>Adicionar Loja</button>
-            &nbsp;
-            <button *ngIf="companyTypeBig" class="btn btn-outline-secondary" routerLink="/businesses/locations/new">
-              <i class="fa fa-upload"></i>Importar Lojas</button>
-            &nbsp;
-            <button class="btn btn-outline-secondary" routerLink="/businesses/locations/batches">
+          <div class="col-xs-12 col-sm-auto input-ct">
+            <button class="btn btn-outline-secondary w-100" (click)="editStore(null)">
+              <i class="fa fa-plus"></i>Adicionar</button>
+          </div>
+          <div class="col-xs-12 col-sm-auto input-ct">
+            <button *ngIf="companyTypeBig" class="btn btn-outline-secondary w-100" routerLink="/businesses/locations/new">
+              <i class="fa fa-upload"></i>Importar</button>
+          </div>
+          <div class="col-xs-12 col-sm-auto input-ct">
+            <button class="btn btn-outline-secondary w-100" routerLink="/businesses/locations/batches">
               <i class="fa fa-paper-plane"></i>Submissões</button>
           </div>
         </div>

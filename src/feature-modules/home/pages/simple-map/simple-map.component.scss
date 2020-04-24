@@ -147,4 +147,15 @@
   .map-info {
     margin-top: -5px;
   }
+
+  .section--primary {  
+    .cookies-warn {
+      padding-left: 20px;
+      line-height: 1.5em;
+    }
+
+    .close-icon {
+      min-height: 40px;
+    }
+  }
 }

@@ -37,47 +37,46 @@
           <span class="font-weight-bold"
             [ngClass]="{'text-success': batch.status == 'APPROVED', 'text-danger': batch.status == 'REJECTED', 'text-warning': batch.status == 'WAITING_FOR_APPROVAL'}">{{batch.status}}</span>
         </h3>
-
       </div>
     </div>
     <div class="kt-portlet__body">
       <div class="row">
-        <div class="col-4">
+        <div class="col-lg-4">
           <dt>Status</dt>
           <dd>{{batch.status}}</dd>
         </div>
 
-        <div class="col-4">
+        <div class="col-lg-4">
           <dt>Nome</dt>
           <dd>{{batch.personName}}</dd>
         </div>
 
-        <div class="col-4">
+        <div class="col-lg-4">
           <dt>Email</dt>
           <dd>{{batch.personEmail}}</dd>
         </div>
 
-        <div class="col-4">
+        <div class="col-lg-4">
           <dt>Telefone</dt>
           <dd>{{batch.personPhone}}</dd>
         </div>
 
-        <div class="col-4">
+        <div class="col-lg-4">
           <dt>Atualizado em</dt>
           <dd>{{batch.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</dd>
         </div>
 
-        <div class="col-4">
+        <div class="col-lg-4">
           <dt>Total de Lojas</dt>
           <dd>{{batch.stats.total}}</dd>
         </div>
 
-        <div class="col-4">
+        <div class="col-lg-4">
           <dt>Lojas Importadas</dt>
           <dd>{{batch.stats.sucess}}</dd>
         </div>
 
-        <div class="col-4">
+        <div class="col-lg-4">
           <dt>Lojas Ignoradas</dt>
           <dd>{{batch.stats.ignored}}</dd>
         </div>

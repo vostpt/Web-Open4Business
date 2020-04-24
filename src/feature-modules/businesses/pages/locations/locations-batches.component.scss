@@ -4,17 +4,6 @@
 
 }
 
-// .title {
-//   color: #000;
-//   font-size: 1.2rem !important;
-// }
-
-// .text {
-//   color: #000;
-//   font-weight: 400;
-//   text-align: justify;
-// }
-
 .filters-section {
   padding: 0 0 25px 0;
 }
@@ -53,4 +42,10 @@
 
 .kt-portlet__head {
   border-bottom: 1px solid #4eaa4f;
+}
+
+@media (max-width: 1024px) {
+  .title-date {
+    display: none;
+  }
 }

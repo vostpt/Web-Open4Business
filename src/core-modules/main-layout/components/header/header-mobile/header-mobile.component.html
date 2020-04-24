@@ -1,16 +1,19 @@
 <!-- begin:: Header Mobile -->
 <div id="kt_header_mobile" class="kt-header-mobile kt-header-mobile--fixed">
-    <div class="kt-header-mobile__logo">
+  <div class="kt-header-mobile__logo">
     <a routerLink="/">
       <img alt="logo" [attr.src]="headerLogo" class="logo" />
     </a>
-    <button [hidden]="session" type="button" class="btn btn-outline-primary register-btn" routerLink="/auth/signup">Registar a minha empresa</button>
+    
+    <button [hidden]="session" type="button" class="btn btn-outline-primary register-btn"
+      routerLink="/auth/signup">Registar a minha Empresa</button>
   </div>
+
   <div class="kt-header-mobile__toolbar">
     <button [hidden]="!asideDisplay" class="kt-header-mobile__toolbar-toggler kt-header-mobile__toolbar-toggler--left"
       id="kt_aside_mobile_toggler"><span></span></button>
     <!-- <button class="kt-header-mobile__toolbar-toggler" id="kt_header_mobile_toggler"><span></span></button> -->
-    <span id="kt_quick_panel_toggler_btn-mobile">ACEDER AO MENU &nbsp; <i class="fas fa-bars"></i></span>
+    <span id="kt_quick_panel_toggler_btn-mobile"><i class="fas fa-bars"></i></span>
   </div>
 </div>
 <!-- end:: Header Mobile -->
