@@ -15,6 +15,7 @@ import { MapService } from './services/map.service';
 import { CookiesComponent } from './pages/cookies/cookies.component';
 import { AboutComponent } from './pages/about/about.component';
 import { SimpleMapComponent } from './pages/simple-map/simple-map.component';
+import { ParserService } from '@core-modules/core/services/parser.service';
 
 @NgModule({
   imports: [
@@ -34,7 +35,8 @@ import { SimpleMapComponent } from './pages/simple-map/simple-map.component';
   ],
   providers: [
     HomeService,
-    MapService
+    MapService,
+    ParserService
   ]
 })
 
