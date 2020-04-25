@@ -1,16 +1,15 @@
 <app-catalog-loader name="pageLoader"></app-catalog-loader>
 
 <div class="banner-section" *ngIf="showInformationBanner"
-  [ngClass]="{'bg-success': importResult.totalRows == importResult.successCount, 'bg-warning': importResult.totalRows > importResult.successCount}">
+  [ngClass]="{'bg-success': importResult.success, 'bg-warning': !importResult.success}">
   <i class="fa fa-times close-icon" (click)="dismissInformationBanner()"></i>
-  <div class="container" [ngClass]="{'text-dark': importResult.totalRows > importResult.successCount}">
-    <p *ngIf="importResult.totalRows == importResult.successCount" class="title">A tua contribuição foi enviada com
+  <div class="container" [ngClass]="{'text-dark': !importResult.success}">
+    <p *ngIf="importResult.success" class="title">A tua contribuição foi enviada com
       sucesso.</p>
-    <p *ngIf="importResult.totalRows > importResult.successCount" class="title">A tua contribuição foi parcialmente
-      enviada com sucesso, por favor corrige os erros abaixo e submete outro ficheiro APENAS com as linhas corrigidas.
+    <p *ngIf="!importResult.success" class="title">A tua contribuição foi registada, mas encontramos alguns erros. Corrija os erros abaixo e submeta outro ficheiro APENAS com as linhas corrigidas.
     </p>
 
-    <p>Será devidamente validada antes de ficar online. Agradecemos o teu contributo neste periodo excepcional.</p>
+    <p>As lojas importadas vão ser validadas antes de ficarem online. Agradecemos o teu contributo neste periodo excepcional.</p>
   </div>
 </div>
 
@@ -23,12 +22,17 @@
           <span>Total: {{importResult.totalRows}}</span>
         </li>
         <li>
-          <span>Imprtadas: {{importResult.successCount}}</span>
+          <span>Adicionadas: {{importResult.addCount}}</span>
+        </li>
+        <li>
+          <span>Atualizadas: {{importResult.updateCount}}</span>
         </li>
         <li>
           <span>Ignoradas: {{importResult.errorCount}}</span>
         </li>
       </ul>
+
+      <a class="" routerLink="/businesses/locations">Ir para Lista de Empresas</a>
     </div>
   </div>
 

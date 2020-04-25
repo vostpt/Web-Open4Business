@@ -38,6 +38,11 @@
             <button class="btn btn-outline-secondary w-100" routerLink="/businesses/locations/batches">
               <i class="fa fa-paper-plane"></i>Submissões</button>
           </div>
+          <div class="col-xs-12 col-sm-auto input-ct">
+            <a href="{{exportUrl}}{{exportSearch}}">
+              <button class="btn btn-outline-secondary w-100" type="button"><i class="fa fa-download"></i>Exportar</button>
+            </a>
+          </div>
         </div>
 
         <h5 *ngIf="datasets.batches.length > 0">Lojas à espera de aprovação</h5>
@@ -88,8 +93,13 @@
         </div>
 
         <div class="col-4">
-          <dt>Lojas Importadas</dt>
-          <dd>{{batch.stats.sucess}}</dd>
+          <dt>Lojas Adicionadas</dt>
+          <dd>{{batch.stats.added}}</dd>
+        </div>
+        
+        <div class="col-4">
+          <dt>Lojas Atualizadas</dt>
+          <dd>{{batch.stats.updated}}</dd>
         </div>
 
         <div class="col-4">
@@ -110,8 +120,6 @@
       </div>
     </div>
   </div>
-
-
 
   <div class="separator"></div>
 

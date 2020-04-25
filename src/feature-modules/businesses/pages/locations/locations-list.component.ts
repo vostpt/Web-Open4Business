@@ -1,11 +1,12 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {BusinessesService} from '@businesses-feature-module/services/businesses.service';
-import {FormsService} from '@core-modules/catalog/modules/forms';
-import {CheckboxComponent} from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
-import {SelectComponent} from '@core-modules/catalog/modules/forms/components/select/select.component';
-import {BasePageComponent} from '@core-modules/main-layout';
-import {forkJoin} from 'rxjs';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
+import { CheckboxComponent } from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
+import { SelectComponent } from '@core-modules/catalog/modules/forms/components/select/select.component';
+import { environment } from '@core-modules/core';
+import { ParserService } from '@core-modules/core/services/parser.service';
+import { BasePageComponent } from '@core-modules/main-layout';
+import { forkJoin } from 'rxjs';
 
 
 @Component({
@@ -20,6 +21,10 @@ export class LocationsListComponent extends BasePageComponent implements
   public total: number = 0;
   public pages: number = 1;
   public page: number = 1;
+  public exportUrl =
+      `${environment.apiUrl}/businesses/v1/locations/export?token=${
+          localStorage.getItem('token')}`;
+  public exportSearch = '';
   public batch: {
     batchId: string,
     status: string,
@@ -27,7 +32,7 @@ export class LocationsListComponent extends BasePageComponent implements
     personEmail: string,
     personPhone: string,
     updatedAt: number,
-    stats: {total: number, sucess: number, ignored: number}
+    stats: {total: number, added: number, updated: number, ignored: number}
   } = null;
 
   contentReady = false;
@@ -59,7 +64,7 @@ export class LocationsListComponent extends BasePageComponent implements
 
   constructor(
       private readonly formBuilder: FormBuilder,
-      private readonly formsService: FormsService,
+      private readonly parserService: ParserService,
       private readonly businessesService: BusinessesService) {
     super();
   }
@@ -140,6 +145,7 @@ export class LocationsListComponent extends BasePageComponent implements
 
     if (search) {
       filter = {search};
+      this.exportSearch = '&search=' + search;
     }
 
     if (this.batch) {
@@ -157,10 +163,10 @@ export class LocationsListComponent extends BasePageComponent implements
                         for (let i = 1; i <= 3; i++) {
                           if (item[`schedule${i}Dow`]) {
                             item[`schedule${i}DowFormatted`] =
-                                this.formatWeekdaysListProperty(
+                                this.parserService.formatWeekdaysListProperty(
                                     item[`schedule${i}Dow`]);
                             item[`schedule${i}Formatted`] =
-                                this.formatScheduleProperty(
+                                this.parserService.formatScheduleProperty(
                                     item[`schedule${i}`]);
                           }
                         }
@@ -190,6 +196,7 @@ export class LocationsListComponent extends BasePageComponent implements
 
     if (search) {
       filter = {search};
+      this.exportSearch = '&search=' + search;
     }
 
     if (this.batch) {
@@ -215,10 +222,10 @@ export class LocationsListComponent extends BasePageComponent implements
                         for (let i = 1; i <= 3; i++) {
                           if (item[`schedule${i}Dow`]) {
                             item[`schedule${i}DowFormatted`] =
-                                this.formatWeekdaysListProperty(
+                                this.parserService.formatWeekdaysListProperty(
                                     item[`schedule${i}Dow`]);
                             item[`schedule${i}Formatted`] =
-                                this.formatScheduleProperty(
+                                this.parserService.formatScheduleProperty(
                                     item[`schedule${i}`]);
                           }
                         }
@@ -243,33 +250,6 @@ export class LocationsListComponent extends BasePageComponent implements
                   this.loader.hide('pageLoader');
                   this.logger.error('Error fetching map markers', error);
                 }));
-  }
-
-  formatWeekdaysListProperty(weekdays: string) {
-    return weekdays.replace(/ /g, '')
-        .split(',')
-        .map(
-            (day, i, arr) =>
-                (i === 0 || arr.length - 1 === i ? day.substring(0, 3) : null))
-        .filter(n => n)
-        .join(' a ');
-  }
-
-
-  formatScheduleProperty(property: string) {
-    if (!property) {
-      return '';
-    }
-
-    try {
-      return property.replace(/ /g, '')
-          .split('-')
-          .map(day => day.substring(0, 5))
-          .join(' às ');
-    } catch (error) {
-      console.log('formatScheduleProperty', property, error);
-      return '';
-    }
   }
 
   onSearch() {
@@ -399,8 +379,15 @@ export class LocationsListComponent extends BasePageComponent implements
                 },
                 (error) => {
                   this.loader.hide('pageLoader');
-                  this.notification.error(`Não foi possível atualizar a Loja.`);
-                  this.logger.error('Error fetching map markers', error);
+
+                  if (error.error) {
+                    this.notification.error(`${error.error.resultMessage}`);
+                  } else {
+                    this.notification.error(
+                        `Não foi possível atualizar a Loja.`);
+                  }
+
+                  this.logger.error('Error saving location', error.error);
                 }));
   }
 
@@ -446,7 +433,7 @@ export class LocationsListComponent extends BasePageComponent implements
     personEmail: string,
     personPhone: string,
     updatedAt: number,
-    stats: {total: number, sucess: number, ignored: number}
+    stats: {total: number, added: number, updated, ignored: number}
   }) {
     this.batch = batch;
 

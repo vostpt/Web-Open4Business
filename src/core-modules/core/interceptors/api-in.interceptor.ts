@@ -57,7 +57,7 @@ export class ApiInInterceptor implements HttpInterceptor {
             break;
         }
 
-        return throwError(errorMessage);
+        return throwError(error);
       }),
       tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {

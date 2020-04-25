@@ -7,6 +7,7 @@ import {MapboxMarkerProperties} from '@home-feature-module/models/mapbox-marker-
 import {MapService} from '@home-feature-module/services/map.service';
 import {GeolocateControl, LngLat, Map, NavigationControl, Popup, LngLatBounds} from 'mapbox-gl';
 import { lang } from 'moment';
+import { ParserService } from '@core-modules/core/services/parser.service';
 
 @Component({
   selector: 'app-home-simple-map',
@@ -45,6 +46,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
   constructor(
       private readonly formBuilder: FormBuilder,
       private readonly formsService: FormsService,
+      private readonly parserService: ParserService,
       private readonly mapService: MapService, private route: ActivatedRoute) {
     super();
   }
@@ -379,8 +381,8 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
 
     for (let i = 1; i <= 3; i++) {
       const dayOfWeekPeriods =
-          this.formatWeekdaysListProperty(properties[`schedule${i}Dow`]);
-      const schedule = this.formatScheduleProperty(properties[`schedule${i}`]);
+          this.parserService.formatWeekdaysListProperty(properties[`schedule${i}Dow`]);
+      const schedule = this.parserService.formatScheduleProperty(properties[`schedule${i}`]);
 
       if (dayOfWeekPeriods) {
         html += `<span>${properties[`schedule${i}Type`] || ''}`;
@@ -426,28 +428,6 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
     // Contacto Agendamento(if Marcação = Sim)
 
     return html;
-  }
-
-  formatWeekdaysListProperty(weekdays: string) {
-    try {
-      return weekdays.replace(/ /g, '')
-          .split(',')
-          .map(
-              (day, i, arr) => (
-                  i === 0 || arr.length - 1 === i ? day.substring(0, 3) : null))
-          .filter(n => n)
-          .join(' a ');
-    } catch (error) {
-      return '';
-    }
-  }
-
-
-  formatScheduleProperty(property: string) {
-    return property.replace(/ /g, '')
-        .split('-')
-        .map(day => day.substring(0, 5))
-        .join(' às ');
   }
 
   ngOnDestroy() {

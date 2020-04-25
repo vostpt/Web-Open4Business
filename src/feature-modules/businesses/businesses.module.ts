@@ -16,6 +16,7 @@ import { ConfirmAccountComponent } from './pages/confirm-account/confirm-account
 import { MomentModule } from 'ngx-moment';
 import { LocationsConfirmComponent } from './pages/locations/locations-confirm.component';
 import { LocationsBatchesComponent } from './pages/locations/locations-batches.component';
+import { ParserService } from '@core-modules/core/services/parser.service';
 
 @NgModule({
   imports: [
@@ -35,7 +36,8 @@ import { LocationsBatchesComponent } from './pages/locations/locations-batches.c
     ConfirmAccountComponent
   ],
   providers: [
-    BusinessesService
+    BusinessesService,
+    ParserService
   ]
 })
 

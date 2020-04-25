@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
 import { BasePageComponent } from '@core-modules/main-layout';
+import { ParserService } from '@core-modules/core/services/parser.service';
 
 
 @Component({
@@ -19,10 +20,11 @@ export class LocationsConfirmComponent extends BasePageComponent implements
 
   contentReady = false;
   datasets = {locations: []};
-  public batch: {batchId: string, status: string, personName: string, personEmail : string, personPhone: string, updatedAt: number, stats: {total: number, sucess: number, ignored: number}} = null;
+  public batch: {batchId: string, status: string, personName: string, personEmail : string, personPhone: string, updatedAt: number, stats: {total: number, added: number, updated: number, ignored: number}} = null;
 
   constructor(
       private readonly businessesService: BusinessesService,
+      private readonly parserService: ParserService,
       private route: ActivatedRoute) {
     super();
   }
@@ -61,7 +63,7 @@ export class LocationsConfirmComponent extends BasePageComponent implements
     this.subscriptions.push(
       this.businessesService.getBatch(this.batchId)
           .subscribe(
-              (result: {data: {batch: {batchId: string, status: string, personName: string, personEmail : string, personPhone: string, updatedAt: number, stats: {total: number, sucess: number, ignored: number}}}}) => {
+              (result: {data: {batch: {batchId: string, status: string, personName: string, personEmail : string, personPhone: string, updatedAt: number, stats: {total: number, added: number, updated: number, ignored: number}}}}) => {
                     this.batch = result.data.batch;
               },
               (error) => {
@@ -78,10 +80,10 @@ export class LocationsConfirmComponent extends BasePageComponent implements
                     for (let i = 1; i <= 3; i++) {
                       if (item[`schedule${i}Dow`]) {
                         item[`schedule${i}DowFormatted`] =
-                            this.formatWeekdaysListProperty(
+                            this.parserService.formatWeekdaysListProperty(
                                 item[`schedule${i}Dow`]);
                         item[`schedule${i}Formatted`] =
-                            this.formatScheduleProperty(item[`schedule${i}`]);
+                            this.parserService.formatScheduleProperty(item[`schedule${i}`]);
                       }
                     }
 
@@ -103,33 +105,6 @@ export class LocationsConfirmComponent extends BasePageComponent implements
                 }));
   }
 
-  formatWeekdaysListProperty(weekdays: string) {
-    return weekdays.replace(/ /g, '')
-        .split(',')
-        .map(
-            (day, i, arr) =>
-                (i === 0 || arr.length - 1 === i ? day.substring(0, 3) : null))
-        .filter(n => n)
-        .join(' a ');
-  }
-
-
-  formatScheduleProperty(property: string) {
-    if(!property) {
-      return '';
-    }
-    
-    try {
-      return property.replace(/ /g, '')
-      .split('-')
-      .map(day => day.substring(0, 5))
-      .join(' às ');  
-    } catch (error) {
-      console.log('formatScheduleProperty', property, error);
-      return '';
-    }
-  }
-
   save(confirm) {
     console.log('save', confirm);
     const data = {email: this.batch.personEmail, batchId: this.batchId, confirm};
@@ -137,7 +112,7 @@ export class LocationsConfirmComponent extends BasePageComponent implements
     this.subscriptions.push(
         this.businessesService.confirmLocations(data).subscribe(
             (result: {data: {locations: object[]}}) => {
-              this.router.navigateByUrl('/businesses/locations');
+              this.router.navigateByUrl('/businesses/locations/batches');
             },
             (error) => {
               this.loader.hide('pageLoader');
