@@ -9,13 +9,15 @@ import { UserUpdateInfoComponent } from '@users-feature-module/pages/user-update
 import { UsersListComponent } from '@users-feature-module/pages/users-list.component';
 
 import { UsersService } from './services/users.service';
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
 
 
 @NgModule({
   imports: [
     MainLayoutModule,
     CatalogModule,
-
+    DropzoneModule,
     UsersRoutingModule
   ],
   declarations: [
@@ -23,7 +25,8 @@ import { UsersService } from './services/users.service';
     UsersListComponent
   ],
   providers: [
-    UsersService
+    UsersService,
+    BusinessesService
   ]
 })
 

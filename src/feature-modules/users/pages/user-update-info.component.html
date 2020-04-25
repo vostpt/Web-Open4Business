@@ -45,6 +45,23 @@
           </div>
         </div>
 
+        <div class="form-group row" >
+          <div class="col-lg-6">
+            <img src="{{marker}}" [hidden]="formUserInfoOnEditMode">
+          </div>
+        </div>
+
+        <div class="form-group row" [hidden]="!formUserInfoOnEditMode">
+          <div class="col-lg-12">
+            <label>Marcador</label>
+            <dropzone #dataUpload [config]="dataUploadConfiguration" (success)="onUploadSuccess('dataFile', $event)"
+              (error)="onUploadError($event)" (removedFile)="onFileRemoved($event)"></dropzone>
+            <div class="preview-container uploaded-files">
+              <div id="dataUploadPreview"></div>
+            </div>
+          </div>
+        </div>
+
         <div class="form-group row" [hidden]="!formUserInfoOnEditMode">
           <div class="col-lg-6" [hidden]="!isAdmin">
             <app-catalog-form-checkbox [formControlField]="fUserInfo.isActive" formControlName="isActive" label="Ativo">
@@ -58,6 +75,7 @@
         <div class="row">
           <div class="col-lg-12 kt-align-right">
             <button *ngIf="!formUserInfoOnEditMode" class="btn btn-primary ml-2" (click)="showEditableForm('formUserInfo')"><i class="fa fa-pen"></i> &nbsp; Editar</button>
+            <button *ngIf="formUserInfoOnEditMode" class="btn btn-outline-secondary ml-2" (click)="hideEditableForm('formUserInfo')"><i class="fa fa-times"></i> &nbsp; Cancelar</button>
             <button *ngIf="formUserInfoOnEditMode" type="submit" class="btn btn-primary ml-2">
               <i class="fa fa-check"></i> &nbsp;
               {{ 'dictionary.submit' | translate }}
@@ -103,6 +121,7 @@
         <div class="row">
           <div class="col-lg-12 kt-align-right">
             <button *ngIf="!formPasswordOnEditMode" class="btn btn-primary ml-2" (click)="showEditableForm('formPassword')"><i class="fa fa-pen"></i> &nbsp; Editar</button>
+            <button *ngIf="formPasswordOnEditMode" class="btn btn-outline-secondary ml-2" (click)="hideEditableForm('formPassword')"><i class="fa fa-times"></i> &nbsp; Cancelar</button>
             <button *ngIf="formPasswordOnEditMode" type="submit" class="btn btn-primary ml-2">
               <i class="fa fa-check"></i> &nbsp; {{ 'dictionary.submit' | translate }}
             </button>

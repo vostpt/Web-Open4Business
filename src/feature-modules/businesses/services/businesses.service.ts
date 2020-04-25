@@ -78,6 +78,13 @@ export class BusinessesService {
 
     return this.http.post(url.buildUrl(), body);
   }
+  
+  setMarker(businessId: string, markerPath: string) {
+    const url =
+        new UrlModel(this.apiUrl).setPath('businesses/v1/business/marker');
+
+    return this.http.post(url.buildUrl(), {businessId, markerPath});
+  }
 
   updateLocation(location: any) {
     const url = new UrlModel(this.apiUrl).setPath('businesses/v1/locations');

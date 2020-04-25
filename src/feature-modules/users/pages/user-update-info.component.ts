@@ -1,10 +1,13 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { FormsService, passwordFieldsMatchValidator, passwordFormatValidator } from '@core-modules/catalog/modules/forms';
-import { BasePageComponent } from '@core-modules/main-layout';
-import { UsersService } from '@users-feature-module/services/users.service';
-import { CheckboxComponent } from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {BusinessesService} from '@businesses-feature-module/services/businesses.service';
+import {FormsService, passwordFieldsMatchValidator, passwordFormatValidator} from '@core-modules/catalog/modules/forms';
+import {CheckboxComponent} from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
+import {environment} from '@core-modules/core';
+import {BasePageComponent} from '@core-modules/main-layout';
+import {UsersService} from '@users-feature-module/services/users.service';
+import {DropzoneConfigInterface} from 'ngx-dropzone-wrapper';
 
 @Component({
   selector: 'app-users-user-update-info',
@@ -20,6 +23,37 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
   public isAdmin: boolean;
   public authId: string;
   public title: string;
+  public marker: string = '';
+
+  defaultUploadConfiguration: DropzoneConfigInterface = {
+    dictRemoveFileConfirmation: 'Tem a certeza que deseja remover o ficheiro?',
+    maxFilesize: 1,
+    maxFiles: 1,
+    previewTemplate: `
+    <div id="preview-template" class="dz-preview">
+      <div class="dropzone-info">
+        <div class="details h-100">
+          <div class="d-flex">
+            <div class="result-success dz-success-mark"><i class="fa fa-check text-success"></i></div>
+            <div class="result-error dz-error-mark pl-2"> <i class="fa fa-times text-danger"></i> </div> &nbsp;
+            <span data-dz-name class="result-success pl-2"></span><span class="result-success pl-2" data-dz-size></span>
+            <div class="result-success actions h-100"><a href="javascript:;" title="Remover" data-dz-remove><i class="fa fa-trash"></i></a></div>
+            <div class="result-error dz-error-message">Ocorreu um erro. Tente novamente ou contacte-nos para apoio.</div>
+          </div>
+        </div>
+      </div>
+    </div>`
+  };
+
+  dataUploadConfiguration = {
+    ...this.defaultUploadConfiguration,
+    ...{
+      dictDefaultMessage: 'Pressione ou arraste um ficheiro .png com 41x51',
+          headers: {authorization: 'Bearer ' + localStorage.getItem('token')},
+          url: `${environment.apiUrl}/businesses/v1/file`,
+          acceptedFiles: '.png', previewsContainer: '#dataUploadPreview'
+    }
+  };
 
   formUserInfo: FormGroup;
   formUserPassword: FormGroup;
@@ -30,12 +64,13 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
     return this.formUserPassword.controls;
   }
 
-  datasets = {user: {}};
+  datasets = {user: {}, company: {}};
 
 
   constructor(
       private readonly formBuilder: FormBuilder,
       private readonly usersService: UsersService,
+      private readonly businessService: BusinessesService,
       private readonly formsService: FormsService,
       private route: ActivatedRoute) {
     super();
@@ -51,6 +86,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
       name: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       phone: [null, Validators.required],
+      dataFile: [null, null],
       isActive: [CheckboxComponent, Validators.required]
     });
 
@@ -80,6 +116,8 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
               .subscribe(
                   (result: {data: {company: object, info: object}}) => {
                     this.datasets.user = result.data.info;
+                    this.datasets.company = result.data.company;
+
                     this.datasets.user['company'] =
                         result.data.company['company'];
 
@@ -91,6 +129,10 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
                     this.fUserInfo.isActive.setValue(
                         this.datasets.user['isActive']);
 
+                    this.marker = `${
+                        this.environment.variables
+                            .apiUrl}/insights/v1/marker?businessId=${
+                        this.datasets.company['businessId']}`;
                     this.contentReady = true;
                     this.loader.hide('pageLoader');
                   },
@@ -113,6 +155,19 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
         break;
       case 'formPassword':
         this.formPasswordOnEditMode = true;
+        break;
+      default:
+        break;
+    }
+  }
+
+  hideEditableForm(form) {
+    switch (form) {
+      case 'formUserInfo':
+        this.formUserInfoOnEditMode = false;
+        break;
+      case 'formPassword':
+        this.formPasswordOnEditMode = false;
         break;
       default:
         break;
@@ -150,6 +205,30 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
                       this.logger.error('User info update unsuccessful', error);
                     }
                   }));
+
+      if (bodyPayload.dataFile) {
+        this.subscriptions.push(
+            this.businessService
+                .setMarker(
+                    this.datasets.company['businessId'], bodyPayload.dataFile)
+                .subscribe(
+                    () => {
+                      this.notification.success(
+                          'Marcador atualizado com sucesso');
+                    },
+                    error => {
+                      console.log(error.error);
+                      if (error.status === 400) {  // Mail already exists
+                        this.notification.error(error.error.resultMessage);
+                      } else {
+                        this.notification.error(
+                          'Não foi possível atualizar o marcador');
+                      }
+                      
+                    }));
+      }
+
+
     } else {
       this.loader.hide('pageLoader');
       this.formsService.showErrors(this.formUserInfo);
@@ -208,5 +287,35 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
       this.loader.hide('pageLoader');
       this.formsService.showErrors(this.formUserPassword);
     }
+  }
+
+  onFileAdded(event) {}
+
+  onFileRemoved(event) {}
+
+  onUploadSuccess(formField, event) {
+    const file = event[0];
+    const response = event[1];
+    file.previewElement.querySelectorAll('.result-success').forEach(el => {
+      el.classList.remove('d-none');
+    });
+
+    file.previewElement.querySelectorAll('.result-error').forEach(el => {
+      el.classList.add('d-none');
+    });
+
+    this.formUserInfo.get(formField).setValue(response.data?.id);
+  }
+
+  onUploadError(event) {
+    const file = event[0];
+    const response = event[1];
+
+    file.previewElement.querySelectorAll('.result-success').forEach(el => {
+      el.classList.add('d-none');
+    });
+    file.previewElement.querySelectorAll('.result-error').forEach(el => {
+      el.classList.remove('d-none');
+    });
   }
 }
