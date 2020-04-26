@@ -6,6 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { TranslateService } from '@ngx-translate/core';
 
 import { locale as ptLanguage } from './config/translations/pt';
+import { GoogleAnalyticsService } from '@core-modules/core/services/google-analytics.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private translateService: TranslateService,
-    private loader: NgxSpinnerService
+    private loader: NgxSpinnerService,
+    private googleAnalytics: GoogleAnalyticsService,
     // private layoutConfigService: LayoutConfigService,
     // private splashScreenService: SplashScreenService
   ) {
@@ -27,6 +29,8 @@ export class AppComponent implements OnInit, OnDestroy {
     this.translateService.setDefaultLang('pt');
     this.translateService.setTranslation(ptLanguage.lang, ptLanguage.data, true);
     // this.translationService.loadTranslations(enLang, chLang, esLang, jpLang, deLang, frLang);
+
+    this.googleAnalytics.start();
   }
 
 

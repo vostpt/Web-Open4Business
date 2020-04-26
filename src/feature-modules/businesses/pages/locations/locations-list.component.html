@@ -215,23 +215,27 @@
               [required]="true" label="Dias da Semana"></app-catalog-form-input>
           </div>
 
-          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
-            <app-catalog-form-select [formControlField]="ef.schedule1StartHour" formControlName="schedule1StartHour"
-              [required]="true" bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
-            </app-catalog-form-select>
+          <div class="col-lg-3" *ngIf="companyTypeSmall">
+            <div class="row">
+              <div class="col-lg-5 input-ct">
+                <app-catalog-form-select [formControlField]="ef.schedule1StartHour" formControlName="schedule1StartHour"
+                  [required]="true" bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+                </app-catalog-form-select>
+              </div>
+              <div class="col-lg-2 input-ct" style="text-align: center; margin-top: 15px">
+                às
+              </div>
+              <div class="col-lg-5 input-ct">
+                <app-catalog-form-select [formControlField]="ef.schedule1EndHour" formControlName="schedule1EndHour"
+                  bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+                </app-catalog-form-select>
+              </div>
+            </div>
           </div>
-          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct" style="text-align: center; margin-top: 15px">
-            às
-          </div>
-          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
-            <app-catalog-form-select [formControlField]="ef.schedule1EndHour" formControlName="schedule1EndHour"
-              bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
-            </app-catalog-form-select>
-          </div>
-
+          
           <div *ngIf="companyTypeSmall" class="col-lg-9 input-ct additional-spacing" style="margin-top: 15px">
             <label *ngFor="let day of datasets.daysOfWeek" class="kt-checkbox kt-checkbox--solid mb-0">
-              <input type="checkbox" [value]="day" (change)="onCheckboxChange($event, 'schedule1DowChoices')">
+              <input type="checkbox" id="schedule1DowChoices-{{day}}" [value]="day" (change)="onCheckboxChange($event, 'schedule1DowChoices')">
               <span></span>
               <label class="mb-0">{{day}}</label>
             </label>
@@ -267,23 +271,27 @@
               label="Dias da Semana"></app-catalog-form-input>
           </div>
 
-          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
-            <app-catalog-form-select [formControlField]="ef.schedule2StartHour" formControlName="schedule2StartHour"
-              [required]="true" bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
-            </app-catalog-form-select>
+          <div class="col-lg-3" *ngIf="companyTypeSmall">
+            <div class="row">
+              <div class="col-lg-5 input-ct">
+                <app-catalog-form-select [formControlField]="ef.schedule2StartHour" formControlName="schedule2StartHour"
+                  [required]="true" bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+                </app-catalog-form-select>
+              </div>
+              <div class="col-lg-2 input-ct" style="text-align: center; margin-top: 15px">
+                às
+              </div>
+              <div class="col-lg-5 input-ct">
+                <app-catalog-form-select [formControlField]="ef.schedule2EndHour" formControlName="schedule2EndHour"
+                  bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+                </app-catalog-form-select>
+              </div>
+            </div>
           </div>
-          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct" style="text-align: center; margin-top: 15px">
-            às
-          </div>
-          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
-            <app-catalog-form-select [formControlField]="ef.schedule2EndHour" formControlName="schedule2EndHour"
-              bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
-            </app-catalog-form-select>
-          </div>
-
+          
           <div *ngIf="companyTypeSmall" class="col-lg-9 input-ct additional-spacing" style="margin-top: 15px">
             <label *ngFor="let day of datasets.daysOfWeek" class="kt-checkbox kt-checkbox--solid mb-0">
-              <input type="checkbox" [value]="day" (change)="onCheckboxChange($event, 'schedule2DowChoices')">
+              <input type="checkbox" id="schedule2DowChoices-{{day}}" [value]="day" (change)="onCheckboxChange($event, 'schedule2DowChoices')">
               <span></span>
               <label class="mb-0">{{day}}</label>
             </label>
@@ -318,23 +326,27 @@
               label="Dias da Semana"></app-catalog-form-input>
           </div>
 
-          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
-            <app-catalog-form-select [formControlField]="ef.schedule3StartHour" formControlName="schedule3StartHour"
-              [required]="true" bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
-            </app-catalog-form-select>
-          </div>
-          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct" style="text-align: center; margin-top: 15px">
-            às
-          </div>
-          <div *ngIf="companyTypeSmall" class="col-lg-1 input-ct">
-            <app-catalog-form-select [formControlField]="ef.schedule3EndHour" formControlName="schedule3EndHour"
-              bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
-            </app-catalog-form-select>
+          <div class="col-lg-3" *ngIf="companyTypeSmall">
+            <div class="row">
+              <div class="col-lg-5 input-ct">
+                <app-catalog-form-select [formControlField]="ef.schedule3StartHour" formControlName="schedule3StartHour"
+                  [required]="true" bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+                </app-catalog-form-select>
+              </div>
+              <div class="col-lg-2 input-ct" style="text-align: center; margin-top: 15px">
+                às
+              </div>
+              <div class="col-lg-5 input-ct">
+                <app-catalog-form-select [formControlField]="ef.schedule3EndHour" formControlName="schedule3EndHour"
+                  bindLabel="id" bindValue="id" [items]="datasets.hourOfDays">
+                </app-catalog-form-select>
+              </div>
+            </div>
           </div>
 
           <div *ngIf="companyTypeSmall" class="col-lg-9 input-ct additional-spacing" style="margin-top: 15px">
             <label *ngFor="let day of datasets.daysOfWeek" class="kt-checkbox kt-checkbox--solid mb-0">
-              <input type="checkbox" [value]="day" (change)="onCheckboxChange($event, 'schedule3DowChoices')">
+              <input type="checkbox" id="schedule3DowChoices-{{day}}" [value]="day" (change)="onCheckboxChange($event, 'schedule3DowChoices')">
               <span></span>
               <label class="mb-0">{{day}}</label>
             </label>

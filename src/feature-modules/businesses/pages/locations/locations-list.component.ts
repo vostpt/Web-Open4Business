@@ -1,12 +1,12 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
-import { CheckboxComponent } from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
-import { SelectComponent } from '@core-modules/catalog/modules/forms/components/select/select.component';
-import { environment } from '@core-modules/core';
-import { ParserService } from '@core-modules/core/services/parser.service';
-import { BasePageComponent } from '@core-modules/main-layout';
-import { forkJoin } from 'rxjs';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {FormArray, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {BusinessesService} from '@businesses-feature-module/services/businesses.service';
+import {CheckboxComponent} from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
+import {SelectComponent} from '@core-modules/catalog/modules/forms/components/select/select.component';
+import {environment} from '@core-modules/core';
+import {ParserService} from '@core-modules/core/services/parser.service';
+import {BasePageComponent} from '@core-modules/main-layout';
+import {forkJoin} from 'rxjs';
 
 
 @Component({
@@ -40,7 +40,21 @@ export class LocationsListComponent extends BasePageComponent implements
     user: {companyType: ''},
     locations: [],
     batches: [],
-    hourOfDays: [{id: '00:00'}, {id: '00:30'}, {id: '01:00'}],
+    hourOfDays:
+        [
+          {id: '00:00'}, {id: '00:30'}, {id: '01:00'}, {id: '01:30'},
+          {id: '02:00'}, {id: '02:30'}, {id: '03:00'}, {id: '03:30'},
+          {id: '04:00'}, {id: '04:30'}, {id: '05:00'}, {id: '05:30'},
+          {id: '06:00'}, {id: '06:30'}, {id: '07:00'}, {id: '07:30'},
+          {id: '08:00'}, {id: '08:30'}, {id: '09:00'}, {id: '09:30'},
+          {id: '10:00'}, {id: '10:30'}, {id: '11:00'}, {id: '11:30'},
+          {id: '12:00'}, {id: '12:30'}, {id: '13:00'}, {id: '13:30'},
+          {id: '14:00'}, {id: '14:30'}, {id: '15:00'}, {id: '15:30'},
+          {id: '16:00'}, {id: '16:30'}, {id: '17:00'}, {id: '17:30'},
+          {id: '18:00'}, {id: '18:30'}, {id: '19:00'}, {id: '19:30'},
+          {id: '20:00'}, {id: '20:30'}, {id: '21:00'}, {id: '21:30'},
+          {id: '22:00'}, {id: '22:30'}, {id: '23:00'}, {id: '23:30'}
+        ],
     daysOfWeek:
         ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado', 'Domingo']
   };
@@ -291,6 +305,30 @@ export class LocationsListComponent extends BasePageComponent implements
           console.warn(e);
         }
       }
+
+      setTimeout(() => {
+        // Fill schedule fields
+        for (let i = 1; i <= 3; i++) {
+          if (location[`schedule${i}`]) {
+            let hours = location.schedule1.split('-');
+            this.editForm.controls[`schedule${i}StartHour`].setValue(
+                hours[0].substring(0, 5));
+            this.editForm.controls[`schedule${i}EndHour`].setValue(
+                hours[1].substring(0, 5));
+          }
+
+          if (location[`schedule${i}Dow`]) {
+            let days = location[`schedule${i}Dow`].split(',');
+
+            days.forEach((d) => {
+              if (document.getElementById(`schedule${i}DowChoices-${d.trim()}`)) {
+                document.getElementById(
+                    `schedule${i}DowChoices-${d.trim()}`)['checked'] = true
+              }
+            });
+          }
+        }
+      }, 50);
     } else {
       this.editForm.reset();
     }
@@ -312,12 +350,12 @@ export class LocationsListComponent extends BasePageComponent implements
             this.ef.schedule1EndHour.value}`);
       }
       if (this.ef.schedule2StartHour.value && this.ef.schedule2EndHour.value) {
-        this.ef.schedule1.setValue(`${this.ef.schedule1StartHour.value}-${
-            this.ef.schedule1EndHour.value}`);
+        this.ef.schedule2.setValue(`${this.ef.schedule2StartHour.value}-${
+            this.ef.schedule2EndHour.value}`);
       }
       if (this.ef.schedule3StartHour.value && this.ef.schedule3EndHour.value) {
-        this.ef.schedule1.setValue(`${this.ef.schedule1StartHour.value}-${
-            this.ef.schedule1EndHour.value}`);
+        this.ef.schedule3.setValue(`${this.ef.schedule3StartHour.value}-${
+            this.ef.schedule3EndHour.value}`);
       }
 
       // Necessary to order the days.
@@ -329,7 +367,7 @@ export class LocationsListComponent extends BasePageComponent implements
                                                                       null);
               })
               .filter(n => n)
-              .join(', '));
+              .join(','));
 
       this.ef.schedule2Dow.setValue(
           this.datasets.daysOfWeek
@@ -339,7 +377,7 @@ export class LocationsListComponent extends BasePageComponent implements
                                                                       null);
               })
               .filter(n => n)
-              .join(', '));
+              .join(','));
 
       this.ef.schedule3Dow.setValue(
           this.datasets.daysOfWeek
@@ -349,7 +387,7 @@ export class LocationsListComponent extends BasePageComponent implements
                                                                       null);
               })
               .filter(n => n)
-              .join(', '));
+              .join(','));
     }
 
     this.subscriptions.push(
