@@ -90,20 +90,20 @@ export class LocationsListComponent extends BasePageComponent implements
       locationId: [null, Validators.required],
       company: [null, Validators.required],
       store: [null, Validators.required],
-      address: [null, Validators.required],
-      fregesia: [null, Validators.required],
-      concelho: [null, Validators.required],
-      district: [null, Validators.required],
-      zipCode: [null, Validators.required],
+      address: [null, null],
+      fregesia: [null, null],
+      concelho: [null, null],
+      district: [null, null],
+      zipCode: [null, null],
       latitude: [null, Validators.required],
       longitude: [null, Validators.required],
       phone: [null, null],
-      sector: [null, Validators.required],
+      sector: [null, null],
 
-      schedule1: [null, Validators.required],
-      schedule1Dow: [null, Validators.required],
-      schedule1Type: [null, Validators.required],
-      schedule1Period: [null, Validators.required],
+      schedule1: [null, null],
+      schedule1Dow: [null, null],
+      schedule1Type: [null, null],
+      schedule1Period: [null, null],
 
       schedule1StartHour: null,  // Auxiliary fields for simples forms!
       schedule1EndHour: null,
@@ -226,8 +226,7 @@ export class LocationsListComponent extends BasePageComponent implements
             .subscribe(
                 result => {
                   this.datasets.user.companyType =
-                      result[0]['data'].company.companyType ||
-                      'small';  // TODO: TMP!
+                      result[0]['data'].company.companyType;
 
                   // Locations call!
                   const resultData = result[1];
@@ -310,18 +309,23 @@ export class LocationsListComponent extends BasePageComponent implements
         // Fill schedule fields
         for (let i = 1; i <= 3; i++) {
           if (location[`schedule${i}`]) {
-            let hours = location.schedule1.split('-');
+            let hours = location[`schedule${i}`].split('-');
             this.editForm.controls[`schedule${i}StartHour`].setValue(
                 hours[0].substring(0, 5));
-            this.editForm.controls[`schedule${i}EndHour`].setValue(
-                hours[1].substring(0, 5));
+                
+            if (hours && hours.length > 1) {
+              this.editForm.controls[`schedule${i}EndHour`].setValue(
+                  hours[1].substring(0, 5));
+            }
           }
 
           if (location[`schedule${i}Dow`]) {
             let days = location[`schedule${i}Dow`].split(',');
 
             days.forEach((d) => {
-              if (document.getElementById(`schedule${i}DowChoices-${d.trim()}`)) {
+              if (document.getElementById(
+                      `schedule${i}DowChoices-${d.trim()}`)) {
+                this.editForm.controls[`schedule${i}DowChoices`].value.push(d);
                 document.getElementById(
                     `schedule${i}DowChoices-${d.trim()}`)['checked'] = true
               }
@@ -344,51 +348,47 @@ export class LocationsListComponent extends BasePageComponent implements
   saveStoreChanges() {
     this.loader.show('pageLoader');
 
-    if (this.companyTypeSmall) {
-      if (this.ef.schedule1StartHour.value && this.ef.schedule1EndHour.value) {
-        this.ef.schedule1.setValue(`${this.ef.schedule1StartHour.value}-${
-            this.ef.schedule1EndHour.value}`);
-      }
-      if (this.ef.schedule2StartHour.value && this.ef.schedule2EndHour.value) {
-        this.ef.schedule2.setValue(`${this.ef.schedule2StartHour.value}-${
-            this.ef.schedule2EndHour.value}`);
-      }
-      if (this.ef.schedule3StartHour.value && this.ef.schedule3EndHour.value) {
-        this.ef.schedule3.setValue(`${this.ef.schedule3StartHour.value}-${
-            this.ef.schedule3EndHour.value}`);
-      }
 
-      // Necessary to order the days.
-      this.ef.schedule1Dow.setValue(
-          this.datasets.daysOfWeek
-              .map(day => {
-                return (
-                    this.ef.schedule1DowChoices.value.includes(day) ? day :
-                                                                      null);
-              })
-              .filter(n => n)
-              .join(','));
-
-      this.ef.schedule2Dow.setValue(
-          this.datasets.daysOfWeek
-              .map(day => {
-                return (
-                    this.ef.schedule2DowChoices.value.includes(day) ? day :
-                                                                      null);
-              })
-              .filter(n => n)
-              .join(','));
-
-      this.ef.schedule3Dow.setValue(
-          this.datasets.daysOfWeek
-              .map(day => {
-                return (
-                    this.ef.schedule3DowChoices.value.includes(day) ? day :
-                                                                      null);
-              })
-              .filter(n => n)
-              .join(','));
+    if (this.ef.schedule1StartHour.value && this.ef.schedule1EndHour.value) {
+      this.ef.schedule1.setValue(`${this.ef.schedule1StartHour.value}-${
+          this.ef.schedule1EndHour.value}`);
     }
+    if (this.ef.schedule2StartHour.value && this.ef.schedule2EndHour.value) {
+      this.ef.schedule2.setValue(`${this.ef.schedule2StartHour.value}-${
+          this.ef.schedule2EndHour.value}`);
+    }
+    if (this.ef.schedule3StartHour.value && this.ef.schedule3EndHour.value) {
+      this.ef.schedule3.setValue(`${this.ef.schedule3StartHour.value}-${
+          this.ef.schedule3EndHour.value}`);
+    }
+
+    // Necessary to order the days.
+    this.ef.schedule1Dow.setValue(
+        this.datasets.daysOfWeek
+            .map(day => {
+              return (
+                  this.ef.schedule1DowChoices.value.includes(day) ? day : null);
+            })
+            .filter(n => n)
+            .join(','));
+
+    this.ef.schedule2Dow.setValue(
+        this.datasets.daysOfWeek
+            .map(day => {
+              return (
+                  this.ef.schedule2DowChoices.value.includes(day) ? day : null);
+            })
+            .filter(n => n)
+            .join(','));
+
+    this.ef.schedule3Dow.setValue(
+        this.datasets.daysOfWeek
+            .map(day => {
+              return (
+                  this.ef.schedule3DowChoices.value.includes(day) ? day : null);
+            })
+            .filter(n => n)
+            .join(','));
 
     this.subscriptions.push(
         this.businessesService.updateLocation(this.editForm.value)

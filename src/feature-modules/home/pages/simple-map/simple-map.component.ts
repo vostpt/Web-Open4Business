@@ -367,15 +367,15 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
   getPopupHTML(properties: MapboxMarkerProperties, coordinates) {
     let html = `
       <h4>${properties.store}</h4>
-      <p class="small">${properties.sector},&nbsp;${properties.parish}</p>
+      <p class="small">${properties.sector}</p>
       <p>Telf.: ${properties.phone}</p>
       <p>${properties.address}</p>
       <p>${properties.zipCode} ${properties.parish}</p>
       <br />`;
 
     html +=
-        (properties.schedule1Dow || properties.schedule2Dow ||
-                 properties.schedule3Dow ?
+        (properties.schedule1Dow != '' || properties.schedule2Dow != '' ||
+                 properties.schedule3Dow != '' ?
              `<h5><b>Horário de Funcionamento</b></h5>` :
              '');
 
@@ -384,8 +384,8 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
           this.parserService.formatWeekdaysListProperty(properties[`schedule${i}Dow`]);
       const schedule = this.parserService.formatScheduleProperty(properties[`schedule${i}`]);
 
-      if (dayOfWeekPeriods) {
-        html += `<span>${properties[`schedule${i}Type`] || ''}`;
+      if (dayOfWeekPeriods != '') {
+        html += `<span>${properties[`schedule${i}Type`]}`;
 
         if (properties[`schedule${i}Period`]) {
           html += `:&nbsp;<span class="font-italic">${
@@ -396,36 +396,30 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
       }
 
       html +=
-          (dayOfWeekPeriods ? `
+          (dayOfWeekPeriods != '' ? `
           <div class="row">
             <div class="col-5"><p>${dayOfWeekPeriods}:</p></div>
             <div class="col-7"><p>${schedule}</p></div>
-          </div>` :
-                              '');
+          </div>` : '');
     }
 
     html +=
-        (properties.typeOfService ? `<br /><h5><b>Entregas</b></h5><p>${
+        (properties.typeOfService != '' ? `<br /><h5><b>Entregas</b></h5><p>${
                                         properties.typeOfService}</p>` :
                                     '');
 
     if (properties.byAppointment == 'Sim') {
       html += `<br /><h5><b>Por Marcação</b></h5>`;
-      html += `<p>${properties.contactForSchedule || ''}<p>`;
+      html += `<p>${properties.contactForSchedule}<p>`;
     }
 
     html +=
-        (properties.obs ? `<br /><p class="notes">${properties.obs}</p>` : '');
+        (properties.obs != '' ? `<br /><p class="notes">${properties.obs}</p>` : '');
 
     html += `<br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.com/maps/search/?api=1&query=${
         properties.latitude},${
         properties
             .longitude}" target="_blank" class="btn btn-primary link">Navegar para...</a></div></div>`;
-
-
-    // tipo de horário,
-    // Por Marcação(if Sim)
-    // Contacto Agendamento(if Marcação = Sim)
 
     return html;
   }
