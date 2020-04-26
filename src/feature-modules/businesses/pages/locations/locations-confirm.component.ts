@@ -17,6 +17,7 @@ export class LocationsConfirmComponent extends BasePageComponent implements
   public total: number = 0;
   public pages: number = 1;
   public page: number = 1;
+  public isAdmin: boolean = false;
 
   contentReady = false;
   datasets = {locations: []};
@@ -27,6 +28,8 @@ export class LocationsConfirmComponent extends BasePageComponent implements
       private readonly parserService: ParserService,
       private route: ActivatedRoute) {
     super();
+
+    this.isAdmin = (localStorage.getItem('token') && localStorage.getItem('email') && localStorage.getItem('isA') === 'true' ? true : false);
   }
 
   ngOnInit() {
