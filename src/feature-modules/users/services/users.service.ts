@@ -12,12 +12,19 @@ export class UsersService {
     private http: HttpClient
   ) { }
 
-  getUsers(search?: string) {
+  getUsers(search?: string, active? : boolean) {
     const url = new UrlModel(this.apiUrl).setPath('auth/v1/users');
+    let filter = {};
 
     if (search) {
-      url.setQueryParams({ search });
+      filter = {...filter, search};
     }
+    
+    if (active !== undefined && active !== null ) {
+      filter = {...filter, active};
+    }
+
+    url.setQueryParams(filter);
 
     return this.http.get(url.buildUrl());
   }

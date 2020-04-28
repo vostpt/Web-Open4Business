@@ -11,19 +11,33 @@
   </ul>
 
 
-  <form [formGroup]="form" class="kt-form kt-form--label-right">
+  <form [formGroup]="form" class="kt-form kt-form--label-right" (ngSubmit)="onSearch()">
     <div class="form-group row">
-      <div class="col-lg-12">
-        <label>Pesquisa </label>
-        <div class="input-group-prepend">
-          <input class="form-control text-dark" id="2cd3e63b-8f29-42bf-8c10-d5e955036ce9-in" type="text" placeholder=""
-            title="" (keyup)="onFormSubmit($event)">
-        </div>
+      <div class="col-lg-6 input-ct">
+        <app-catalog-form-input [formControlField]="f.search" formControlName="search"
+          [placeholder]="searchPlaceholder" [appendButton]="true" [appendButtonIcon]="'fa fa-search'">
+        </app-catalog-form-input>
+      </div>
+      <div class="col-lg-6 input-ct">
+        <app-catalog-form-select [formControlField]="f.active" formControlName="active" [required]="false" placeholder="Filtar por Estado" clearable="true"
+        bindLabel="desc" bindValue="id" [items]="statusList"></app-catalog-form-select>
       </div>
     </div>
   </form>
 
   <div class="kt-portlet" *ngFor="let user of datasets.users">
+    <div _ngcontent-cqf-c174="" class="kt-portlet__head" *ngIf="!user.isAdmin">
+      <div _ngcontent-cqf-c174="" class="kt-portlet__head-label">
+        <h3 _ngcontent-cqf-c174="" class="kt-portlet__head-title title">
+          {{ user.business ? user.business.company : '' }}<br />
+          <span class="second-line">{{ user.business ? user.business.businessId : '' }}</span></h3>
+      </div>
+      <div _ngcontent-cqf-c174="" class="kt-portlet__head-label">
+        <h3 _ngcontent-cqf-c174="" class="kt-portlet__head-title title-date">
+          <span class="font-weight-bold" >{{ user.business ? user.business.companyType.toUpperCase() : '' }}</span>
+        </h3>
+      </div>
+    </div>
     <div class="kt-portlet__body" *ngIf="!user.isAdmin">
       <div class="row custom-card">
         <div class="col-lg-3">
