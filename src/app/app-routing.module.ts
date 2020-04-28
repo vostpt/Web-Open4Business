@@ -29,6 +29,7 @@ const routes: Routes = [
     loadChildren: () =>
         import('@users-feature-module/users.module').then(m => m.UsersModule)
   },
+  {path: 'signup', redirectTo: 'auth/signup'},
   {path: 'not-found', component: NotFoundComponent},
   {path: '**', component: NotFoundComponent}
 
