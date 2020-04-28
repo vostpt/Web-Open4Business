@@ -335,6 +335,7 @@ export class LocationsListComponent extends BasePageComponent implements
       }, 50);
     } else {
       this.editForm.reset();
+      this.editForm.controls.isOpen.setValue(true);
     }
 
     setTimeout(() => {document.getElementById('edit-company-in').focus()}, 100);
