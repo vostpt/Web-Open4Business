@@ -273,9 +273,7 @@ export class LocationsListComponent extends BasePageComponent implements
 
 
   onCheckboxChange(e, field) {
-    console.log(e.target.value);
     const checkboxField: FormArray = this.editForm.get(field) as FormArray;
-    console.log(checkboxField);
 
     if (e.target.checked) {
       checkboxField.push(new FormControl(e.target.value));
