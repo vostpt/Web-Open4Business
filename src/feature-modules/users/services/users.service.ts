@@ -12,7 +12,7 @@ export class UsersService {
     private http: HttpClient
   ) { }
 
-  getUsers(search?: string, active? : boolean) {
+  getUsers(search?: string, status? : string) {
     const url = new UrlModel(this.apiUrl).setPath('auth/v1/users');
     let filter = {};
 
@@ -20,8 +20,8 @@ export class UsersService {
       filter = {...filter, search};
     }
     
-    if (active !== undefined && active !== null ) {
-      filter = {...filter, active};
+    if (status) {
+      filter = {...filter, status};
     }
 
     url.setQueryParams(filter);
@@ -60,4 +60,13 @@ export class UsersService {
     return this.http.put(url.buildUrl(), body);
   }
 
+  deactivateUser(email: string) {
+    const url = new UrlModel(this.apiUrl).setPath('auth/v1/deactivate');
+    return this.http.post(url.buildUrl(), {email});
+  }
+
+  deleteUser(email: string) {
+    const url = new UrlModel(this.apiUrl).setPath('auth/v1/delete');
+    return this.http.post(url.buildUrl(), {email});
+  }
 }
