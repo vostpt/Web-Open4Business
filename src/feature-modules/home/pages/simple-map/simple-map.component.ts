@@ -33,8 +33,8 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
 
   public imageLib = [{name: 'pin', path: 'assets/images/mapbox/pin.png'}];
 
-  public count = 0;
-  public searchInfo = 'lojas já estão registadas.';
+  public count : number = null;
+  public searchInfo = 'A carregar...';
 
   private map: Map;
 
@@ -107,13 +107,15 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
             this.searchInfo = search ? 'lojas correspondem à tua pesquisa.' :
                                        'lojas já estão registadas.';
             this.loadMapbox(markers);
+
+            this.draw();
           },
           (error) => {
             this.loader.hide('app-map');
             this.logger.error('Error fetching map markers', error);
           }));
 
-      this.draw();
+      
     });
   }
 
@@ -360,7 +362,6 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
   }
 
   draw() {
-    this.logger.debug('App ready!');
     this.loader.hide('app-map');
   }
 
