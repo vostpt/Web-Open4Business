@@ -46,7 +46,7 @@
         </div>
         <div class="col-lg-3">
           <h5>Telefone</h5>
-          <p>{{user.phone}}</p>
+          <p>{{user.phone || ( user.business ? user.business.phone : '') }}</p>
         </div>
         <div class="col-lg-3">
           <h5>Estado</h5>

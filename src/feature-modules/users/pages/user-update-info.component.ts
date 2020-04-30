@@ -85,7 +85,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
       company: [null, Validators.required],
       name: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
-      phone: [null, Validators.required],
+      phone: [null, [Validators.required, Validators.pattern('^9[1236]{1}[0-9]{7}$')]],
       dataFile: [null, null],
       isActive: [CheckboxComponent, Validators.required]
     });
@@ -120,12 +120,12 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
 
                     this.datasets.user['company'] =
                         result.data.company['company'];
-
+                    
                     this.fUserInfo.company.setValue(
                         this.datasets.user['company']);
                     this.fUserInfo.name.setValue(this.datasets.user['name']);
                     this.fUserInfo.email.setValue(this.datasets.user['email']);
-                    this.fUserInfo.phone.setValue(this.datasets.user['phone']);
+                    this.fUserInfo.phone.setValue(this.datasets.user['phone'] || this.datasets.company['phone']);
                     this.fUserInfo.isActive.setValue(
                         this.datasets.user['isActive']);
 
