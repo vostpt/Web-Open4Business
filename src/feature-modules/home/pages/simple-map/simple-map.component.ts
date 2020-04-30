@@ -1,13 +1,12 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {FormsService} from '@core-modules/catalog/modules/forms';
-import {BasePageComponent} from '@core-modules/main-layout';
-import {MapboxMarkerProperties} from '@home-feature-module/models/mapbox-marker-properties.model';
-import {MapService} from '@home-feature-module/services/map.service';
-import {GeolocateControl, LngLat, Map, NavigationControl, Popup, LngLatBounds} from 'mapbox-gl';
-import { lang } from 'moment';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { FormsService } from '@core-modules/catalog/modules/forms';
 import { ParserService } from '@core-modules/core/services/parser.service';
+import { BasePageComponent } from '@core-modules/main-layout';
+import { MapboxMarkerProperties } from '@home-feature-module/models/mapbox-marker-properties.model';
+import { MapService } from '@home-feature-module/services/map.service';
+import { GeolocateControl, LngLatBounds, Map, NavigationControl, Popup } from 'mapbox-gl';
 
 @Component({
   selector: 'app-home-simple-map',
@@ -33,7 +32,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
 
   public imageLib = [{name: 'pin', path: 'assets/images/mapbox/pin.png'}];
 
-  public count : number = null;
+  public count: number = null;
   public searchInfo = 'A carregar...';
 
   private map: Map;
@@ -107,15 +106,13 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
             this.searchInfo = search ? 'lojas correspondem à tua pesquisa.' :
                                        'lojas já estão registadas.';
             this.loadMapbox(markers);
-
-            this.draw();
           },
           (error) => {
             this.loader.hide('app-map');
             this.logger.error('Error fetching map markers', error);
           }));
 
-      
+      this.draw();
     });
   }
 
@@ -381,9 +378,10 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
              '');
 
     for (let i = 1; i <= 3; i++) {
-      const dayOfWeekPeriods =
-          this.parserService.formatWeekdaysListProperty(properties[`schedule${i}Dow`]);
-      const schedule = this.parserService.formatScheduleProperty(properties[`schedule${i}`]);
+      const dayOfWeekPeriods = this.parserService.formatWeekdaysListProperty(
+          properties[`schedule${i}Dow`]);
+      const schedule =
+          this.parserService.formatScheduleProperty(properties[`schedule${i}`]);
 
       if (dayOfWeekPeriods != '') {
         html += `<span>${properties[`schedule${i}Type`]}`;
@@ -401,13 +399,14 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
           <div class="row">
             <div class="col-5"><p>${dayOfWeekPeriods}:</p></div>
             <div class="col-7"><p>${schedule}</p></div>
-          </div>` : '');
+          </div>` :
+                                    '');
     }
 
     html +=
         (properties.typeOfService != '' ? `<br /><h5><b>Entregas</b></h5><p>${
-                                        properties.typeOfService}</p>` :
-                                    '');
+                                              properties.typeOfService}</p>` :
+                                          '');
 
     if (properties.byAppointment == 'Sim') {
       html += `<br /><h5><b>Por Marcação</b></h5>`;
@@ -415,7 +414,8 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
     }
 
     html +=
-        (properties.obs != '' ? `<br /><p class="notes">${properties.obs}</p>` : '');
+        (properties.obs != '' ? `<br /><p class="notes">${properties.obs}</p>` :
+                                '');
 
     html += `<br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.com/maps/search/?api=1&query=${
         properties.latitude},${
