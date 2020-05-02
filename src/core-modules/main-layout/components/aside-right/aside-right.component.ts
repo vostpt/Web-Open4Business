@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { OffcanvasOptions } from '../../../main-layout/directives/offcanvas.directive';
+import { environment } from '@core-modules/core';
 
 @Component({
   selector: 'app-main-layout-aside-right',
@@ -18,6 +19,8 @@ export class AsideRightComponent implements OnInit {
 
   offcanvasOptions: OffcanvasOptions;
 
+  public qickGuideLink = "";
+  
   constructor() {
     if (localStorage.getItem('email')) {
       this.email = `${localStorage.getItem('email')}`;
@@ -38,6 +41,8 @@ export class AsideRightComponent implements OnInit {
       closeBy: this.toggleBy + '-close-btn',
       toggleBy: this.toggleBy || 'kt_quick_panel_toggler_btn'
     };
+
+    this.qickGuideLink = `${environment.apiUrl}/insights/v1/guide`;
   }
 
   open() {

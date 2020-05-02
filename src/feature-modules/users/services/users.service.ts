@@ -12,10 +12,10 @@ export class UsersService {
     private http: HttpClient
   ) { }
 
-  getUsers(search?: string, status? : string) {
+  getUsers(limit: number, offset: number, search?: string, status? : string) {
     const url = new UrlModel(this.apiUrl).setPath('auth/v1/users');
     let filter = {};
-
+    filter = {...filter, ...{limit, offset}}
     if (search) {
       filter = {...filter, search};
     }
@@ -68,5 +68,11 @@ export class UsersService {
   deleteUser(email: string) {
     const url = new UrlModel(this.apiUrl).setPath('auth/v1/delete');
     return this.http.post(url.buildUrl(), {email});
+  }
+
+  confirmAccount(token, confirmationCode) {
+    const url =
+        new UrlModel(this.apiUrl).setPath('businesses/v1/confirm').buildUrl();
+    return this.http.post(url, {token, confirmationCode});
   }
 }

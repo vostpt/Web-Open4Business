@@ -28,6 +28,9 @@ export class UsersListComponent extends BasePageComponent implements
     {id: 'inactive', desc: 'Inactivos'}, {id: 'deleted', desc: 'Apagados'}
   ];
   private status: string = null;
+  public total: number = 0;
+  public pages: number = 1;
+  public page: number = 1;
 
   constructor(
       private readonly formBuilder: FormBuilder,
@@ -56,10 +59,15 @@ export class UsersListComponent extends BasePageComponent implements
       this.onSearch();
     });
 
-    this.subscriptions.push(this.usersService.getUsers().subscribe(
-        (result: {data: {users: object[]}}) => {
-          this.datasets.users = result.data.users;
+    this.subscriptions.push(this.usersService.getUsers(50, (this.page - 1) * 50).subscribe(
+        (result) => {
+          this.datasets.users = result['data'].users;
           this.decodeUserStatus();
+
+          this.total = parseInt(result['data'].total);
+                  this.pages = Math.ceil(this.total / 50);
+                  const offset = parseInt(result['data'].offset);
+                  this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
 
           this.contentReady = true;
           this.loader.hide('pageLoader');
@@ -73,17 +81,34 @@ export class UsersListComponent extends BasePageComponent implements
 
   ngAfterViewInit() {}
 
+  goto(page: number) {
+    if (page < 1) {
+      this.page = 1;
+    } else if (page > this.pages) {
+      this.page = this.pages;
+    } else {
+      this.page = page;
+    }
+
+    this.onSearch();
+  }
+
   onSearch() {
     this.logger.info('form', this.form.value);
 
     this.loader.show('pageLoader');
 
     this.subscriptions.push(
-        this.usersService.getUsers(this.form.value.search, this.status)
+        this.usersService.getUsers(50, (this.page - 1) * 50, this.form.value.search, this.status)
             .subscribe(
-                (result: {data: {users: object[]}}) => {
-                  this.datasets.users = result.data.users;
+                (result) => {
+                  this.datasets.users = result['data'].users;
                   this.decodeUserStatus();
+                  
+                  this.total = parseInt(result['data'].total);
+                  this.pages = Math.ceil(this.total / 50);
+                  const offset = parseInt(result['data'].offset);
+                  this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
 
                   this.loader.hide('pageLoader');
                 },
@@ -155,6 +180,27 @@ export class UsersListComponent extends BasePageComponent implements
         this.notification.error("Não foi possível apagar o utilizador.");
         
         this.logger.error('Error fetching users list', error);
+      });
+  }
+  
+  confirmUser(user) {
+    this.loader.show('pageLoader');
+
+    this.usersService.confirmAccount(user.activationToken, user.confirmationCode).subscribe(
+      (result: {resultCode: number}) => {
+        if (result.resultCode == 200) {
+          this.notification.success(`Utilizador "${user.authId}" confimado com sucesso!`);
+          return this.onSearch();
+        }
+
+        this.loader.hide('pageLoader');
+        this.notification.error("Não foi possível confirmar o utilizador.");
+      },
+      error => {
+        this.loader.hide('pageLoader');
+        this.notification.error("Não foi possível confirmar o utilizador.");
+        
+        this.logger.error('Error confirming user', error);
       });
   }
 }

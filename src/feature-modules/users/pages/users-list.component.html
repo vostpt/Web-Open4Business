@@ -25,6 +25,31 @@
     </div>
   </form>
 
+  <div class="row">
+    <div class="col-auto mr-auto">
+      <p class="counter"><strong>{{total}}</strong> Utilizadores</p>
+    </div>
+
+    <div class="col-auto" *ngIf="total > 0">
+      <nav aria-label="Pagination" class="">
+        <ul class="pagination">
+          <li class="page-item" (click)="goto(page-1)">
+            <a class="page-link disabled" href="javascript:void(0)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="javascript:void(0)">{{page}}&nbsp;/&nbsp;{{pages}}</a>
+          </li>
+          <li class="page-item" (click)="goto(page+1)">
+            <a class="page-link" href="javascript:void(0)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
   <div class="kt-portlet" *ngFor="let user of datasets.users">
     <div _ngcontent-cqf-c174="" class="kt-portlet__head" *ngIf="!user.isAdmin">
       <div _ngcontent-cqf-c174="" class="kt-portlet__head-label">
@@ -65,7 +90,7 @@
           
           <a *ngIf="user.status != 'Apagado'" href="javascript:void(0)" (click)="deleteUser(user)" class="text-danger action"><i class="fa fa-trash"></i>&nbsp;Apagar Conta</a>
 
-          <a *ngIf="user.status == 'Pendente'" [routerLink]="['/businesses/confirm']" [queryParams]="{ token: user.activationToken, confirmationCode: user.confirmationCode}" class="action"><i class="fa fa-check"></i>&nbsp;Confirmar Conta</a>
+          <a *ngIf="user.status == 'Pendente'" href="javascript:void(0)" (click)="confirmUser(user)" class="action"><i class="fa fa-check"></i>&nbsp;Confirmar Conta</a>
         </div>
       </div>
     </div>

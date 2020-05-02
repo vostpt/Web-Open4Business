@@ -24,6 +24,7 @@
         <li class="nav-item" *ngIf="session && isAdmin"><a routerLink="/users/list" class="nav-link">Lista de Utilizadores</a></li>
         <li class="nav-item"><a routerLink="/" class="nav-link">Listagem</a></li>
         <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signup" class="nav-link">Junte-se a nós</a></li>
+        <li class="nav-item"><a href="{{qickGuideLink}}" target="_blank" class="nav-link">Guia Rápido</a></li>
         <li class="nav-item"><a routerLink="/about" class="nav-link">Sobre</a></li>
         <li class="nav-item"><a routerLink="/cookies" class="nav-link">Política de Privacidade e Política de Cookies</a></li>
       </ul>
