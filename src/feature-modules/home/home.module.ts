@@ -16,6 +16,8 @@ import { CookiesComponent } from './pages/cookies/cookies.component';
 import { AboutComponent } from './pages/about/about.component';
 import { SimpleMapComponent } from './pages/simple-map/simple-map.component';
 import { ParserService } from '@core-modules/core/services/parser.service';
+import { ListComponent } from './pages/list/list.component';
+import { MomentModule } from 'ngx-moment';
 
 @NgModule({
   imports: [
@@ -23,11 +25,12 @@ import { ParserService } from '@core-modules/core/services/parser.service';
     CatalogModule,
 
     DropzoneModule,
-
+    MomentModule,
     HomeRoutingModule
   ],
   declarations: [
     MapComponent,
+    ListComponent,
     SimpleMapComponent,
     SmallMediumCompaniesComponent,
     CookiesComponent,

@@ -8,6 +8,7 @@ import {MapComponent} from '@home-feature-module/pages/map/map.component';
 import {SmallMediumCompaniesComponent} from '@home-feature-module/pages/small-medium-companies/small-medium-companies.component';
 
 import {SimpleMapComponent} from './pages/simple-map/simple-map.component';
+import { ListComponent } from './pages/list/list.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,11 @@ const routes: Routes = [
       {
         path: 'map',
         component: MapComponent,
+        pathMatch: 'full',
+      },
+      {
+        path: 'list',
+        component: ListComponent,
         pathMatch: 'full',
       },
       {

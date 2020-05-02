@@ -1,0 +1,61 @@
+:host {
+  width: 80%;
+  align-self: center;
+}
+
+.filters-section {
+  padding: 0 0 25px 0;
+}
+
+.custom-card {
+  border-bottom: .07rem dashed #ebedf2;
+  color:  black;
+  padding: 15px 0;
+
+  p {
+    margin-bottom: 0;
+  }
+}
+
+.fa.fa-search {
+  color: #FFFFFF !important;
+}
+
+.go-to-map {
+  padding-top: 10px;
+}
+
+.audit {
+  text-align: right;
+}
+
+.input-ct {
+  margin-top: 5px;
+}
+
+.separator {
+  margin-top: 15px;
+  clear: both;
+}
+
+.pending-batch {
+  cursor: pointer;
+  padding: 10px;
+}
+
+p.counter {
+  line-height: 32px;
+}
+
+.additional-spacing > label{
+  margin-left: 10px;
+}
+
+.kt-portlet__head {
+  border-bottom: 1px solid #CCCCCC;
+}
+
+.second-line {
+  font-size: 0.8rem;
+  font-weight: lighter;
+}

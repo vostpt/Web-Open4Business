@@ -1,0 +1,148 @@
+<app-catalog-loader name="pageLoader"></app-catalog-loader>
+
+<div *ngIf="contentReady" class="container">
+
+  <ul class="breadcrumbs">
+    <li><a routerLink="/">OPEN4BUSINESS</a></li>
+    <li>/</li>
+    <li class="current">
+      <span>Lista de Empresas</span>
+    </li>
+  </ul>
+
+  <div class="row filters-section">
+    <div class="col-lg-12 text">
+      <h3>Pequenas, Médias e Grandes Empresas em Funcionamento</h3>
+
+      <p class="text-justify">
+        Apoiemos os negócios locais e a economia do país.<br />
+        Podemos querer parar o virus, não podemos parar o país.
+      </p>
+    </div>
+  </div>
+
+  <div>
+    <form [formGroup]="form" class="kt-form kt-form--label-right" (ngSubmit)="onSearch()">
+      <div class="kt-portlet__body">
+        <div class="form-group row">
+          <div class="col-lg-4 input-ct">
+            <app-catalog-form-input [formControlField]="f.search" formControlName="search"
+              [placeholder]="searchPlaceholder" [appendButton]="true" [appendButtonIcon]="'fa fa-search'">
+            </app-catalog-form-input>
+          </div>
+          <div class="col-lg-4 input-ct">
+            <app-catalog-form-select [formControlField]="f.sector" formControlName="sector" [required]="false" placeholder="Sector" clearable="true"
+            bindLabel="desc" bindValue="id" [items]="sectorList"></app-catalog-form-select>
+          </div>
+          <div class="col-lg-4 input-ct">
+            <app-catalog-form-select [formControlField]="f.district" formControlName="district" [required]="false" placeholder="Distrito" clearable="true"
+            bindLabel="desc" bindValue="id" [items]="districtList"></app-catalog-form-select>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="row">
+    <div class="col-auto mr-auto">
+      <p class="counter"><strong>{{total}}</strong> Lojas</p>
+    </div>
+
+    <div class="col-auto" *ngIf="total > 0">
+      <nav aria-label="Pagination" class="">
+        <ul class="pagination">
+          <li class="page-item" (click)="goto(page-1)">
+            <a class="page-link disabled" href="javascript:void(0)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="javascript:void(0)">{{page}}&nbsp;/&nbsp;{{pages}}</a>
+          </li>
+          <li class="page-item" (click)="goto(page+1)">
+            <a class="page-link" href="javascript:void(0)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="kt-portlet" *ngFor="let location of datasets.locations">
+    <div class="kt-portlet__body">
+      <div class="row custom-card">
+        <div class="col-lg-3">
+          <h4>{{location.store}}</h4>
+          <p class="">{{location.sector}}<span *ngIf="location.council || location.district">,&nbsp;{{location.council || location.district}}</span></p>
+          <p>Telf.: {{location.phone}}</p>
+          <p class="separator"><a
+              href="https://www.google.com/maps/search/?api=1&query={{location.latitude}},{{location.longitude}}"
+              target="_blank" class="link">{{location.longitude}},&nbsp;{{location.latitude}}</a></p>
+        </div>
+        <div class="col-lg-3">
+          <h5>Morada</h5>
+          <p>{{location.address}}</p>
+          <p>{{location.zipCode}} {{location.parish}}</p>
+        </div>
+        <div class="col-lg-3">
+          <h5>Horário de Funcionamento</h5>
+          <div class="row" *ngFor="let number of [1,2,3]">
+            <div class="col-5">
+              <p>{{ location['schedule' + number + 'DowFormatted'] }}</p>
+            </div>
+            <div class="col-7">
+              <p>{{ location['schedule' + number + 'Formatted'] }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <h5>Entregas</h5>
+          <p>{{location.typeOfService}}</p>
+          <h5 class="separator">Por Marcação?</h5>
+          <p>{{location.byAppointment}}.&nbsp;<span
+              *ngIf="location.contactForSchedule">Contaco:&nbsp;</span>{{location.contactForSchedule}}</p>
+        </div>
+        <div class="col-lg-12 separator">
+          <h5>Observações</h5>
+          <p>{{location.obs}}</p>
+        </div>
+      </div>
+      <div class="row justify-content-between go-to-map">
+        <div class="col">
+          <a target="_blank" [routerLink]="['/']" [queryParams]="{ search: location.store}"><i
+              class="fa fa-map"></i>&nbsp;Ver no Mapa</a>
+          &nbsp;&nbsp;
+        </div>
+        <div class="col audit">
+          <span title="{{location.audit.personEmail}}">{{location.audit.personName}}<span
+              class="font-italic">&nbsp;{{location.audit.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" *ngIf="total > 10">
+    <div class="col-auto mr-auto">
+      <p class="counter"><strong>{{total}}</strong> Lojas</p>
+    </div>
+
+    <div class="col-auto">
+      <nav aria-label="Pagination" class="">
+        <ul class="pagination">
+          <li class="page-item" (click)="goto(page-1)">
+            <a class="page-link disabled" href="javascript:void(0)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item active"><a class="page-link" href="javascript:void(0)">{{page}}&nbsp;/&nbsp;{{pages}}</a>
+          </li>
+          <li class="page-item" (click)="goto(page+1)">
+            <a class="page-link" href="javascript:void(0)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

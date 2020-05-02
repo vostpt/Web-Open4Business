@@ -27,6 +27,43 @@ export class MapService {
     return this.http.get(url.buildUrl());
   }
 
+  getDistricts() {
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations/districts')
+
+    return this.http.get(url.buildUrl());
+  }
+
+  getSectors() {
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations/sectors')
+
+    return this.http.get(url.buildUrl());
+  }
+
+  getLocations(limit: number, offset: number, filter?: {search?: string, sector?: string, district?: string}) {
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations-list')
+    let params = {};
+    params = {...params, ...{limit, offset}};
+
+    if (filter) {
+      if (filter.search) {
+        params = {...params, ...{limit, search: filter.search}};
+      }
+
+      if (filter.sector) {
+        params = {...params, ...{limit, sector: filter.sector}};
+      }
+      
+      if (filter.district) {
+        params = {...params, ...{limit, district: filter.district}};
+      }
+    }
+    
+
+    url.setQueryParams(params);
+
+    return this.http.get(url.buildUrl());
+  }
+
   parseResponseToGeoJSON(items) {
 
     const geoJSON: GeoJSON.FeatureCollection = {
