@@ -394,7 +394,7 @@ export class MapComponent extends BasePageComponent implements OnInit,
     html += `<br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.com/maps/search/?api=1&query=${
         properties.latitude},${
         properties
-            .longitude}" target="_blank" class="btn btn-primary link">Navegar para...</a></div></div>`;
+            .longitude}" target="_blank" class="btn btn-primary link">Abrir Mapa</a></div></div>`;
 
 
     // tipo de horário,
