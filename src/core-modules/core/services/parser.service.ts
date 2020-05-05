@@ -17,11 +17,11 @@ export class ParserService {
         let parsedWeekdays = weekdays.replace(/ /g, '').split(',');
         parsedWeekdays = parsedWeekdays.map((d) => d.charAt(0).toUpperCase() + d.toLowerCase().substring(1, 3));
 
-        if (parsedWeekdays.filter(value => this.alldays.includes(value)).length == this.alldays.length) {
+        if (parsedWeekdays.filter(value => this.alldays.includes(value)).length === this.alldays.length) {
           formattedString = 'Todos os dias';
-        } else if (parsedWeekdays.filter(value => this.weekdays.includes(value)).length == this.weekdays.length){
+        } else if (parsedWeekdays.filter(value => this.weekdays.includes(value)).length === this.weekdays.length){
           formattedString = 'Seg a Sex';
-        } else if (parsedWeekdays.filter(value => this.weekend.includes(value)).length == this.weekend.length){
+        } else if (parsedWeekdays.filter(value => this.weekend.includes(value)).length === this.weekend.length){
           formattedString = 'Fim de semana';
         } else {
           formattedString = parsedWeekdays.join(', ');

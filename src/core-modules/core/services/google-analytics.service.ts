@@ -1,7 +1,7 @@
-import {DOCUMENT} from '@angular/common';
-import {Inject, Injectable} from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 
-import {environment} from '../models/environment.model';
+import { environment } from '../models/environment.model';
 
 declare var gtag: any;
 declare var window: any;
@@ -16,12 +16,12 @@ declare var window: any;
 //   gtag('config', 'UA-164640622-1');
 // </script>
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class GoogleAnalyticsService {
-  public started: boolean = false;
+  public started = false;
 
   constructor(
-      @Inject(DOCUMENT) document: any,
+    @Inject(DOCUMENT) document: any,
   ) {
     if (environment.googleAnalytics) {
       this.loadGoogleAnalytics();
@@ -31,14 +31,13 @@ export class GoogleAnalyticsService {
   loadGoogleAnalytics() {
     // injecting GA main script asynchronously
     const script = document.createElement('script');
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${
-        environment.googleAnalytics}`;
+    script.src = `https://www.googletagmanager.com/gtag/js?id=${environment.googleAnalytics}`;
     script.async = true;
     document.body.appendChild(script);
 
     // preparing GA API to be usable even before the async script is loaded
     window.dataLayer = window.dataLayer || [];
-    window.gtag = function() {
+    window.gtag = () => {
       window.dataLayer.push(arguments);
     };
     gtag('js', new Date());

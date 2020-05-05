@@ -18,6 +18,9 @@ Create a new file "environment.js" file in "src" directory with the content belo
 window.__env = {
   baseHref: '',
   apiUrl: 'http://api.domain.io',
+  defaultLanguage: 'PT',
+  mapbox: 'key-of-mapbox',
+  googleAnalytics: 'key-of-google-analytics';
   logLevel: 'TRACE'
 };
 ```

@@ -1,23 +1,20 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {ParserService} from '@core-modules/core/services/parser.service';
-import {BasePageComponent} from '@core-modules/main-layout';
-import {MapService} from '@home-feature-module/services/map.service';
-
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ParserService } from '@core-modules/core/services/parser.service';
+import { BasePageComponent } from '@core-modules/main-layout';
+import { MapService } from '@home-feature-module/services/map.service';
 
 @Component({
   selector: 'app-locations-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class ListComponent extends BasePageComponent implements OnInit,
-                                                                AfterViewInit,
-                                                                OnDestroy {
+export class ListComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
   public searchPlaceholder = 'Pesquisar Empresas';
 
-  public total: number = 0;
-  public pages: number = 1;
-  public page: number = 1;
+  public total = 0;
+  public pages = 1;
+  public page = 1;
   public sectorList = [];
   public districtList = [];
 
@@ -30,14 +27,12 @@ export class ListComponent extends BasePageComponent implements OnInit,
   };
 
   form: FormGroup;
-  get f() {
-    return this.form.controls;
-  }
+  get f() { return this.form.controls; }
 
   constructor(
-      private readonly formBuilder: FormBuilder,
-      private readonly parserService: ParserService,
-      private readonly mapService: MapService) {
+    private readonly formBuilder: FormBuilder,
+    private readonly parserService: ParserService,
+    private readonly mapService: MapService) {
     super();
   }
 
@@ -65,7 +60,7 @@ export class ListComponent extends BasePageComponent implements OnInit,
     this.getLocations();
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   private compareValues(a, b) {
     const descA = a.desc.toUpperCase();
@@ -82,45 +77,45 @@ export class ListComponent extends BasePageComponent implements OnInit,
 
   getDistricts() {
     this.subscriptions.push(this.mapService.getDistricts().subscribe(
-        result => {
-          if (!result['data']) {
-            return;
-          }
+      result => {
+        if (!result['data']) {
+          return;
+        }
 
-          const resultData = result['data'];
+        const resultData = result['data'];
 
-          if (resultData.districts) {
-            this.districtList = resultData.districts.map((d) => {
-              return {desc: `${d.district} (${d.count})`, id: d.district};
-            });
+        if (resultData.districts) {
+          this.districtList = resultData.districts.map((d) => {
+            return { desc: `${d.district} (${d.count})`, id: d.district };
+          });
 
-            this.districtList = this.districtList.sort(this.compareValues);
-          }
-        },
-        (error) => {
-          this.logger.error('Error fetching districts', error);
-        }));
+          this.districtList = this.districtList.sort(this.compareValues);
+        }
+      },
+      (error) => {
+        this.logger.error('Error fetching districts', error);
+      }));
   }
 
   getSectors() {
     this.subscriptions.push(this.mapService.getSectors().subscribe(
-        result => {
-          if (!result['data']) {
-            return;
-          }
+      result => {
+        if (!result['data']) {
+          return;
+        }
 
-          const resultData = result['data'];
+        const resultData = result['data'];
 
-          if (resultData.sectors) {
-            this.sectorList = resultData.sectors.map((s) => {
-              return {desc: `${s.sector} (${s.count})`, id: s.sector};
-            });
-            this.sectorList = this.sectorList.sort(this.compareValues);
-          }
-        },
-        (error) => {
-          this.logger.error('Error fetching sectors', error);
-        }));
+        if (resultData.sectors) {
+          this.sectorList = resultData.sectors.map((s) => {
+            return { desc: `${s.sector} (${s.count})`, id: s.sector };
+          });
+          this.sectorList = this.sectorList.sort(this.compareValues);
+        }
+      },
+      (error) => {
+        this.logger.error('Error fetching sectors', error);
+      }));
   }
 
   goto(page: number) {
@@ -143,7 +138,7 @@ export class ListComponent extends BasePageComponent implements OnInit,
     let filter = {};
 
     if (search) {
-      filter = {...filter, search};
+      filter = { ...filter, search };
     }
 
     if (this.sector) {
@@ -165,50 +160,50 @@ export class ListComponent extends BasePageComponent implements OnInit,
     }
 
     this.subscriptions.push(
-        this.mapService.getLocations(50, (this.page - 1) * 50, filter)
-            .subscribe(
-                result => {
-                  // Locations call!
-                  const resultData = result;
-                  this.datasets.locations =
-                      resultData['data'].locations.map(item => {
-                        for (let i = 1; i <= 3; i++) {
-                          if (item[`schedule${i}Dow`]) {
-                            item[`schedule${i}DowFormatted`] =
-                                this.parserService.formatWeekdaysListProperty(
-                                    item[`schedule${i}Dow`]);
-                            item[`schedule${i}Formatted`] =
-                                this.parserService.formatScheduleProperty(
-                                    item[`schedule${i}`]);
-                          }
-                        }
-
-                        return item;
-                      });
-
-                  this.total = parseInt(resultData['data'].total);
-                  this.pages = Math.ceil(this.total / 50);
-                  const offset = parseInt(resultData['data'].offset);
-                  this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
-                  this.contentReady = true;
-
-                  if (this.districtList.length == 0 &&
-                      resultData['data'].districts) {
-                    this.districtList =
-                        resultData['data'].districts.map((d) => {
-                          return {
-                            desc: `${d.district} (${d.count})`,
-                            id: d.district
-                          };
-                        })
+      this.mapService.getLocations(50, (this.page - 1) * 50, filter)
+        .subscribe(
+          result => {
+            // Locations call!
+            const resultData = result;
+            this.datasets.locations =
+              resultData['data'].locations.map(item => {
+                for (let i = 1; i <= 3; i++) {
+                  if (item[`schedule${i}Dow`]) {
+                    item[`schedule${i}DowFormatted`] =
+                      this.parserService.formatWeekdaysListProperty(
+                        item[`schedule${i}Dow`]);
+                    item[`schedule${i}Formatted`] =
+                      this.parserService.formatScheduleProperty(
+                        item[`schedule${i}`]);
                   }
+                }
 
-                  this.loader.hide('pageLoader');
-                },
-                (error) => {
-                  this.loader.hide('pageLoader');
-                  this.logger.error('Error fetching map markers', error);
-                }));
+                return item;
+              });
+
+            this.total = parseInt(resultData['data'].total, 10);
+            this.pages = Math.ceil(this.total / 50);
+            const offset = parseInt(resultData['data'].offset, 10);
+            this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
+            this.contentReady = true;
+
+            if (this.districtList.length == 0 &&
+              resultData['data'].districts) {
+              this.districtList =
+                resultData['data'].districts.map((d) => {
+                  return {
+                    desc: `${d.district} (${d.count})`,
+                    id: d.district
+                  };
+                });
+            }
+
+            this.loader.hide('pageLoader');
+          },
+          (error) => {
+            this.loader.hide('pageLoader');
+            this.logger.error('Error fetching map markers', error);
+          }));
   }
 
   onSearch() {

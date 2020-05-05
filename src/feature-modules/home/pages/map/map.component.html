@@ -1,7 +1,8 @@
 <div class="section--primary">
   <div class="cookies-warn" *ngIf="showCookieWarning">
     <i class="fa fa-times warn-close close-icon" (click)="dismissCookieWarn()"></i>
-    <p>Utilizamos cookies para melhorar a experiência de navegação. Saber mais sobre a nossa política de cookies
+    <p>{{ 'dictionary.loading' | translate }}
+      <!-- Utilizamos cookies para melhorar a experiência de navegação. Saber mais sobre a nossa política de cookies -->
       <a routerLink="/cookies" class="warn-link">aqui</a>.
       &nbsp;&nbsp;
     </p>

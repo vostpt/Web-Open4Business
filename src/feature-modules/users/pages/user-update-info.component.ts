@@ -95,7 +95,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
       this.authId = params['email'];
 
       if (this.isAdmin && this.authId &&
-          this.authId != localStorage.getItem('email')) {
+          this.authId !== localStorage.getItem('email')) {
         this.title = this.authId;
       } else {
         this.title = 'A minha conta';
@@ -120,7 +120,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
 
                     this.datasets.user['company'] =
                         result.data.company['company'];
-                    
+
                     this.fUserInfo.company.setValue(
                         this.datasets.user['company']);
                     this.fUserInfo.name.setValue(this.datasets.user['name']);

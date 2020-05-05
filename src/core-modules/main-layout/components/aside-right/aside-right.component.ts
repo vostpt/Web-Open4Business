@@ -19,8 +19,8 @@ export class AsideRightComponent implements OnInit {
 
   offcanvasOptions: OffcanvasOptions;
 
-  public qickGuideLink = "";
-  
+  quickGuideLink = `${environment.apiUrl}/insights/v1/guide`;
+
   constructor() {
     if (localStorage.getItem('email')) {
       this.email = `${localStorage.getItem('email')}`;
@@ -41,8 +41,6 @@ export class AsideRightComponent implements OnInit {
       closeBy: this.toggleBy + '-close-btn',
       toggleBy: this.toggleBy || 'kt_quick_panel_toggler_btn'
     };
-
-    this.qickGuideLink = `${environment.apiUrl}/insights/v1/guide`;
   }
 
   open() {

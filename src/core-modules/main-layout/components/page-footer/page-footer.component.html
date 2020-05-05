@@ -2,18 +2,14 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-4 brand">
-        <h3 class="brand">#OPEN4BUSINESSPT</h3>
+        <h3 class="brand">{{ 'app.hashtag' | translate }}</h3>
       </div>
       <div class="col-lg-1">
       </div>
-      <div class="col-lg-7 text">
-        Partilhe esta hashtag e este site com os negócios locais para que possam incluir a sua actividade,
-        disponibilidade e modo de funcionamento nesta altura excepcional.
-      </div>
+      <div class="col-lg-7 text">{{ 'sections.footer.share_this_hashtag' | translate }}</div>
     </div>
   </div>
 </div>
-
 
 <div class="kt-footer kt-grid__item kt-grid kt-grid--desktop kt-grid--ver-desktop footer" id="kt_footer">
   <div class="kt-container" [ngClass]="{'kt-container--fluid': fluid}">
@@ -54,50 +50,26 @@
           </ul>
         </div>
         <div class="col-sm-6 col-12 footer-block right-block">
-          <h3>Ligações úteis</h3>
+          <h3>{{ 'sections.footer.usefull_links' | translate }}</h3>
           <dl class="footer__list">
-            <dt>
-              <a href="http://covid19estamoson.gov.pt" target="_blank">
-                covid19estamoson.gov.pt
-              </a>
-            </dt>
-            <dd>
-              <a href="http://covid19estamoson.gov.pt" target="_blank">
-                Canal do Governo de Portugal para partilha das Medidas Excecionais relativas à <abbr
-                  title="Coronavirus disease 2019">COVID-19</abbr>
-              </a>
-            </dd>
+            <dt><a href="{{ 'sections.footer.government_url' | translate }}" target="_blank">{{ 'sections.footer.government_title' | translate }}</a></dt>
+            <dd><a href="{{ 'sections.footer.government_url' | translate }}" target="_blank" innerHtml="{{ 'sections.footer.government_description' | translate }}"></a></dd>
           </dl>
           <dl class="footer__list">
-            <dt><a href="https://covid19pt.vost.pt" target="_blank">VOSTPT COVID19</a></dt>
-            <dd>
-              <a href="https://covid19pt.vost.pt" target="_blank">
-                Hub de informação sobre a atuação da VOST Portugal durante a pandemia de COVID-19.
-              </a>
-            </dd>
+            <dt><a href="{{ 'sections.footer.vost_url' | translate }}" target="_blank">{{ 'sections.footer.vost_title' | translate }}</a></dt>
+            <dd><a href="{{ 'sections.footer.vost_url' | translate }}" target="_blank" innerHtml="{{ 'sections.footer.vost_description' | translate }}"></a></dd>
           </dl>
         </div>
         <div class="col text-center footer-block">
           <div class="cc-img">
             <img src="/assets/images/icons/cc.svg">
           </div>
+          <small innerHtml="{{ 'sections.footer.disclaimer' | translate }}"></small>
+          <br />
           <small>
-            <span>#open4business — <time datetime="2020">2020</time>
-            &nbsp;<abbr title="Associação de Voluntários Digitais em Situações de Emergências para Portugal">VOSTPT</abbr>
-            </span>
-            – Associação de Voluntários Digitais em Situações de Emergências para Portugal. <br>
-            Este site e os seus conteúdos encontram-se sob uma licença  <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank">Creative Commons CC-BY-SA 4.0 -
-            Attribution-ShareAlike 4.0 International</a>
-          </small>
-          <br>
-          <small>
-            <a routerLink="/cookies">
-              Política de Privacidade
-            </a>
-            e
-            <a routerLink="/cookies">
-              Política de Cookies
-            </a>
+            <a routerLink="/cookies">{{ 'sections.footer.privacy_policy' | translate }}</a>
+            /
+            <a routerLink="/cookies">{{ 'sections.footer.cookies_policy' | translate }}</a>
           </small>
         </div>
       </div>

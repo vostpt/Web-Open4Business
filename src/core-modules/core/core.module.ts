@@ -4,16 +4,11 @@ import { APP_BASE_HREF } from '@angular/common';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-// import { NgxSpinnerModule } from 'ngx-spinner';
 import { ToastrModule } from 'ngx-toastr';
-
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-// import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // Services.
 import { AuthenticationService } from './services/authentication.service';
 import { EnvironmentService } from './services/environment.service';
-
 
 // Interceptors.
 import { ApiInInterceptor } from './interceptors/api-in.interceptor';
@@ -24,17 +19,12 @@ import { AuthenticationGuard } from './guards/authentication.guard';
 
 // Resolvers.
 
-
 // Models.
 import { environment } from './models/environment.model';
-import { UrlModel } from './models/url.model';
-
 
 // Initialize LayoutConfigService.
 import { LayoutConfig } from '../main-layout/_config/layout.config';
 import { LayoutConfigService } from '../main-layout/services/layout-config.service';
-
-
 export function initializeLayoutConfig(appConfig: LayoutConfigService) {
   return () => { appConfig.loadConfiguration(new LayoutConfig().configs); };
 }
@@ -49,16 +39,10 @@ export function initializeLayoutConfig(appConfig: LayoutConfigService) {
       timestampFormat: 'mediumTime'
     }),
 
-    // NgxSpinnerModule,
-
     ToastrModule.forRoot({
       closeButton: true
-    }),
-
-    TranslateModule.forRoot({})
-
+    })
   ],
-  exports: [],
   providers: [
     AuthenticationService,
     EnvironmentService,

@@ -50,7 +50,7 @@ export class LocationsBatchesComponent extends BasePageComponent implements
 
       this.getBatches();
     });
-    
+
 
     this.getBatches();
   }

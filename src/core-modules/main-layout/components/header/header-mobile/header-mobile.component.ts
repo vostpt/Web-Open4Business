@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 
 import { LayoutConfigService } from '../../../services/layout-config.service';
@@ -11,7 +10,7 @@ import { ToggleOptions } from '../../../directives/toggle.directive';
   styleUrls: ['./header-mobile.component.scss']
 })
 export class HeaderMobileComponent implements OnInit {
-  
+
   session: boolean;
   headerLogo: string;
   asideDisplay: boolean;

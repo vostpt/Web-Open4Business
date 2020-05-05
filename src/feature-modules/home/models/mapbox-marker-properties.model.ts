@@ -62,7 +62,7 @@ export class MapboxMarkerProperties {
   }
 
   private tryGetValue(data: object, key: string): string {
-    return !data[key] || data[key] == 'undefined' || data[key] == 'null' ?
+    return !data[key] || data[key] === 'undefined' || data[key] === 'null' ?
         '' :
         data[key];
   }

@@ -1,40 +1,36 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+
 import { BasePageComponent } from '@core-modules/main-layout';
+
 import { UsersService } from '@users-feature-module/services/users.service';
-
-
-
 
 @Component({
   selector: 'app-users-users-list',
   templateUrl: './users-list.component.html',
   styleUrls: ['./users-list.component.scss']
 })
-export class UsersListComponent extends BasePageComponent implements
-    OnInit, AfterViewInit, OnDestroy {
+export class UsersListComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
   contentReady = false;
 
   form: FormGroup;
-  get f() {
-    return this.form.controls;
-  }
+  get f() { return this.form.controls; }
 
-  datasets = {users: []};
+  datasets = { users: [] };
 
   public searchPlaceholder = 'pesquise por nome';
   public statusList = [
-    {id: 'active', desc: 'Activos'}, {id: 'pending', desc: 'Pendentes'},
-    {id: 'inactive', desc: 'Inactivos'}, {id: 'deleted', desc: 'Apagados'}
+    { id: 'active', desc: 'Activos' }, { id: 'pending', desc: 'Pendentes' },
+    { id: 'inactive', desc: 'Inactivos' }, { id: 'deleted', desc: 'Apagados' }
   ];
   private status: string = null;
-  public total: number = 0;
-  public pages: number = 1;
-  public page: number = 1;
+  public total = 0;
+  public pages = 1;
+  public page = 1;
 
   constructor(
-      private readonly formBuilder: FormBuilder,
-      private readonly usersService: UsersService,
+    private readonly formBuilder: FormBuilder,
+    private readonly usersService: UsersService,
   ) {
     super();
   }
@@ -60,26 +56,26 @@ export class UsersListComponent extends BasePageComponent implements
     });
 
     this.subscriptions.push(this.usersService.getUsers(50, (this.page - 1) * 50).subscribe(
-        (result) => {
-          this.datasets.users = result['data'].users;
-          this.decodeUserStatus();
+      (result) => {
+        this.datasets.users = result['data'].users;
+        this.decodeUserStatus();
 
-          this.total = parseInt(result['data'].total);
-                  this.pages = Math.ceil(this.total / 50);
-                  const offset = parseInt(result['data'].offset);
-                  this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
+        this.total = parseInt(result['data'].total, 10);
+        this.pages = Math.ceil(this.total / 50);
+        const offset = parseInt(result['data'].offset, 10);
+        this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
 
-          this.contentReady = true;
-          this.loader.hide('pageLoader');
-        },
-        (error) => {
-          this.contentReady = true;
-          this.loader.hide('pageLoader');
-          this.logger.error('Error fetching users list', error);
-        }));
+        this.contentReady = true;
+        this.loader.hide('pageLoader');
+      },
+      (error) => {
+        this.contentReady = true;
+        this.loader.hide('pageLoader');
+        this.logger.error('Error fetching users list', error);
+      }));
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   goto(page: number) {
     if (page < 1) {
@@ -99,29 +95,29 @@ export class UsersListComponent extends BasePageComponent implements
     this.loader.show('pageLoader');
 
     this.subscriptions.push(
-        this.usersService.getUsers(50, (this.page - 1) * 50, this.form.value.search, this.status)
-            .subscribe(
-                (result) => {
-                  this.datasets.users = result['data'].users;
-                  this.decodeUserStatus();
-                  
-                  this.total = parseInt(result['data'].total);
-                  this.pages = Math.ceil(this.total / 50);
-                  const offset = parseInt(result['data'].offset);
-                  this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
+      this.usersService.getUsers(50, (this.page - 1) * 50, this.form.value.search, this.status)
+        .subscribe(
+          (result) => {
+            this.datasets.users = result['data'].users;
+            this.decodeUserStatus();
 
-                  this.loader.hide('pageLoader');
-                },
-                error => {
-                  this.loader.hide('pageLoader');
-                  this.logger.error('Error fetching users list', error);
-                }));
+            this.total = parseInt(result['data'].total, 10);
+            this.pages = Math.ceil(this.total / 50);
+            const offset = parseInt(result['data'].offset, 10);
+            this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
+
+            this.loader.hide('pageLoader');
+          },
+          error => {
+            this.loader.hide('pageLoader');
+            this.logger.error('Error fetching users list', error);
+          }));
   }
 
   decodeUserStatus() {
     // decode user status
     for (let i = 0; i < this.datasets.users.length; i++) {
-      let u = this.datasets.users[i];
+      const u = this.datasets.users[i];
 
       if (u.deletedAt) {
         u.status = 'Apagado';
@@ -143,17 +139,17 @@ export class UsersListComponent extends BasePageComponent implements
     this.loader.show('pageLoader');
 
     this.usersService.deactivateUser(user.authId).subscribe(
-      (result: {resultCode: number}) => {
-        if (result.resultCode == 200) {
+      (result: { resultCode: number }) => {
+        if (result.resultCode === 200) {
           return this.onSearch();
         }
 
         this.loader.hide('pageLoader');
-        this.notification.error("Não foi possível desativar o utilizador.");
+        this.notification.error('Não foi possível desativar o utilizador.');
       },
       error => {
         this.loader.hide('pageLoader');
-        this.notification.error("Não foi possível desativar o utilizador.");
+        this.notification.error('Não foi possível desativar o utilizador.');
 
         this.logger.error('Error fetching users list', error);
       });
@@ -167,39 +163,38 @@ export class UsersListComponent extends BasePageComponent implements
     this.loader.show('pageLoader');
 
     this.usersService.deleteUser(user.authId).subscribe(
-      (result: {resultCode: number}) => {
-        if (result.resultCode == 200) {
+      (result: { resultCode: number }) => {
+        if (result.resultCode === 200) {
           return this.onSearch();
         }
 
         this.loader.hide('pageLoader');
-        this.notification.error("Não foi possível apagar o utilizador.");
+        this.notification.error('Não foi possível apagar o utilizador.');
       },
       error => {
         this.loader.hide('pageLoader');
-        this.notification.error("Não foi possível apagar o utilizador.");
-        
+        this.notification.error('Não foi possível apagar o utilizador.');
+
         this.logger.error('Error fetching users list', error);
       });
   }
-  
+
   confirmUser(user) {
     this.loader.show('pageLoader');
 
     this.usersService.confirmAccount(user.activationToken, user.confirmationCode).subscribe(
-      (result: {resultCode: number}) => {
-        if (result.resultCode == 200) {
+      (result: { resultCode: number }) => {
+        if (result.resultCode === 200) {
           this.notification.success(`Utilizador "${user.authId}" confimado com sucesso!`);
           return this.onSearch();
         }
 
         this.loader.hide('pageLoader');
-        this.notification.error("Não foi possível confirmar o utilizador.");
+        this.notification.error('Não foi possível confirmar o utilizador.');
       },
       error => {
         this.loader.hide('pageLoader');
-        this.notification.error("Não foi possível confirmar o utilizador.");
-        
+        this.notification.error('Não foi possível confirmar o utilizador.');
         this.logger.error('Error confirming user', error);
       });
   }

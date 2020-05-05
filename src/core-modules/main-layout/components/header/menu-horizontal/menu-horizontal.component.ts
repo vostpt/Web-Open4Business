@@ -1,30 +1,12 @@
-// Angular
-import {
-  AfterViewInit,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  OnInit,
-  Renderer2,
-  OnChanges
-} from '@angular/core';
-import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
-
-import { HtmlClassService } from '../../../services/html-class.service';
-
-
-// RxJS
+import { AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
-// Object-Path
 import * as objectPath from 'object-path';
 
+import { HtmlClassService } from '../../../services/html-class.service';
 import { LayoutConfigService } from '../../../services/layout-config.service';
 
 import { OffcanvasOptions } from '../../../directives/offcanvas.directive';
-
-
-
 
 @Component({
   selector: 'app-main-layout-menu-horizontal',
@@ -68,29 +50,14 @@ export class MenuHorizontalComponent implements OnInit, AfterViewInit {
   constructor(
     private el: ElementRef,
     public htmlClassService: HtmlClassService,
-    // public menuHorService: MenuHorizontalService,
-    // private menuConfigService: MenuConfigService,
     private layoutConfigService: LayoutConfigService,
-    private route: ActivatedRoute,
     private router: Router,
-    private render: Renderer2,
     private cdr: ChangeDetectorRef
   ) {
   }
 
-  /**
-   * @ Lifecycle sequences => https://angular.io/guide/lifecycle-hooks
-   */
+  ngAfterViewInit(): void { }
 
-  /**
-   * After view init
-   */
-  ngAfterViewInit(): void {
-  }
-
-  /**
-   * On init
-   */
   ngOnInit(): void {
     if (localStorage.getItem('email')) {
       this.session = true;

@@ -9,14 +9,11 @@ import {
   ViewChild
 } from '@angular/core';
 
-import { NavigationEnd, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import * as objectPath from 'object-path';
-// Layout
 import { LayoutConfigService } from '../../services/layout-config.service';
 
-// import { LayoutConfigService, MenuAsideService, MenuOptions, OffcanvasOptions } from '../../../core/_base/layout';
 import { HtmlClassService } from '../../services/html-class.service';
-
 
 @Component({
   selector: 'app-layout-aside-left',
@@ -25,7 +22,6 @@ import { HtmlClassService } from '../../services/html-class.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AsideLeftComponent implements OnInit, AfterViewInit {
-
   @ViewChild('asideMenu', { static: true }) asideMenu: ElementRef;
 
   currentRouteUrl = '';
@@ -42,29 +38,8 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
     }
   };
 
-  // menuOptions: object = {
-  //   // vertical scroll
-  //   scroll: null,
-
-  //   // submenu setup
-  //   submenu: {
-  //     desktop: {
-  //       // by default the menu mode set to accordion in desktop mode
-  //       default: 'dropdown',
-  //     },
-  //     tablet: 'accordion', // menu set to accordion in tablet mode
-  //     mobile: 'accordion' // menu set to accordion in mobile mode
-  //   },
-
-  //   // accordion setup
-  //   accordion: {
-  //     expandAll: false // allow having multiple expanded accordions in the menu
-  //   }
-  // };
-
   constructor(
     public htmlClassService: HtmlClassService,
-    // public menuAsideService: MenuAsideService,
     public layoutConfigService: LayoutConfigService,
     private router: Router,
     private render: Renderer2,
@@ -76,15 +51,6 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    // this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
-
-    // this.router.events
-    //   .pipe(filter(event => event instanceof NavigationEnd))
-    //   .subscribe(event => {
-    //     this.currentRouteUrl = this.router.url.split(/[?#]/)[0];
-    //     this.cdr.markForCheck();
-    //   });
-
     const config = this.layoutConfigService.getConfig();
 
     if (objectPath.get(config, 'aside.menu.dropdown') !== true && objectPath.get(config, 'aside.self.fixed')) {
@@ -97,39 +63,6 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
     }
 
   }
-
-  // /**
-  //  * Check Menu is active
-  //  * @param item: any
-  //  */
-  // isMenuItemIsActive(item): boolean {
-  //   if (item.submenu) {
-  //     return this.isMenuRootItemIsActive(item);
-  //   }
-
-  //   if (!item.page) {
-  //     return false;
-  //   }
-
-  //   return this.currentRouteUrl.indexOf(item.page) !== -1;
-  // }
-
-  // /**
-  //  * Check Menu Root Item is active
-  //  * @param item: any
-  //  */
-  // isMenuRootItemIsActive(item): boolean {
-  //   let result = false;
-
-  //   for (const subItem of item.submenu) {
-  //     result = this.isMenuItemIsActive(subItem);
-  //     if (result) {
-  //       return true;
-  //     }
-  //   }
-
-  //   return false;
-  // }
 
   /**
    * Use for fixed left aside menu, to show menu on mouseenter event.
@@ -176,48 +109,4 @@ export class AsideLeftComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // /**
-  //  * Returns Submenu CSS Class Name
-  //  * @param item: any
-  //  */
-  // getItemCssClasses(item) {
-  //   let classes = 'kt-menu__item';
-
-  //   if (objectPath.get(item, 'submenu')) {
-  //     classes += ' kt-menu__item--submenu';
-  //   }
-
-  //   if (!item.submenu && this.isMenuItemIsActive(item)) {
-  //     classes += ' kt-menu__item--active kt-menu__item--here';
-  //   }
-
-  //   if (item.submenu && this.isMenuItemIsActive(item)) {
-  //     classes += ' kt-menu__item--open kt-menu__item--here';
-  //   }
-
-  //   // custom class for menu item
-  //   const customClass = objectPath.get(item, 'custom-class');
-  //   if (customClass) {
-  //     classes += ' ' + customClass;
-  //   }
-
-  //   if (objectPath.get(item, 'icon-only')) {
-  //     classes += ' kt-menu__item--icon-only';
-  //   }
-
-  //   return classes;
-  // }
-
-  // getItemAttrSubmenuToggle(item) {
-  //   let toggle = 'hover';
-  //   if (objectPath.get(item, 'toggle') === 'click') {
-  //     toggle = 'click';
-  //   } else if (objectPath.get(item, 'submenu.type') === 'tabs') {
-  //     toggle = 'tabs';
-  //   } else {
-  //     // submenu toggle default to 'hover'
-  //   }
-
-  //   return toggle;
-  // }
 }

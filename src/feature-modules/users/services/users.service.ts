@@ -12,16 +12,16 @@ export class UsersService {
     private http: HttpClient
   ) { }
 
-  getUsers(limit: number, offset: number, search?: string, status? : string) {
+  getUsers(limit: number, offset: number, search?: string, status?: string) {
     const url = new UrlModel(this.apiUrl).setPath('auth/v1/users');
     let filter = {};
-    filter = {...filter, ...{limit, offset}}
+    filter = { ...filter, ...{ limit, offset } };
     if (search) {
-      filter = {...filter, search};
+      filter = { ...filter, search };
     }
-    
+
     if (status) {
-      filter = {...filter, status};
+      filter = { ...filter, status };
     }
 
     url.setQueryParams(filter);
@@ -33,7 +33,7 @@ export class UsersService {
     const url = new UrlModel(this.apiUrl).setPath('auth/v1/info');
 
     if (authId) {
-      url.setQueryParams({authId});
+      url.setQueryParams({ authId });
     }
 
     return this.http.get(url.buildUrl());
@@ -62,17 +62,17 @@ export class UsersService {
 
   deactivateUser(email: string) {
     const url = new UrlModel(this.apiUrl).setPath('auth/v1/deactivate');
-    return this.http.post(url.buildUrl(), {email});
+    return this.http.post(url.buildUrl(), { email });
   }
 
   deleteUser(email: string) {
     const url = new UrlModel(this.apiUrl).setPath('auth/v1/delete');
-    return this.http.post(url.buildUrl(), {email});
+    return this.http.post(url.buildUrl(), { email });
   }
 
   confirmAccount(token, confirmationCode) {
     const url =
-        new UrlModel(this.apiUrl).setPath('businesses/v1/confirm').buildUrl();
-    return this.http.post(url, {token, confirmationCode});
+      new UrlModel(this.apiUrl).setPath('businesses/v1/confirm').buildUrl();
+    return this.http.post(url, { token, confirmationCode });
   }
 }

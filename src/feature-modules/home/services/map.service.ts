@@ -12,13 +12,13 @@ export class MapService {
   ) { }
 
   getBusinesses() {
-    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations/businesses')
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations/businesses');
 
     return this.http.get(url.buildUrl());
   }
 
   getMarkers(search: string) {
-    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations')
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations');
 
     if (search) {
       url.setQueryParams({search});
@@ -28,19 +28,19 @@ export class MapService {
   }
 
   getDistricts() {
-    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations/districts')
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations/districts');
 
     return this.http.get(url.buildUrl());
   }
 
   getSectors() {
-    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations/sectors')
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations/sectors');
 
     return this.http.get(url.buildUrl());
   }
 
   getLocations(limit: number, offset: number, filter?: {search?: string, sector?: string, district?: string}) {
-    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations-list')
+    const url = new UrlModel(this.apiUrl).setPath('insights/v1/locations-list');
     let params = {};
     params = {...params, ...{limit, offset}};
 
@@ -52,12 +52,12 @@ export class MapService {
       if (filter.sector) {
         params = {...params, ...{limit, sector: filter.sector}};
       }
-      
+
       if (filter.district) {
         params = {...params, ...{limit, district: filter.district}};
       }
     }
-    
+
 
     url.setQueryParams(params);
 
@@ -82,7 +82,7 @@ export class MapService {
       // };
 
       if (element.obs) {
-        element.obs = element.obs.length > 140 ? element.obs.substring(0, 137) + "..." : element.obs;
+        element.obs = element.obs.length > 140 ? element.obs.substring(0, 137) + '...' : element.obs;
       }
 
       const item: GeoJSON.Feature = {

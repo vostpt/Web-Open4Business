@@ -14,20 +14,18 @@
         <br />
         <button class="btn btn-outline-secondary logout" onclick="document.getElementById('kt_quick_panel_toggler_btn-close-btn').click();"><a routerLink="/auth/signout">Logout</a></button>
       </div>
-      
       <ul class="navbar-nav text-uppercase" onclick="document.getElementById('kt_quick_panel_toggler_btn-close-btn').click();">
-        
-        <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signin" class="nav-link">Login</a></li>
-        <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations" class="nav-link">As Minhas Lojas</a></li>
-        <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations/new" class="nav-link">Adicionar Lojas</a></li>
-        <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations/batches" class="nav-link">Submissões</a></li>
-        <li class="nav-item" *ngIf="session && isAdmin"><a routerLink="/users/list" class="nav-link">Lista de Utilizadores</a></li>
-        <li class="nav-item"><a routerLink="/" class="nav-link">Mapa</a></li>
-        <li class="nav-item"><a routerLink="/list" class="nav-link">Listagem</a></li>
-        <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signup" class="nav-link">Junte-se a nós</a></li>
-        <li class="nav-item"><a href="{{qickGuideLink}}" target="_blank" class="nav-link">Guia Rápido</a></li>
-        <li class="nav-item"><a routerLink="/about" class="nav-link">Sobre</a></li>
-        <li class="nav-item"><a routerLink="/cookies" class="nav-link">Política de Privacidade e Política de Cookies</a></li>
+        <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signin" class="nav-link">{{ 'app.menus.signin' | translate }}</a></li>
+        <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations" class="nav-link">{{ 'app.menus.my_locations' | translate }}</a></li>
+        <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations/new" class="nav-link">{{ 'app.menus.add_locations' | translate }}</a></li>
+        <li class="nav-item" *ngIf="session"><a routerLink="/businesses/locations/batches" class="nav-link">{{ 'app.menus.batches' | translate }}</a></li>
+        <li class="nav-item" *ngIf="session && isAdmin"><a routerLink="/users/list" class="nav-link">{{ 'app.menus.users_list' | translate }}</a></li>
+        <li class="nav-item"><a routerLink="/" class="nav-link">{{ 'app.menus.map' | translate }}</a></li>
+        <li class="nav-item"><a routerLink="/list" class="nav-link">{{ 'app.menus.list' | translate }}</a></li>
+        <li class="nav-item" *ngIf="!session"><a routerLink="/auth/signup" class="nav-link">{{ 'app.menus.signup' | translate }}</a></li>
+        <li class="nav-item"><a href="{{quickGuideLink}}" target="_blank" class="nav-link">{{ 'app.menus.quick_guide' | translate }}</a></li>
+        <li class="nav-item"><a routerLink="/about" class="nav-link">{{ 'app.menus.about' | translate }}</a></li>
+        <li class="nav-item"><a routerLink="/cookies" class="nav-link">{{ 'app.menus.cookies' | translate }}</a></li>
       </ul>
     </div>
   </div>

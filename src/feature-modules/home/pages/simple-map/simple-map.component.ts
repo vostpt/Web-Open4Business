@@ -13,21 +13,10 @@ import { GeolocateControl, LngLatBounds, Map, NavigationControl, Popup } from 'm
   templateUrl: './simple-map.component.html',
   styleUrls: ['./simple-map.component.scss']
 })
-export class SimpleMapComponent extends BasePageComponent implements OnInit,
-                                                                     OnDestroy {
-  @HostListener('document:keyup', ['$event'])
-  handleDeleteKeyboardEvent(event: KeyboardEvent) {
-    if (event.key === 'Escape') {
-      document.getElementsByClassName(
-          'mapboxgl-popup-close-button')[0]['click']();
-    }
-  }
-  public showCookieWarning =
-      (JSON.parse(localStorage.getItem('dismissedCookieWarning')) ? false :
-                                                                    true);
-  public showInformationBanner =
-      (JSON.parse(localStorage.getItem('dismissedInformationBanner')) ? false :
-                                                                        true);
+export class SimpleMapComponent extends BasePageComponent implements OnInit, OnDestroy {
+
+  public showCookieWarning = (JSON.parse(localStorage.getItem('dismissedCookieWarning')) ? false : true);
+  public showInformationBanner = (JSON.parse(localStorage.getItem('dismissedInformationBanner')) ? false : true);
   public searchPlaceholder = 'Pesquise locais';
 
   public imageLib = [{name: 'pin', path: 'assets/images/mapbox/pin.png'}];
@@ -48,6 +37,15 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
       private readonly parserService: ParserService,
       private readonly mapService: MapService, private route: ActivatedRoute) {
     super();
+  }
+
+
+  @HostListener('document:keyup', ['$event'])
+  handleDeleteKeyboardEvent(event: KeyboardEvent) {
+    if (event.key === 'Escape') {
+      document.getElementsByClassName(
+          'mapboxgl-popup-close-button')[0]['click']();
+    }
   }
 
   ngOnInit() {
@@ -313,7 +311,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
             .addTo(this.map);
       });
 
-      let that = this;
+      const that = this;
       this.map.on('click', 'clusters', function(e) {
         const cluster =
             that.map.queryRenderedFeatures(e.point, {layers: ['clusters']});
@@ -372,8 +370,8 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
       <br />`;
 
     html +=
-        (properties.schedule1Dow != '' || properties.schedule2Dow != '' ||
-                 properties.schedule3Dow != '' ?
+        (properties.schedule1Dow !== '' || properties.schedule2Dow != '' ||
+                 properties.schedule3Dow !== '' ?
              `<h5><b>Horário de Funcionamento</b></h5>` :
              '');
 
@@ -404,17 +402,17 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit,
     }
 
     html +=
-        (properties.typeOfService != '' ? `<br /><h5><b>Entregas</b></h5><p>${
+        (properties.typeOfService !== '' ? `<br /><h5><b>Entregas</b></h5><p>${
                                               properties.typeOfService}</p>` :
                                           '');
 
-    if (properties.byAppointment == 'Sim') {
+    if (properties.byAppointment === 'Sim') {
       html += `<br /><h5><b>Por Marcação</b></h5>`;
       html += `<p>${properties.contactForSchedule}<p>`;
     }
 
     html +=
-        (properties.obs != '' ? `<br /><p class="notes">${properties.obs}</p>` :
+        (properties.obs !== '' ? `<br /><p class="notes">${properties.obs}</p>` :
                                 '');
 
     html += `<br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.com/maps/search/?api=1&query=${

@@ -42,7 +42,7 @@ export class InputComponent implements ControlValueAccessor, OnInit, AfterViewIn
 
   @Input() tooltip: string;
   @Input() icon: string;
-  
+
   @Input() appendButton: string;
   @Input() appendButtonIcon: string;
 

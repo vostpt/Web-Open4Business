@@ -1,12 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { NgxSpinnerService } from 'ngx-spinner';
 import { TranslateService } from '@ngx-translate/core';
 
-import { locale as ptLanguage } from './config/translations/pt';
+import { environment } from '@core-modules/core';
 import { GoogleAnalyticsService } from '@core-modules/core/services/google-analytics.service';
+
+import { locale as ptLanguage } from './config/translations/pt';
+import { locale as enLanguage } from './config/translations/en';
 
 @Component({
   selector: 'app-root',
@@ -18,17 +22,18 @@ export class AppComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   constructor(
+    private titleService: Title,
     private router: Router,
     private translateService: TranslateService,
     private loader: NgxSpinnerService,
-    private googleAnalytics: GoogleAnalyticsService,
-    // private layoutConfigService: LayoutConfigService,
-    // private splashScreenService: SplashScreenService
+    private googleAnalytics: GoogleAnalyticsService
   ) {
-    this.translateService.addLangs(['pt']);
-    this.translateService.setDefaultLang('pt');
+    this.translateService.addLangs(['pt', 'en']);
+    this.translateService.setDefaultLang(environment.defaultLanguage.toLowerCase());
     this.translateService.setTranslation(ptLanguage.lang, ptLanguage.data, true);
-    // this.translationService.loadTranslations(enLang, chLang, esLang, jpLang, deLang, frLang);
+    this.translateService.setTranslation(enLanguage.lang, enLanguage.data, true);
+
+    this.titleService.setTitle( translateService.instant('app.title') );
 
     this.googleAnalytics.start();
   }
@@ -38,20 +43,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.loader.show('splash-screen-loader');
 
-    // this.translateService.setDefaultLang('en');
-    // this.translateService.use('en');
-
-
     const routerSubscription = this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        // hide splash screen
-        this.loader.hide('splash-screen-loader');
 
-        // scroll to top on every route change
-        window.scrollTo(0, 0);
+        this.loader.hide('splash-screen-loader'); // hide splash screen
+        
+        window.scrollTo(0, 0); // scroll to top on every route change
 
-        // to display back the body content
-        setTimeout(() => {
+        setTimeout(() => { // to display back the body content
           document.body.classList.add('kt-page--loaded');
         }, 500);
       }
