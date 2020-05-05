@@ -279,8 +279,8 @@ export class MapComponent extends BasePageComponent implements OnInit,
             .addTo(this.map);
       });
 
-      let that = this;
-      this.map.on('click', 'clusters', function(e) {
+      const that = this;
+      this.map.on('click', 'clusters', (e) => {
         const cluster =
             that.map.queryRenderedFeatures(e.point, {layers: ['clusters']});
         console.log(cluster);
@@ -327,7 +327,7 @@ export class MapComponent extends BasePageComponent implements OnInit,
 
       // This can be any easing function: it takes a number between
       // 0 and 1 and returns another number between 0 and 1.
-      easing: function(t) {
+      easing: (t) => {
         return t;
       }
     });
@@ -383,7 +383,7 @@ export class MapComponent extends BasePageComponent implements OnInit,
                                         properties.typeOfService}</p>` :
                                     '');
 
-    if (properties.byAppointment == 'Sim') {
+    if (properties.byAppointment === 'Sim') {
       html += `<br /><h5><b>Por Marcação</b></h5>`;
       html += `<p>${properties.contactForSchedule || ''}<p>`;
     }

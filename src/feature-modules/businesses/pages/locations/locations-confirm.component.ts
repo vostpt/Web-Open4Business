@@ -4,7 +4,6 @@ import { BusinessesService } from '@businesses-feature-module/services/businesse
 import { BasePageComponent } from '@core-modules/main-layout';
 import { ParserService } from '@core-modules/core/services/parser.service';
 
-
 @Component({
   selector: 'app-businesses-locations-confirm',
   templateUrl: './locations-confirm.component.html',
@@ -92,9 +91,9 @@ export class LocationsConfirmComponent extends BasePageComponent implements OnIn
               return item;
             });
 
-            this.total = parseInt(result.data.total);
+            this.total = parseInt(result.data.total, 10);
             this.pages = Math.ceil(this.total / 50);
-            const offset = parseInt(result.data.offset);
+            const offset = parseInt(result.data.offset, 10);
             this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
 
             this.contentReady = true;

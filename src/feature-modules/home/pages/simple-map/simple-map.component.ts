@@ -312,7 +312,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
       });
 
       const that = this;
-      this.map.on('click', 'clusters', function(e) {
+      this.map.on('click', 'clusters', (e) => {
         const cluster =
             that.map.queryRenderedFeatures(e.point, {layers: ['clusters']});
         console.log(cluster);
@@ -350,7 +350,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
 
       // This can be any easing function: it takes a number between
       // 0 and 1 and returns another number between 0 and 1.
-      easing: function(t) {
+      easing: (t) => {
         return t;
       }
     });
@@ -370,7 +370,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
       <br />`;
 
     html +=
-        (properties.schedule1Dow !== '' || properties.schedule2Dow != '' ||
+        (properties.schedule1Dow !== '' || properties.schedule2Dow !== '' ||
                  properties.schedule3Dow !== '' ?
              `<h5><b>Horário de Funcionamento</b></h5>` :
              '');
@@ -381,7 +381,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
       const schedule =
           this.parserService.formatScheduleProperty(properties[`schedule${i}`]);
 
-      if (dayOfWeekPeriods != '') {
+      if (dayOfWeekPeriods !== '') {
         html += `<span>${properties[`schedule${i}Type`]}`;
 
         if (properties[`schedule${i}Period`]) {
@@ -393,7 +393,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
       }
 
       html +=
-          (dayOfWeekPeriods != '' ? `
+          (dayOfWeekPeriods !== '' ? `
           <div class="row">
             <div class="col-5"><p>${dayOfWeekPeriods}:</p></div>
             <div class="col-7"><p>${schedule}</p></div>

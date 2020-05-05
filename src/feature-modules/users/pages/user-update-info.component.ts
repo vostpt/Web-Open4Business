@@ -1,21 +1,20 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {BusinessesService} from '@businesses-feature-module/services/businesses.service';
-import {FormsService, passwordFieldsMatchValidator, passwordFormatValidator} from '@core-modules/catalog/modules/forms';
-import {CheckboxComponent} from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
-import {environment} from '@core-modules/core';
-import {BasePageComponent} from '@core-modules/main-layout';
-import {UsersService} from '@users-feature-module/services/users.service';
-import {DropzoneConfigInterface} from 'ngx-dropzone-wrapper';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
+import { FormsService, passwordFieldsMatchValidator, passwordFormatValidator } from '@core-modules/catalog/modules/forms';
+import { CheckboxComponent } from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
+import { environment } from '@core-modules/core';
+import { BasePageComponent } from '@core-modules/main-layout';
+import { UsersService } from '@users-feature-module/services/users.service';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 @Component({
   selector: 'app-users-user-update-info',
   templateUrl: './user-update-info.component.html',
   styleUrls: ['./user-update-info.component.scss']
 })
-export class UserUpdateInfoComponent extends BasePageComponent implements
-    OnInit, AfterViewInit, OnDestroy {
+export class UserUpdateInfoComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
   contentReady = false;
   formUserInfoOnEditMode = false;
   formPasswordOnEditMode = false;
@@ -23,7 +22,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
   public isAdmin: boolean;
   public authId: string;
   public title: string;
-  public marker: string = '';
+  public marker = '';
 
   defaultUploadConfiguration: DropzoneConfigInterface = {
     dictRemoveFileConfirmation: 'Tem a certeza que deseja remover o ficheiro?',
@@ -49,9 +48,9 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
     ...this.defaultUploadConfiguration,
     ...{
       dictDefaultMessage: 'Pressione ou arraste um ficheiro .png com 41x51',
-          headers: {authorization: 'Bearer ' + localStorage.getItem('token')},
-          url: `${environment.apiUrl}/businesses/v1/file`,
-          acceptedFiles: '.png', previewsContainer: '#dataUploadPreview'
+      headers: { authorization: 'Bearer ' + localStorage.getItem('token') },
+      url: `${environment.apiUrl}/businesses/v1/file`,
+      acceptedFiles: '.png', previewsContainer: '#dataUploadPreview'
     }
   };
 
@@ -64,15 +63,15 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
     return this.formUserPassword.controls;
   }
 
-  datasets = {user: {}, company: {}};
+  datasets = { user: {}, company: {} };
 
 
   constructor(
-      private readonly formBuilder: FormBuilder,
-      private readonly usersService: UsersService,
-      private readonly businessService: BusinessesService,
-      private readonly formsService: FormsService,
-      private route: ActivatedRoute) {
+    private readonly formBuilder: FormBuilder,
+    private readonly usersService: UsersService,
+    private readonly businessService: BusinessesService,
+    private readonly formsService: FormsService,
+    private route: ActivatedRoute) {
     super();
   }
 
@@ -95,7 +94,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
       this.authId = params['email'];
 
       if (this.isAdmin && this.authId &&
-          this.authId !== localStorage.getItem('email')) {
+        this.authId !== localStorage.getItem('email')) {
         this.title = this.authId;
       } else {
         this.title = 'A minha conta';
@@ -103,44 +102,44 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
       }
 
       this.formUserPassword = this.formBuilder.group(
-          {
-            currentPassword: [null, this.authId ? null : Validators.required],
-            password: [null, [Validators.required, passwordFormatValidator]],
-            confirmPassword:
-                [null, [Validators.required, passwordFormatValidator]]
-          },
-          {validator: passwordFieldsMatchValidator});
+        {
+          currentPassword: [null, this.authId ? null : Validators.required],
+          password: [null, [Validators.required, passwordFormatValidator]],
+          confirmPassword:
+            [null, [Validators.required, passwordFormatValidator]]
+        },
+        { validator: passwordFieldsMatchValidator });
 
       this.subscriptions.push(
-          this.usersService.getUser(this.authId)
-              .subscribe(
-                  (result: {data: {company: object, info: object}}) => {
-                    this.datasets.user = result.data.info;
-                    this.datasets.company = result.data.company;
+        this.usersService.getUser(this.authId)
+          .subscribe(
+            (result: { data: { company: object, info: object } }) => {
+              this.datasets.user = result.data.info;
+              this.datasets.company = result.data.company;
 
-                    this.datasets.user['company'] =
-                        result.data.company['company'];
+              this.datasets.user['company'] =
+                result.data.company['company'];
 
-                    this.fUserInfo.company.setValue(
-                        this.datasets.user['company']);
-                    this.fUserInfo.name.setValue(this.datasets.user['name']);
-                    this.fUserInfo.email.setValue(this.datasets.user['email']);
-                    this.fUserInfo.phone.setValue(this.datasets.user['phone'] || this.datasets.company['phone']);
-                    this.fUserInfo.isActive.setValue(
-                        this.datasets.user['isActive']);
+              this.fUserInfo.company.setValue(
+                this.datasets.user['company']);
+              this.fUserInfo.name.setValue(this.datasets.user['name']);
+              this.fUserInfo.email.setValue(this.datasets.user['email']);
+              this.fUserInfo.phone.setValue(this.datasets.user['phone'] || this.datasets.company['phone']);
+              this.fUserInfo.isActive.setValue(
+                this.datasets.user['isActive']);
 
-                    this.marker = `${
-                        this.environment.variables
-                            .apiUrl}/insights/v1/marker?businessId=${
-                        this.datasets.company['businessId']}`;
-                    this.contentReady = true;
-                    this.loader.hide('pageLoader');
-                  },
-                  (error) => {
-                    this.contentReady = true;
-                    this.loader.hide('pageLoader');
-                    this.logger.error('Error fetching user info', error);
-                  }));
+              this.marker = `${
+                this.environment.variables
+                  .apiUrl}/insights/v1/marker?businessId=${
+                this.datasets.company['businessId']}`;
+              this.contentReady = true;
+              this.loader.hide('pageLoader');
+            },
+            (error) => {
+              this.contentReady = true;
+              this.loader.hide('pageLoader');
+              this.logger.error('Error fetching user info', error);
+            }));
     });
   }
 
@@ -185,47 +184,46 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
       }
 
       this.subscriptions.push(
-          this.usersService.saveUserInfo(bodyPayload)
-              .subscribe(
-                  () => {
-                    this.formUserInfoOnEditMode = false;
-                    this.loader.hide('pageLoader');
-                    this.notification.success(
-                        'A informação foi enviada com sucesso');
-                  },
-                  error => {
-                    this.loader.hide('pageLoader');
+        this.usersService.saveUserInfo(bodyPayload)
+          .subscribe(
+            () => {
+              this.formUserInfoOnEditMode = false;
+              this.loader.hide('pageLoader');
+              this.notification.success(
+                'A informação foi enviada com sucesso');
+            },
+            error => {
+              this.loader.hide('pageLoader');
 
-                    if (error.status === 401) {  // Mail already exists
-                      this.notification.error(
-                          'A informação enviada entrou em conflito com dados existentes. Por favor, experimente com outros dados.');
-                    } else {
-                      this.notification.error(
-                          'Ocorreu um erro ao atualizar. Tente mais tarde ou contacte os nossos serviços de apoio.');
-                      this.logger.error('User info update unsuccessful', error);
-                    }
-                  }));
+              if (error.status === 401) {  // Mail already exists
+                this.notification.error(
+                  'A informação enviada entrou em conflito com dados existentes. Por favor, experimente com outros dados.');
+              } else {
+                this.notification.error(
+                  'Ocorreu um erro ao atualizar. Tente mais tarde ou contacte os nossos serviços de apoio.');
+                this.logger.error('User info update unsuccessful', error);
+              }
+            }));
 
       if (bodyPayload.dataFile) {
         this.subscriptions.push(
-            this.businessService
-                .setMarker(
-                    this.datasets.company['businessId'], bodyPayload.dataFile)
-                .subscribe(
-                    () => {
-                      this.notification.success(
-                          'Marcador atualizado com sucesso');
-                    },
-                    error => {
-                      console.log(error.error);
-                      if (error.status === 400) {  // Mail already exists
-                        this.notification.error(error.error.resultMessage);
-                      } else {
-                        this.notification.error(
-                          'Não foi possível atualizar o marcador');
-                      }
-                      
-                    }));
+          this.businessService
+            .setMarker(
+              this.datasets.company['businessId'], bodyPayload.dataFile)
+            .subscribe(
+              () => {
+                this.notification.success(
+                  'Marcador atualizado com sucesso');
+              },
+              error => {
+                console.log(error.error);
+                if (error.status === 400) {  // Mail already exists
+                  this.notification.error(error.error.resultMessage);
+                } else {
+                  this.notification.error(
+                    'Não foi possível atualizar o marcador');
+                }
+              }));
       }
 
 
@@ -238,7 +236,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
 
   onUserPasswordSubmit() {
     if (this.fUserPassword.password.valid && this.formUserPassword.errors?.passwordFieldsMatch) {
-      this.fUserPassword.password.setErrors({passwordFieldsMatch: true});
+      this.fUserPassword.password.setErrors({ passwordFieldsMatch: true });
       return;
     }
 
@@ -260,28 +258,28 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
       }
 
       this.subscriptions.push(
-          this.usersService.saveUserPassword(bodyPayload)
-              .subscribe(
-                  () => {
-                    this.formPasswordOnEditMode = false;
-                    this.loader.hide('pageLoader');
-                    this.notification.success(
-                        'A password foi alterada com sucesso');
-                    this.formUserPassword.reset();
-                  },
-                  error => {
-                    this.loader.hide('pageLoader');
+        this.usersService.saveUserPassword(bodyPayload)
+          .subscribe(
+            () => {
+              this.formPasswordOnEditMode = false;
+              this.loader.hide('pageLoader');
+              this.notification.success(
+                'A password foi alterada com sucesso');
+              this.formUserPassword.reset();
+            },
+            error => {
+              this.loader.hide('pageLoader');
 
-                    if (error.status ===
-                        401) {  // Current password does not match
-                      this.notification.error(
-                          'Não foi possível atualizar a sua password. Verifique se a password atual está correcta.');
-                    } else {
-                      this.notification.error(
-                          'Ocorreu um erro ao atualizar. Tente mais tarde ou contacte os nossos serviços de apoio.');
-                      this.logger.error('Passwordupdate unsuccessful', error);
-                    }
-                  }));
+              if (error.status ===
+                401) {  // Current password does not match
+                this.notification.error(
+                  'Não foi possível atualizar a sua password. Verifique se a password atual está correcta.');
+              } else {
+                this.notification.error(
+                  'Ocorreu um erro ao atualizar. Tente mais tarde ou contacte os nossos serviços de apoio.');
+                this.logger.error('Passwordupdate unsuccessful', error);
+              }
+            }));
     } else {
       console.log('Invalid form', this.formUserPassword.errors);
       this.loader.hide('pageLoader');
@@ -289,9 +287,9 @@ export class UserUpdateInfoComponent extends BasePageComponent implements
     }
   }
 
-  onFileAdded(event) {}
+  onFileAdded(event) { }
 
-  onFileRemoved(event) {}
+  onFileRemoved(event) { }
 
   onUploadSuccess(formField, event) {
     const file = event[0];

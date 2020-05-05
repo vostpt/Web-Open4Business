@@ -2,6 +2,7 @@ export const locale = {
   lang: 'pt',
   data: {
     app: {
+      brand: 'Open4Business',
       hashtag: '#OPEN4BUSINESSPT',
       title: 'Open4Business - Estamos ON',
       menus: {
@@ -20,11 +21,19 @@ export const locale = {
     },
     dictionary: {
       cancelar: 'cancelar',
-      home: 'Início',
+      email: 'e-mail',
+      home: 'início',
       loading: 'a carregar...',
+      login: 'login',
+      name: 'nome',
+      password: 'password',
+      phone: 'Telefone',
       required: 'obrigatório',
       submit: 'submeter',
       start: 'início'
+    },
+    labels: {
+      company_name: 'Nome da empresa'
     },
     actions: {
       access_to_menu: 'ACEDER AO MENU',
@@ -43,6 +52,21 @@ export const locale = {
       }
     },
     sections: {
+      authentication: {
+        companies_registration: 'Registo para empresas',
+        signin_title: 'Efectue o login',
+        signup_title: 'Junte-se a nós',
+        signup_here: 'Ainda não se registou? Faça-o aqui.',
+        signup_description: 'Nesta área pode pode fazer o registo da sua empresa. Após o registo irá receber um e-mail com os seus dados, e após validação pela equipa do “Open4Business” irá receber um segundo e-mail a informar que a sua conta já se encontra ativa. Não partilhe estes dados de login com ninguém externo à sua organização. Para qualquer questão contacte a equipa de suporte via este <a href="mailto:o4b@vost.pt">e-mail</a>.',
+        small_companies_title: 'Pequenas empresas',
+        small_companies_description: 'Para gestão manual de localizações',
+        big_companies_title: 'Grandes empresas',
+        big_companies_description: 'Para carregamento e gestão automatizada de muitas localizações',
+        phone_placeholder: '9XXXXXXXX',
+        phone_validation: '^9[1236]{1}[0-9]{7}$',
+        signup_successful: '<p class="title">O seu pedido foi registado com sucesso.</p>Após validação irá receber um e-mail de confirmação, com as suas credenciais.'
+
+      },
       error_pages: {
         page_not_found: 'A ligação a que tentaste aceder não foi encontrada.<br />Poderá ter sido movida, removida, alterada ou até nem existir.'
       },

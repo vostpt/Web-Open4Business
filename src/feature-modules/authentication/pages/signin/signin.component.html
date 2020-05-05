@@ -2,10 +2,10 @@
 
 <div class="container">
   <ul class="breadcrumbs">
-    <li><a routerLink="/">OPEN4BUSINESS</a></li>
+    <li><a routerLink="/">{{ 'app.brand' | translate }}</a></li>
     <li>/</li>
     <li class="current">
-      <span>Login</span>
+      <span>{{ 'dictionary.login' | translate }}</span>
     </li>
   </ul>
 </div>
@@ -14,7 +14,7 @@
   <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
       <h3 class="kt-portlet__head-title title">
-        Efectue o login
+        {{ 'sections.authentication.signin_title' | translate }}
       </h3>
     </div>
   </div>
@@ -24,10 +24,12 @@
 
       <div class="form-group row">
         <div class="col-lg-6">
-          <app-catalog-form-input [formControlField]="f.authId" formControlName="authId" label="E-Mail" [required]="true"></app-catalog-form-input>
+          <app-catalog-form-input [formControlField]="f.authId" formControlName="authId" label="{{ 'dictionary.email' | translate }}"
+            [required]="true"></app-catalog-form-input>
         </div>
         <div class="col-lg-6">
-          <app-catalog-form-input [formControlField]="f.password" formControlName="password" type="password" label="Password" [required]="true"></app-catalog-form-input>
+          <app-catalog-form-input [formControlField]="f.password" formControlName="password" type="password"
+            label="{{ 'dictionary.password' | translate }}" [required]="true"></app-catalog-form-input>
         </div>
       </div>
 
@@ -36,11 +38,11 @@
       <div class="kt-form__actions">
         <div class="row">
           <div class="col-lg-8">
-            <a routerLink="/auth/signup">Ainda não se registou? Faça-o aqui.</a>
+            <a routerLink="/auth/signup">{{ 'sections.authentication.signup_here' | translate }}</a>
           </div>
           <div class="col-lg-4 kt-align-right">
             <button type="submit" class="btn btn-primary ml-2">
-              <i class="fa fa-check"></i> &nbsp; Login</button>
+              <i class="fa fa-check"></i> &nbsp; {{ 'dictionary.login' | translate | titlecase }}</button>
           </div>
         </div>
       </div>

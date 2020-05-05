@@ -187,7 +187,7 @@ export class ListComponent extends BasePageComponent implements OnInit, AfterVie
             this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
             this.contentReady = true;
 
-            if (this.districtList.length == 0 &&
+            if (this.districtList.length === 0 &&
               resultData['data'].districts) {
               this.districtList =
                 resultData['data'].districts.map((d) => {

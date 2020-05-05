@@ -34,7 +34,7 @@ export class SignupComponent extends BasePageComponent implements OnInit, AfterV
       company: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
       name: [null, Validators.required],
-      phone: [null, [Validators.required, Validators.pattern('^9[1236]{1}[0-9]{7}$')]]
+      phone: [null, [Validators.required, Validators.pattern( this.translate('sections.authentication.phone_validation' ))]]
     });
 
   }

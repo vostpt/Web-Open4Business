@@ -1,5 +1,5 @@
 export const locale = {
-	lang: 'en',
+  lang: 'en',
   data: {
     app: {
       title: 'Open4Business - Were ON'

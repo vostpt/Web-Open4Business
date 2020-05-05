@@ -15,6 +15,8 @@ import { BusinessesService } from '@businesses-feature-module/services/businesse
 })
 export class LocationsInsertComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
 
+  quickGuideLink = `${environment.apiUrl}/insights/v1/guide`;
+
   form: FormGroup;
   get f() { return this.form.controls; }
 
@@ -49,8 +51,6 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
     }
   };
 
-  public qickGuideLink = "";
-
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly businessesService: BusinessesService,
@@ -70,7 +70,6 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
       dataFile: [null, Validators.required]
     });
 
-    this.qickGuideLink = `${environment.apiUrl}/insights/v1/guide`;
   }
 
   ngAfterViewInit() {

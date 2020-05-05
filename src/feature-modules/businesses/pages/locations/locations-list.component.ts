@@ -14,16 +14,13 @@ import { forkJoin } from 'rxjs';
   templateUrl: './locations-list.component.html',
   styleUrls: ['./locations-list.component.scss']
 })
-export class LocationsListComponent extends BasePageComponent implements
-  OnInit, AfterViewInit, OnDestroy {
+export class LocationsListComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
   public searchPlaceholder = 'Pesquisar Empresas';
-  public editing: boolean = false;
-  public total: number = 0;
-  public pages: number = 1;
-  public page: number = 1;
-  public exportUrl =
-    `${environment.apiUrl}/businesses/v1/locations/export?token=${
-    localStorage.getItem('token')}`;
+  public editing = false;
+  public total = 0;
+  public pages = 1;
+  public page  = 1;
+  public exportUrl = `${environment.apiUrl}/businesses/v1/locations/export?token=${localStorage.getItem('token')}`;
   public exportSearch = '';
   public batch: {
     batchId: string,
@@ -188,9 +185,9 @@ export class LocationsListComponent extends BasePageComponent implements
                 return item;
               });
 
-            this.total = parseInt(resultData['data'].total);
+            this.total = parseInt(resultData['data'].total, 10);
             this.pages = Math.ceil(this.total / 50);
-            const offset = parseInt(resultData['data'].offset);
+            const offset = parseInt(resultData['data'].offset, 10);
             this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
 
             this.loader.hide('pageLoader');
@@ -246,9 +243,9 @@ export class LocationsListComponent extends BasePageComponent implements
                 return item;
               });
 
-            this.total = parseInt(resultData['data'].total);
+            this.total = parseInt(resultData['data'].total, 10);
             this.pages = Math.ceil(this.total / 50);
-            const offset = parseInt(resultData['data'].offset);
+            const offset = parseInt(resultData['data'].offset, 10);
             this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
 
             // Load batches
@@ -278,7 +275,7 @@ export class LocationsListComponent extends BasePageComponent implements
     if (e.target.checked) {
       checkboxField.push(new FormControl(e.target.value));
     } else {
-      let i: number = 0;
+      let i = 0;
       checkboxField.controls.forEach((item: FormControl) => {
         if (item.value === e.target.value) {
           checkboxField.removeAt(i);
@@ -293,7 +290,7 @@ export class LocationsListComponent extends BasePageComponent implements
     this.editing = true;
 
     if (location) {
-      for (let [key, value] of Object.entries(location)) {
+      for (const [key, value] of Object.entries(location)) {
         try {
           if (this.editForm.controls[key]) {
             this.editForm.controls[key].setValue(value);
@@ -307,7 +304,7 @@ export class LocationsListComponent extends BasePageComponent implements
         // Fill schedule fields
         for (let i = 1; i <= 3; i++) {
           if (location[`schedule${i}`]) {
-            let hours = location[`schedule${i}`].split('-');
+            const hours = location[`schedule${i}`].split('-');
             this.editForm.controls[`schedule${i}StartHour`].setValue(
               hours[0].substring(0, 5));
 

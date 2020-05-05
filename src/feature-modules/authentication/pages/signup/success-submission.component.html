@@ -2,15 +2,12 @@
 
 <div class="banner-section" *ngIf="showInformationBanner">
   <i class="fa fa-times close-icon" (click)="dismissInformationBanner()"></i>
-  <div class="container">
-    <p class="title">O seu pedido foi registado com sucesso.</p>
-    Após validação irá receber um e-mail de confirmação, com as suas credenciais.
-  </div>
+  <div class="container" innerHtml="{{ 'sections.authentication.signup_successful' | translate}}"></div>
 </div>
 
 <div class="content-section">
   <div class="container center-block">
     <a href="/"><img class="logo" src="assets/images/logos/o4b.png"></a>
-    <h3 class="brand">#OPEN4BUSINESS</h3>
+    <h3 class="brand">{{ 'app.brand' | translate | uppercase }}</h3>
   </div>
 </div>

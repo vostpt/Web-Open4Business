@@ -37,7 +37,7 @@ export class UsersListComponent extends BasePageComponent implements OnInit, Aft
 
 
   ngOnInit() {
-    if (localStorage.getItem('isA') != 'true') {
+    if (localStorage.getItem('isA') !== 'true') {
       location.href = '/not-found';
       return;
     }

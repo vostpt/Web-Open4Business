@@ -78,7 +78,7 @@ export class BusinessesService {
 
     return this.http.post(url.buildUrl(), body);
   }
-  
+
   setMarker(businessId: string, markerPath: string) {
     const url =
         new UrlModel(this.apiUrl).setPath('businesses/v1/business/marker');

@@ -47,7 +47,7 @@ export class AppComponent implements OnInit, OnDestroy {
       if (event instanceof NavigationEnd) {
 
         this.loader.hide('splash-screen-loader'); // hide splash screen
-        
+
         window.scrollTo(0, 0); // scroll to top on every route change
 
         setTimeout(() => { // to display back the body content

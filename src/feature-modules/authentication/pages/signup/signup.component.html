@@ -2,10 +2,10 @@
 
 <div class="container">
   <ul class="breadcrumbs">
-    <li><a routerLink="/">OPEN4BUSINESS</a></li>
+    <li><a routerLink="/">{{ 'app.brand' | translate }}</a></li>
     <li>/</li>
     <li class="current">
-      <span>Registo para empresas</span>
+      <span>{{ 'sections.authentication.companies_registration' | translate }}</span>
     </li>
   </ul>
 </div>
@@ -14,7 +14,7 @@
   <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
       <h3 class="kt-portlet__head-title title">
-        Junte-se nós
+        {{ 'sections.authentication.signup_title' | translate }}
       </h3>
     </div>
   </div>
@@ -23,13 +23,7 @@
     <div class="kt-portlet__body">
 
       <div class="form-group row">
-        <div class="col-lg-12 text">
-          Nesta área pode pode fazer o registo da sua empresa.
-          Após o registo irá receber um e-mail com os seus dados, e após validação pela equipa do “Open4Business”
-          irá receber um segundo e-mail a informar que a sua conta já se encontra ativa.
-          Não partilhe estes dados de login com ninguém externo à sua organização.
-          Para qualquer questão contacte a equipa de suporte via este <a href="mailto:o4b@vost.pt">e-mail</a>.
-        </div>
+        <div class="col-lg-12 text" innerHtml="{{ 'sections.authentication.signup_description' | translate }}"></div>
       </div>
 
       <div class="row vertical-padding">
@@ -44,11 +38,11 @@
             <span class="kt-option__label">
               <span class="kt-option__head">
                 <span class="kt-option__title">
-                  Pequenas empresas
+                  {{ 'sections.authentication.small_companies_title' | translate }}
                 </span>
               </span>
               <span class="kt-option__body">
-                <b>Para gestão manual de localizações</b>
+                <b>{{ 'sections.authentication.small_companies_description' | translate }}</b>
               </span>
             </span>
           </label>
@@ -57,16 +51,16 @@
           <label class="kt-option">
             <span class="kt-option__control">
               <span class="kt-radio">
-                <input  formControlName="companyType" type="radio" value="big">
+                <input formControlName="companyType" type="radio" value="big">
                 <span></span>
               </span>
             </span>
             <span class="kt-option__label">
               <span class="kt-option__head">
-                <span class="kt-option__title">Grandes empresas</span>
+                <span class="kt-option__title">{{ 'sections.authentication.big_companies_title' | translate }}</span>
               </span>
               <span class="kt-option__body">
-                <b>Para carregamento e gestão automatizada de muitas localizações</b>
+                <b>{{ 'sections.authentication.big_companies_description' | translate }}</b>
               </span>
             </span>
           </label>
@@ -75,23 +69,22 @@
 
       <div class="form-group row">
         <div class="col-lg-6">
-          <app-catalog-form-input [formControlField]="f.company" formControlName="company" label="Nome da empresa"
-            [placeholder]="" [required]="true"></app-catalog-form-input>
+          <app-catalog-form-input [formControlField]="f.company" formControlName="company" label="{{ 'labels.company_name' | translate }}"
+            [required]="true"></app-catalog-form-input>
         </div>
         <div class="col-lg-6">
-          <app-catalog-form-input [formControlField]="f.email" formControlName="email" label="E-mail" [placeholder]=""
+          <app-catalog-form-input [formControlField]="f.email" formControlName="email" label="{{ 'dictionary.email' | translate }}"
             [required]="true"></app-catalog-form-input>
         </div>
       </div>
       <div class="form-group row">
         <div class="col-lg-6">
-          <app-catalog-form-input [formControlField]="f.name" formControlName="name" label="Nome" [placeholder]=""
-            [required]="true"></app-catalog-form-input>
-            
+          <app-catalog-form-input [formControlField]="f.name" formControlName="name" label="{{ 'dictionary.name' | translate }}"
+          [required]="true"></app-catalog-form-input>
         </div>
         <div class="col-lg-6">
-          <app-catalog-form-input [formControlField]="f.phone" formControlName="phone" label="Telefone" placeholder="9XXXXXXXX"
-            [required]="true" pattern="^9[1236]{1}[0-9]{7}$"></app-catalog-form-input>
+          <app-catalog-form-input [formControlField]="f.phone" formControlName="phone" label="{{ 'dictionary.phone' | translate }}" placeholder="{{ 'sections.authentication.phone_placeholder' | translate }}"
+            [required]="true" pattern="{{ 'sections.authentication.phone_validation' | translate }}"></app-catalog-form-input>
         </div>
       </div>
 
@@ -101,8 +94,7 @@
         <div class="row">
           <div class="col-lg-12 kt-align-right">
             <button type="submit" class="btn btn-primary ml-2">
-              <i class="fa fa-check"></i> &nbsp;
-              {{ 'dictionary.submit' | translate }}
+              <i class="fa fa-check"></i> &nbsp; {{ 'dictionary.submit' | translate | titlecase }}
             </button>
           </div>
         </div>
