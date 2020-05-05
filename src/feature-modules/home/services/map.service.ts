@@ -81,6 +81,10 @@ export class MapService {
       //   className: 'dot'
       // };
 
+      if (element.obs) {
+        element.obs = element.obs.length > 140 ? element.obs.substring(0, 137) + "..." : element.obs;
+      }
+
       const item: GeoJSON.Feature = {
         type: 'Feature',
         geometry: {
