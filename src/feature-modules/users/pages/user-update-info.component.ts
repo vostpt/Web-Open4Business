@@ -29,7 +29,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
   public marker = '';
 
   defaultUploadConfiguration: DropzoneConfigInterface = {
-    dictRemoveFileConfirmation: this.translate('are_you_sure_remove_file'),
+    dictRemoveFileConfirmation: this.translate('messages.alerts.are_you_sure_remove_file'),
     maxFilesize: 1,
     maxFiles: 1,
     previewTemplate: `
@@ -51,7 +51,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
   dataUploadConfiguration = {
     ...this.defaultUploadConfiguration,
     ...{
-      dictDefaultMessage: this.translate('press_or_drag_marker_file'),
+      dictDefaultMessage: this.translate('messages.informations.press_or_drag_marker_file'),
       headers: { authorization: 'Bearer ' + localStorage.getItem('token') },
       url: `${environment.apiUrl}/businesses/v1/file`,
       acceptedFiles: '.png', previewsContainer: '#dataUploadPreview'
@@ -188,15 +188,15 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
             () => {
               this.formUserInfoOnEditMode = false;
               this.loader.hide('pageLoader');
-              this.notification.success(this.translate('information_successfully_sent'));
+              this.notification.success(this.translate('messages.success.information_successfully_sent'));
             },
             error => {
               this.loader.hide('pageLoader');
 
               if (error.status === 401) {  // Mail already exists
-                this.notification.error(this.translate('information_sent_has_conflicts'));
+                this.notification.error(this.translate('messages.errors.information_sent_has_conflicts'));
               } else {
-                this.notification.error(this.translate('unknown_error'));
+                this.notification.error(this.translate('messages.errors.unknown_error'));
                 this.logger.error('User info update unsuccessful', error);
               }
             }));
@@ -208,14 +208,14 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
               this.datasets.company['businessId'], bodyPayload.dataFile)
             .subscribe(
               () => {
-                this.notification.success(this.translate('marker_successfully_updated'));
+                this.notification.success(this.translate('messages.success.marker_successfully_updated'));
               },
               error => {
                 console.log(error.error);
                 if (error.status === 400) {  // Mail already exists
                   this.notification.error(error.error.resultMessage);
                 } else {
-                  this.notification.error(this.translate('unable_to_update'));
+                  this.notification.error(this.translate('messages.errors.unable_to_update'));
                 }
               }));
       }
@@ -257,16 +257,16 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
             () => {
               this.formPasswordOnEditMode = false;
               this.loader.hide('pageLoader');
-              this.notification.success(this.translate('password_successfully_updated'));
+              this.notification.success(this.translate('messages.success.password_successfully_updated'));
               this.formUserPassword.reset();
             },
             error => {
               this.loader.hide('pageLoader');
 
               if (error.status === 401) {  // Current password does not match
-                this.notification.error(this.translate('unable_to_update_password'));
+                this.notification.error(this.translate('messages.errors.unable_to_update_password'));
               } else {
-                this.notification.error(this.translate('unknown_error'));
+                this.notification.error(this.translate('messages.errors.unknown_error'));
                 this.logger.error('Password update unsuccessful', error);
               }
             }));

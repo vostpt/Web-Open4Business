@@ -75,8 +75,8 @@ export const locale = {
     messages: {
       alerts: {
         are_you_sure_remove_file: 'Tem a certeza que deseja remover o ficheiro?',
-        are_your_sure_deactivate_user: 'Tem a certeza que deseja desactivar o utilizador {{user}}?',
-        are_your_sure_delete_user: 'Tem a certeza que deseja remover o utilizador {{user}}?',
+        are_you_sure_deactivate_user: 'Tem a certeza que deseja desactivar o utilizador "{{user}}"?',
+        are_you_sure_delete_user: 'Tem a certeza que deseja remover o utilizador "{{user}}"?',
       },
       errors: {
         information_sent_has_conflicts: 'A informação enviada entrou em conflito com dados existentes. Por favor, experimente com outros dados.',
