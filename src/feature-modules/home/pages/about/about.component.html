@@ -1,66 +1,30 @@
 <app-catalog-loader name="pageLoader"></app-catalog-loader>
 
-<div>
+<div class="container">
   <ul class="breadcrumbs">
-    <li>
-      <a routerLink="/">OPEN4BUSINESS</a>
-    </li>
-
+    <li><a routerLink="/">{{ 'app.brand' | translate }}</a></li>
     <li>/</li>
-
     <li class="current">
-      <span>Sobre</span>
+      <span>{{ 'dictionary.about' | translate | titlecase }}</span>
     </li>
   </ul>
 </div>
 
 <div class="container">
   <div class="main-title">
-    <h2>Sobre o <span class="logo-primary">#OPEN</span>4BUSINESSPT</h2>
+    <h2>{{ 'dictionary.about' | translate | titlecase }} <span class="logo-primary">#OPEN</span>4BUSINESS</h2>
   </div>
 
-  <!-- <p class="text-justify">O "#OPEN4BUSINESS" é uma iniciativa da <a href="https://info.vost.pt/" class="logo-primary">VOST Portugal</a> e da <a href="https://www.portugal.gov.pt/pt/gc22/area-de-governo/economia-transicao-digital/secretarios-de-estado" class="logo-primary">Secretaria de Estado da Transição Digital</a>, no âmbito do Gabinete de Resposta Digital à <abbr
-    title="Coronavirus disease 2019">COVID-19</abbr> do Governo Português, e liderado pelo Ministério da Economia.</p>
-    
-  <p class="text-justify">Numa altura em que a economia vai começar a reabrir, julgamos ser necessário existir uma plataforma que consiga agregar o maior número de estabelecimentos que estão abertos ao público, os seus horários (incluindo horários específicos para profissionais de saúde, forças de segurança, e grupos de risco), e que tipo de serviços oferecem e as suas condições.</p>
-  
-  <p class="text-justify">Nesta plataforma será possível a qualquer cidadão, num só lugar, saber que estabelecimentos estão abertos para evitar deslocações em vão.</p>
-  
-  <p class="text-justify">Esta é uma plataforma aberta a todos os tipos de empresas, entidades, ou cidadãos que a queriam alimentar e promover, para que todos nós estejamos mais informados e mais seguros.</p>
-   -->
+  <p class="text-justify" innerHtml="{{ 'sections.home.about.paragraph_01' | translate }}"></p>
 
-  <p class="text-justify">
-    A plataforma <span class="text-primary">“#Open4Business”</span> é uma iniciativa da <a href="https://info.vost.pt/" class="logo-primary">VOST Portugal</a> 
-    e da <a href="https://www.portugal.gov.pt/pt/gc22/area-de-governo/economia-transicao-digital/secretarios-de-estado" class="logo-primary">Secretaria de Estado para a Transição Digital</a>, 
-    no âmbito do Gabinete de Resposta Digital à <abbr title="Coronavirus disease 2019">COVID-19</abbr>,
-    gabinete este liderado pelo Ministro de Estado, da Economia e para a Transição Digital, Pedro Siza Vieira.
-  </p>
+  <p class="text-justify" innerHtml="{{ 'sections.home.about.paragraph_02' | translate }}"></p>
 
-  <p class="text-justify">
-    Numa altura em que todo o país se prepara para uma abertura gradual da economia, é
-    importante disponibilizar aos empresários - independentemente do seu sector ou
-    dimensão - uma ferramenta que ajude a informar todos os cidadãos, de um modo simples,
-    quais os negócios / serviços que se encontram abertos ao público, que restrições de
-    horário existem (se algumas), e que serviços são disponibilizados.
-  </p>
+  <p class="text-justify" innerHtml="{{ 'sections.home.about.paragraph_03' | translate }}"></p>
 
-  <p class="text-justify">
-    Para os cidadãos é de extrema importância terem acesso, numa plataforma oficial e com
-    dados validados, à informação sobre que estabelecimentos/empresas estão abertas na
-    sua área de residência, e quais os horários praticados, evitando assim deslocações em vão
-    ou a uma maior distância do que aquela necessária.
-    Estas duas preocupações dão assim origem à plataforma “Open4Business”, que está
-    desde já disponível a todos.
-  </p>
-
-  <p class="text-justify">
-    Esta plataforma está também integrada no portal central de resposta à COVID-19 (<a href="covid19estamoson.gov.pt">covid19estamoson.gov.pt</a>)
-    e tem dezenas de Voluntários VOSTPT diariamente a verificar a informação para garantir a fiabilidade dos dados.
-    Se notar alguma incorrecção, ou necessitar de alguma informação adicional tem ao seu dispor um canal de apoio
-    via email (<a href="mailto:o4b@vost.pt">o4b@vost.pt</a>)
-  </p>
+  <p class="text-justify" innerHtml="{{ 'sections.home.about.paragraph_04' | translate }}"></p>
 
   <br />
   <br />
   <br />
+
 </div>

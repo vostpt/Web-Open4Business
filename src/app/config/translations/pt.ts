@@ -9,7 +9,7 @@ export const locale = {
         about: 'Sobre',
         add_locations: 'Adicionar lojas',
         batches: 'Submissões',
-        cookies: 'Política de Privacidade e Política de Cookies',
+        cookies: 'Política de Privacidade e Cookies',
         list: 'Listagem',
         map: 'Mapa',
         my_locations: 'As minhas lojas',
@@ -20,6 +20,7 @@ export const locale = {
       }
     },
     dictionary: {
+      about: 'sobre',
       active: 'ativo',
       active_s: 'ativos',
       cancel: 'cancelar',
@@ -52,6 +53,7 @@ export const locale = {
       by_appointment: 'Por Marcação',
       change_your_password: 'Altere a sua password de acesso',
       company_name: 'Nome da empresa',
+      companies_list: 'Lista de companhias',
       confirm_new_password: 'Confirme a nova password',
       contact: 'Contato',
       csv_file: 'Ficheiro CSV',
@@ -146,7 +148,7 @@ export const locale = {
         signin_title: 'Efectue o login',
         signup_title: 'Junte-se a nós',
         signup_here: 'Ainda não se registou? Faça-o aqui.',
-        signup_description: 'Nesta área pode pode fazer o registo da sua empresa. Após o registo irá receber um e-mail com os seus dados, e após validação pela equipa do “Open4Business” irá receber um segundo e-mail a informar que a sua conta já se encontra ativa. Não partilhe estes dados de login com ninguém externo à sua organização. Para qualquer questão contacte a equipa de suporte via este <a href="mailto:o4b@vost.pt">e-mail</a>.',
+        signup_description: 'Nesta área pode pode fazer o registo da sua empresa. Após o registo irá receber um e-mail com os seus dados, e após validação pela equipa do "Open4Business" irá receber um segundo e-mail a informar que a sua conta já se encontra ativa. Não partilhe estes dados de login com ninguém externo à sua organização. Para qualquer questão contacte a equipa de suporte via este <a href="mailto:o4b@vost.pt">e-mail</a>.',
         small_companies_title: 'Pequenas empresas',
         small_companies_description: 'Para gestão manual de localizações',
         big_companies_title: 'Grandes empresas',
@@ -188,6 +190,42 @@ export const locale = {
             warning: 'A tua contribuição foi registada, mas encontramos alguns erros. Corrija os erros abaixo e submeta outro ficheiro APENAS com as linhas corrigidas.',
             error_counter: 'Linha #{{row}}'
           }
+        }
+      },
+      home: {
+        about: {
+          paragraph_01: 'A plataforma <span class="text-primary">"#Open4Business"</span> é uma iniciativa da <a href="https://info.vost.pt/" class="logo-primary">VOST Portugal</a> e da <a href="https://www.portugal.gov.pt/pt/gc22/area-de-governo/economia-transicao-digital/secretarios-de-estado" class="logo-primary" target="_blank">Secretaria de Estado para a Transição Digital</a>, no âmbito do Gabinete de Resposta Digital à <abbr title="Coronavirus disease 2019">COVID-19</abbr>, gabinete este liderado pelo Ministro de Estado, da Economia e para a Transição Digital, Pedro Siza Vieira.',
+          paragraph_02: 'Numa altura em que todo o país se prepara para uma abertura gradual da economia, é importante disponibilizar aos empresários - independentemente do seu sector ou dimensão - uma ferramenta que ajude a informar todos os cidadãos, de um modo simples, quais os negócios / serviços que se encontram abertos ao público, que restrições de horário existem (se algumas), e que serviços são disponibilizados.',
+          paragraph_03: 'Para os cidadãos é de extrema importância terem acesso, numa plataforma oficial e com dados validados, à informação sobre que estabelecimentos/empresas estão abertas na sua área de residência, e quais os horários praticados, evitando assim deslocações em vão ou a uma maior distância do que aquela necessária. Estas duas preocupações dão assim origem à plataforma "Open4Business", que está desde já disponível a todos.',
+          paragraph_04: 'Esta plataforma está também integrada no portal central de resposta à COVID-19 (<a href="mailto:covid19estamoson.gov.pt">covid19estamoson.gov.pt</a>) e tem dezenas de Voluntários VOSTPT diariamente a verificar a informação para garantir a fiabilidade dos dados. Se notar alguma incorrecção, ou necessitar de alguma informação adicional tem ao seu dispor um canal de apoio via email (<a href="mailto:o4b@vost.pt">o4b@vost.pt</a>)'
+        },
+        privacy_cookies_policy: {
+          section_01_title: 'A. Introdução',
+          section_01_content: '<ol><li>A privacidade dos visitantes do nosso site é muito importante para nós, e estamos comprometidos em protegê-la. Esta política explica o que faremos com as suas informações pessoais.</li><li>Consentir, com o uso de cookies de acordo com os termos desta política, quando acedes ao nosso site pela primeira vez permite-nos usar cookies sempre que acedes ao nosso site.</li></ol>',
+          section_02_title: 'B. TL;DR',
+          section_02_content: 'A VOST Portugal - Associação de Voluntários Digitais em Situações de Emergência, nunca partilhará os teus dados com terceiros e restringe ao máximo a informação que recolhe quando navega em qualquer um dos nossos sites.',
+          section_03_title: 'C. Recolha de informações pessoais',
+          section_03_content: 'Os seguintes tipos de informações pessoais podem ser coletados, armazenados e usados: <ol><li>informações sobre o teu computador, incluindo seu endereço IP, localização geográfica, tipo e versão do navegador e sistema operativo, apenas para efeitos de estatísticas de acesso;</li><li>informações sobre as tuas visitas e uso deste site, incluindo fonte de referência, duração da visita, visualizações de página e caminhos de navegação no site apenas para efeitos de estatísticas;</li><li>informações, como o endereço de e-mail, quando abres uma conta nesta plataforma; </li><li>todas as informações que inseres quando crias uma conta;</li><li>informações geradas ao usar este site, incluindo quando, com que frequência e em que circunstâncias o consultas;</li><li>todas as informações que colocas após abrir a conta que se destinam para consulta do público em geral;</li><li>informações contidas em quaisquer comunicações que nos envies por e-mail ou através de nosso site, incluindo o conteúdo e os metadados da comunicação;</li><li>qualquer outra informação pessoal que nos envies;</li></ol>Antes de divulgares informações pessoais de outra pessoa, deves obter o consentimento dessa pessoa para a divulgação e o processamento dessas informações pessoais de acordo com esta política.',
+          section_04_title: 'D. Uso de suas informações pessoais e comerciais',
+          section_04_content: 'As informações pessoais que nos são enviadas por meio deste site serão usadas para os fins especificados nesta política, ou em páginas relevantes do site. Podemos usar suas informações pessoais para o seguinte:<ol><li>Gerir os dados enviados, seja por submissão de um ficheiro, seja por submissão no próprio site;</li><li>possibilitar o uso dos serviços disponíveis neste site;</li><li>enviar notificações por e-mail;</li><li>manter nosso site seguro e evitar fraudes;</li></ol>Toda a informação comercial que inserires neste site ficará disponível publicamente, para consulta por todos. As informações pessoais que inseres, que são necessárias para gerir a informação comercial que nos envias, não serão nunca partilhadas com ninguém.',
+          section_05_title: 'E. Divulgação de informações pessoais',
+          section_05_content: 'As tuas informações pessoais serão apenas acedidas pela equipa da VOST Portugal que gere a plataforma "Open4Business"',
+          section_06_title: 'F. Transferências internacionais de dados',
+          section_06_content: '<ol><li>As informações que recolhemos podem ser armazenadas, processadas e transferidas para outros países</li><li>As informações que coletamos podem ser transferidas para os seguintes países que não possuem leis de proteção de dados equivalentes às vigentes no Espaço Econômico Europeu: Estados Unidos da América</li><li>As informações comerciais que publicas no nosso site estão disponíveis, através da internet, em todo o mundo. Não podemos impedir o uso ou uso indevido de tais informações por terceiros.</li><li>Concordas expressamente com as transferências de informações descritas nesta seção F.</li></ol>',
+          section_07_title: 'G. Retenção de informações pessoais',
+          section_07_content: '<ol><li>Esta secção G define nossas políticas e procedimentos de retenção de dados, projetados para ajudar a garantir o cumprimento de nossas obrigações legais em relação à retenção e exclusão de informações pessoais.</li><li>As informações pessoais que processamos para qualquer propósito ou propósitos não devem ser mantidas por mais tempo do que o necessário para esse propósito ou propósitos.</li><li>Sem prejuízo do artigo G-2, todos os dados pessoais serão eliminados a partir do momento em que esta plataforma tiver cumprido o seu objectivo.</li></ol>',
+          section_08_title: 'H. Segurança das tuas informações pessoais',
+          section_08_content: '<ol><li>Tomaremos as devidas precauções técnicas e organizacionais para evitar a perda, mau uso ou alteração das tuas informações pessoais.</li><li>Armazenaremos todas as suas informações pessoais fornecidas em servidores seguros.</li><li>Reconheces que a transmissão de informações pela internet é inerentemente insegura e que não podemos garantir a segurança dos dados enviados pela internet.</li><li>És responsável por manter em sigilo a senha usada para aceder ao nosso site; não solicitaremos a tua senha (exceto quando fizeres login no nosso site).</li></ol>',
+          section_09_title: 'I. Alterações',
+          section_09_content: 'Podemos atualizar esta política periodicamente, através da publicação de uma nova versão em nosso site. Deves verificar esta página ocasionalmente para garantir que compreendes quaisquer alterações nesta política. Podemos notificar-te sobre alterações nesta política por e-mail.',
+          section_10_title: 'J. Os Teus Direitos',
+          section_10_content: 'Podes-nos pedir para te fornecer qualquer informação pessoal que que tenhamos alojada nesta plataforma; o fornecimento dessas informações estará sujeito ao seguinte:<ol><li>fornecimento de evidência apropriada da tua identidade</li><li>Podemos reter as informações pessoais solicitadas na extensão permitida por lei.</li></ol>',
+          section_11_title: 'K. Sites de terceiros',
+          section_11_content: 'Este site inclui links sites de terceiros. Não temos controle sobre, e não somos responsáveis pelas políticas e práticas de privacidade de terceiros.',
+          section_12_title: 'L. Atualização de informações',
+          section_12_content: 'Na tua área pessoal podes modificar os teus dados.',
+          section_13_title: 'M. Cookies',
+          section_13_content: 'O nosso site usa cookies. Um cookie é um arquivo que contém um identificador (uma sequência de letras e números) que é enviado por um servidor da web para um navegador e armazenado pelo navegador. O identificador é então enviado de volta ao servidor toda vez que o navegador solicita uma página do servidor. Os cookies podem ser cookies "persistentes" ou cookies "de sessão": um cookie persistente será armazenado por um navegador e permanecerá válido até a data de vencimento definida, a menos que seja excluído pelo usuário antes da data de vencimento; um cookie de sessão, por outro lado, expirará no final da sessão do usuário, quando o navegador for fechado. Os cookies normalmente não contêm nenhuma informação que identifique pessoalmente um usuário, mas as informações pessoais que armazenamos sobre você podem estar vinculadas às informações armazenadas e obtidas a partir de cookies. Utilizamos cookies persistentes e de sessão neste site.<ol><li>Os nomes dos cookies que usamos em nosso site e os propósitos para os quais são usados estão descritos abaixo:<ol><li>usamos a Google Analytics e Cloudflare no nosso site para reconhecer um computador quando um usuário acede ao site / rastrear usuários enquanto eles navegam no site / melhorar a usabilidade do site / analisar o uso do site / administrar o site / evitar fraudes e melhorar a segurança do site;</li></ol></li><li>A maioria dos navegadores permite que te recuses a aceitar cookies – por exemplo: <ol><li>no Internet Explorer (versão 11), podes bloquear cookies usando as configurações disponíveis de cancelamento de manipulação de cookies clicando em "Ferramentas", "Opções da Internet" "Privacidade" e "Avançado";</li><li>no Firefox (versão 75), podes bloquear todos os cookies clicando em "Ferramentas", "Opções", "Privacidade", selecionando "Usar configurações personalizadas para o histórico" no menu suspenso e desmarcando "Aceitar cookies de sites" ; e</li><li>no Chrome (versão 81), podes bloquear todos os cookies indo ao menu "Personalizar e controlar" e clicando em "Configurações", "Avançado" e "Configurações do site" e, em seguida, selecionando "Bloquear cookies de terceiros" na seção "Cookies e dados do site".</li></ol></li><span>O bloqueio de todos os cookies causará um impacto negativo na usabilidade de muitos sites. Se bloqueares os cookies, não poderás usar todos os recursos deste site.</span><li>Podes excluir os cookies que já estão armazenados no seu computador - por exemplo: <ol><li>no Internet Explorer (versão 11), deves excluir os arquivos de cookies manualmente (confere as instruções para fazê-lo em http://support.microsoft.com/kb/278835 );</li><li>no Firefox (versão 75), podes excluir os cookies clicando em "Ferramentas", "Opções", "Privacidade", selecionando "Usar configurações personalizadas para o histórico", clicando em "Mostrar cookies" e, então, em "Remover todos os cookies"; e </li><li>no Chrome (versão 81), podes excluir todos os cookies indo o menu "Personalizar e controlar" e clicando em "Configurações", "Avançado", "Limpar dados de navegação" e, em seguida, selecionando "Excluir cookies e outros dados de sites e plugins" antes de clicar em "Limpar dados de navegação".</li></ol></li><li>A exclusão de cookies causará um impacto negativo na usabilidade de muitos sites.</li></ol>'
         }
       }
     }
