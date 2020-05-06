@@ -42,54 +42,49 @@
     <div class="kt-portlet__body">
       <div class="row">
         <div class="col-lg-4">
-          <dt>Status</dt>
-          <dd>{{batch.status}}</dd>
-        </div>
-
-        <div class="col-lg-4">
-          <dt>Nome</dt>
+          <dt>{{'labels.name' | translate}}</dt>
           <dd>{{batch.personName}}</dd>
         </div>
 
         <div class="col-lg-4">
-          <dt>Email</dt>
+          <dt>{{'labels.email' | translate}}</dt>
           <dd>{{batch.personEmail}}</dd>
         </div>
 
         <div class="col-lg-4">
-          <dt>Telefone</dt>
+          <dt>{{ 'labels.phone' | translate }}</dt>
           <dd>{{batch.personPhone}}</dd>
         </div>
 
         <div class="col-lg-4">
-          <dt>Atualizado em</dt>
-          <dd>{{batch.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</dd>
-        </div>
-
-        <div class="col-lg-4">
-          <dt>Total de Lojas</dt>
+          <dt>{{'labels.total_locations' | translate}}</dt>
           <dd>{{batch.stats.total}}</dd>
         </div>
 
         <div class="col-lg-4">
-          <dt>Lojas Adicionadas</dt>
+          <dt>{{'labels.added_locations' | translate}}</dt>
           <dd>{{batch.stats.added}}</dd>
         </div>
         
         <div class="col-lg-4">
-          <dt>Lojas Atualizadas</dt>
+          <dt>{{'labels.updated_locations' | translate}}</dt>
           <dd>{{batch.stats.updated}}</dd>
         </div>
 
         <div class="col-lg-4">
-          <dt>Lojas Ignoradas</dt>
+          <dt>{{'labels.ignored_locations' | translate}}</dt>
           <dd>{{batch.stats.ignored}}</dd>
+        </div>
+
+        <div class="col-lg-4">
+          <dt>{{ 'labels.updated_at' | translate }}</dt>
+          <dd>{{batch.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</dd>
         </div>
       </div>
 
       <div class="row">
         <div class="col-lg-12">
-          <button [routerLink]="['/businesses/locations/review']" [queryParams]="{batchId: batch.batchId}" class="btn btn-primary">Rever</button>
+          <button [routerLink]="['/businesses/locations/review']" [queryParams]="{batchId: batch.batchId}" class="btn btn-primary">{{'actions.review' | translate}}</button>
         </div>
       </div>
     </div>

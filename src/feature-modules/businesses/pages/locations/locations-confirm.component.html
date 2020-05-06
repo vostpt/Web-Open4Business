@@ -5,12 +5,12 @@
   <ul class="breadcrumbs">
     <li><a routerLink="/">OPEN4BUSINESS</a></li>
     <li>/</li>
-    <li><a routerLink="/businesses/locations">As Minhas Lojas</a></li>
+    <li><a routerLink="/businesses/locations">{{ 'app.menus.my_locations' | translate }}</a></li>
     <li>/</li>
-    <li><a routerLink="/businesses/locations/batches">Submissões</a></li>
+    <li><a routerLink="/businesses/locations/batches">{{ 'app.menus.batches' | translate }}</a></li>
     <li>/</li>
     <li class="current">
-      <span>Confirmar Lojas</span>
+      <span>{{ 'actions.confirm_locations' | translate }}</span>
     </li>
   </ul>
 
@@ -22,58 +22,58 @@
     <div class="kt-portlet__body">
       <div class="row">
         <div class="col-lg-4">
-          <dt>Status</dt>
+          <dt>{{'labels.status' | translate}}</dt>
           <dd
             [ngClass]="{'text-success': batch.status == 'APPROVED', 'text-danger': batch.status == 'REJECTED', 'text-warning': batch.status == 'WAITING_FOR_APPROVAL'}">
             {{batch.status}}</dd>
         </div>
 
         <div class="col-lg-4">
-          <dt>Nome</dt>
+          <dt>{{'labels.name' | translate}}</dt>
           <dd>{{batch.personName}}</dd>
         </div>
 
         <div class="col-lg-4">
-          <dt>Email</dt>
+          <dt>{{'labels.email' | translate}}</dt>
           <dd>{{batch.personEmail}}</dd>
         </div>
 
         <div class="col-lg-4">
-          <dt>Telefone</dt>
+          <dt>{{ 'labels.phone' | translate }}</dt>
           <dd>{{batch.personPhone}}</dd>
         </div>
 
         <div class="col-lg-4">
-          <dt>Atualizado em</dt>
-          <dd>{{batch.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</dd>
-        </div>
-
-        <div class="col-lg-4">
-          <dt>Total de Lojas</dt>
+          <dt>{{'labels.total_locations' | translate}}</dt>
           <dd>{{batch.stats.total}}</dd>
         </div>
 
         <div class="col-lg-4">
-          <dt>Lojas Adicionadas</dt>
+          <dt>{{'labels.added_locations' | translate}}</dt>
           <dd>{{batch.stats.added}}</dd>
         </div>
-
+        
         <div class="col-lg-4">
-          <dt>Lojas Atualizadas</dt>
+          <dt>{{'labels.updated_locations' | translate}}</dt>
           <dd>{{batch.stats.updated}}</dd>
         </div>
 
         <div class="col-lg-4">
-          <dt>Lojas Ignoradas</dt>
+          <dt>{{'labels.ignored_locations' | translate}}</dt>
           <dd>{{batch.stats.ignored}}</dd>
+        </div>
+
+        <div class="col-lg-4">
+          <dt>{{ 'labels.updated_at' | translate }}</dt>
+          <dd>{{batch.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</dd>
         </div>
       </div>
 
       <div class="row" *ngIf="isAdmin && batch.status == 'WAITING_FOR_APPROVAL'">
         <div class="col-lg-12">
-          <button class="btn btn-outline-secondary" (click)="save(false)">Rejeitar</button>
+          <button class="btn btn-outline-secondary" (click)="save(false)">{{'actions.reject' | translate}}</button>
           &nbsp;
-          <button class="btn btn-primary" (click)="save(true)">Aprovar</button>
+          <button class="btn btn-primary" (click)="save(true)">{{'actions.approve' | translate}}</button>
         </div>
       </div>
     </div>
@@ -81,7 +81,7 @@
 
   <div class="row">
     <div class="col-auto mr-auto">
-      <p class="counter"><strong>{{total}}</strong> Lojas</p>
+      <p class="counter"><strong>{{total}}</strong> {{'label.locations' | translate}}</p>
     </div>
 
     <div class="col-auto" *ngIf="total > 0">
@@ -133,12 +133,12 @@
               target="_blank" class="link">{{location.latitude}},&nbsp;{{location.longitude}}</a></p>
         </div>
         <div class="col-lg-3">
-          <h5>Morada</h5>
+          <h5>{{'labels.address' | translate}}</h5>
           <p>{{location.address}}</p>
           <p>{{location.zipCode}} {{location.parish}}</p>
         </div>
         <div class="col-lg-3">
-          <h5>Horário de Funcionamento</h5>
+          <h5>{{'labels.working_schedule' | translate}}</h5>
           <div class="row" *ngFor="let number of [1,2,3]">
             <div class="col-5">
               <p>{{ location['schedule' + number + 'DowFormatted'] }}</p>
@@ -149,14 +149,14 @@
           </div>
         </div>
         <div class="col-lg-3">
-          <h5>Entregas</h5>
+          <h5>{{'labels.delivery' | translate}}</h5>
           <p>{{location.typeOfService}}</p>
-          <h5 class="separator">Por Marcação?</h5>
+          <h5 class="separator">{{'labels.by_appointment' | translate}}?</h5>
           <p>{{location.byAppointment}}.&nbsp;<span
-              *ngIf="location.contactForSchedule">Contaco:&nbsp;</span>{{location.contactForSchedule}}</p>
+              *ngIf="location.contactForSchedule">{{'labels.contact' | translate}}:&nbsp;</span>{{location.contactForSchedule}}</p>
         </div>
         <div class="col-lg-12 separator">
-          <h5>Observações</h5>
+          <h5>{{'labels.obs' | translate}}</h5>
           <p>{{location.obs}}</p>
         </div>
       </div>
@@ -165,7 +165,7 @@
 
   <div class="row" *ngIf="total > 10">
     <div class="col-auto mr-auto">
-      <p class="counter"><strong>{{total}}</strong> Lojas</p>
+      <p class="counter"><strong>{{total}}</strong> {{'lables.locations' | translate}}</p>
     </div>
 
     <div class="col-auto">
