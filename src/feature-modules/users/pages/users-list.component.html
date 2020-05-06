@@ -3,23 +3,22 @@
 <div *ngIf="contentReady" class="container">
 
   <ul class="breadcrumbs">
-    <li><a routerLink="/">OPEN4BUSINESS</a></li>
+    <li><a routerLink="/">{{ 'app.brand' | translate }}</a></li>
     <li>/</li>
     <li class="current">
-      <span>Lista de utilizadores (Contas de acesso)</span>
+      <span>{{ 'labels.users_list' | translate }} ({{ 'labels.access_accounts' | translate }})</span>
     </li>
   </ul>
-
 
   <form [formGroup]="form" class="kt-form kt-form--label-right" (ngSubmit)="onSearch()">
     <div class="form-group row">
       <div class="col-lg-6 input-ct">
         <app-catalog-form-input [formControlField]="f.search" formControlName="search"
-          [placeholder]="searchPlaceholder" [appendButton]="true" [appendButtonIcon]="'fa fa-search'">
+          placeholder="{{ 'labels.search_by_name' | translate }}" [appendButton]="true" [appendButtonIcon]="'fa fa-search'">
         </app-catalog-form-input>
       </div>
       <div class="col-lg-6 input-ct">
-        <app-catalog-form-select [formControlField]="f.active" formControlName="active" [required]="false" placeholder="Filtar por Estado" clearable="true"
+        <app-catalog-form-select [formControlField]="f.active" formControlName="active" [required]="false" placeholder="{{ 'labels.filter_by_state' | translate }}" clearable="true"
         bindLabel="desc" bindValue="id" [items]="statusList"></app-catalog-form-select>
       </div>
     </div>
@@ -27,7 +26,7 @@
 
   <div class="row">
     <div class="col-auto mr-auto">
-      <p class="counter"><strong>{{total}}</strong> Utilizadores</p>
+      <p class="counter"><strong>{{total}}</strong> {{ 'dictionary.users' | translate | titlecase }}</p>
     </div>
 
     <div class="col-auto" *ngIf="total > 0">
@@ -70,27 +69,24 @@
           <p>{{user.authId}}</p>
         </div>
         <div class="col-lg-3">
-          <h5>Telefone</h5>
+          <h5>{{ 'dictionary.phone' | translate | titlecase }}</h5>
           <p>{{user.phone || ( user.business ? user.business.phone : '') }}</p>
         </div>
         <div class="col-lg-3">
-          <h5>Estado</h5>
+          <h5>{{ 'dictionary.state' | translate | titlecase }}</h5>
           <p [ngClass]="{'text-danger': user.status == 'Apagado' || user.status == 'Inativo', 'text-warning': user.status == 'Pendente', 'text-primary': user.status == 'Ativo'}">{{ user.status }}</p>
         </div>
         <div class="col-lg-3">
-          <h5>Logins</h5>
+          <h5>{{ 'dictionary.logins' | translate | titlecase }}</h5>
           <p>{{user.numberOfLogins}}</p>
         </div>
       </div>
       <div class="row justify-content-between confirm-account">
         <div class="col">
-          <a *ngIf="user.status != 'Apagado'" [routerLink]="['/users/my-info']" [queryParams]="{ email: user.authId}" class="text-dark"><i class="fa fa-edit"></i>Editar Conta</a>
-          
-          <a *ngIf="user.status == 'Ativo'" href="javascript:void(0)" (click)="deactivateUser(user)" class="text-warning action"><i class="fa fa-ban"></i>&nbsp;Desativar Conta</a>
-          
-          <a *ngIf="user.status != 'Apagado'" href="javascript:void(0)" (click)="deleteUser(user)" class="text-danger action"><i class="fa fa-trash"></i>&nbsp;Apagar Conta</a>
-
-          <a *ngIf="user.status == 'Pendente'" href="javascript:void(0)" (click)="confirmUser(user)" class="action"><i class="fa fa-check"></i>&nbsp;Confirmar Conta</a>
+          <a *ngIf="user.status != 'Apagado'" [routerLink]="['/users/my-info']" [queryParams]="{ email: user.authId}" class="text-dark"><i class="fa fa-edit"></i>&nbsp;{{ 'actions.edit_account' | translate }}</a>
+          <a *ngIf="user.status == 'Ativo'" href="javascript:void(0)" (click)="deactivateUser(user)" class="text-warning action"><i class="fa fa-ban"></i>&nbsp;{{ 'actions.deactivate_account' | translate }}</a>
+          <a *ngIf="user.status != 'Apagado'" href="javascript:void(0)" (click)="deleteUser(user)" class="text-danger action"><i class="fa fa-trash"></i>&nbsp;{{ 'actions.delete_account' | translate }}</a>
+          <a *ngIf="user.status == 'Pendente'" href="javascript:void(0)" (click)="confirmUser(user)" class="action"><i class="fa fa-check"></i>&nbsp;{{ 'actions.confirm_account' | translate }}</a>
         </div>
       </div>
     </div>

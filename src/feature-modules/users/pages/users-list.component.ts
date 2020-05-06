@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { upperFirst } from 'lodash';
+
 import { BasePageComponent } from '@core-modules/main-layout';
 
 import { UsersService } from '@users-feature-module/services/users.service';
@@ -18,10 +20,11 @@ export class UsersListComponent extends BasePageComponent implements OnInit, Aft
 
   datasets = { users: [] };
 
-  public searchPlaceholder = 'pesquise por nome';
   public statusList = [
-    { id: 'active', desc: 'Activos' }, { id: 'pending', desc: 'Pendentes' },
-    { id: 'inactive', desc: 'Inactivos' }, { id: 'deleted', desc: 'Apagados' }
+    { id: 'active', desc: upperFirst(this.translate('dictionary.active_s')) },
+    { id: 'pending', desc: upperFirst(this.translate('dictionary.pending_s')) },
+    { id: 'inactive', desc: upperFirst(this.translate('dictionary.inactives')) },
+    { id: 'deleted', desc: upperFirst(this.translate('dictionary.deleted_s')) }
   ];
   private status: string = null;
   public total = 0;
@@ -132,7 +135,7 @@ export class UsersListComponent extends BasePageComponent implements OnInit, Aft
   }
 
   deactivateUser(user) {
-    if (!confirm(`Tem a certeza que deseja desativar o utilizador "${user.authId}"?`)) {
+    if ( !confirm( this.translate('messages.alerts.are_you_sure_deactivate_user', { user: user.authId }) ) ) {
       return;
     }
 
@@ -145,18 +148,17 @@ export class UsersListComponent extends BasePageComponent implements OnInit, Aft
         }
 
         this.loader.hide('pageLoader');
-        this.notification.error('Não foi possível desativar o utilizador.');
+        this.notification.error(this.translate('messages.errors.unable_to_deactivate_user'));
       },
       error => {
         this.loader.hide('pageLoader');
-        this.notification.error('Não foi possível desativar o utilizador.');
-
+        this.notification.error(this.translate('messages.errors.unable_to_deactivate_user'));
         this.logger.error('Error fetching users list', error);
       });
   }
 
   deleteUser(user) {
-    if (!confirm(`Tem a certeza que deseja apagar o utilizador "${user.authId}"?`)) {
+    if ( !confirm( this.translate('messages.alerts.are_you_sure_delete_user', { user: user.authId }) ) ) {
       return;
     }
 
@@ -169,12 +171,11 @@ export class UsersListComponent extends BasePageComponent implements OnInit, Aft
         }
 
         this.loader.hide('pageLoader');
-        this.notification.error('Não foi possível apagar o utilizador.');
+        this.notification.error(this.translate('messages.errors.unable_to_delete_user'));
       },
       error => {
         this.loader.hide('pageLoader');
-        this.notification.error('Não foi possível apagar o utilizador.');
-
+        this.notification.error(this.translate('messages.errors.unable_to_delete_user'));
         this.logger.error('Error fetching users list', error);
       });
   }
@@ -185,16 +186,16 @@ export class UsersListComponent extends BasePageComponent implements OnInit, Aft
     this.usersService.confirmAccount(user.activationToken, user.confirmationCode).subscribe(
       (result: { resultCode: number }) => {
         if (result.resultCode === 200) {
-          this.notification.success(`Utilizador "${user.authId}" confimado com sucesso!`);
+          this.notification.success( this.translate('messages.success.user_successfully_confirmed', { user: user.authId }) );
           return this.onSearch();
         }
 
         this.loader.hide('pageLoader');
-        this.notification.error('Não foi possível confirmar o utilizador.');
+        this.notification.error(this.translate('messages.errors.unable_to_confirm_user'));
       },
       error => {
         this.loader.hide('pageLoader');
-        this.notification.error('Não foi possível confirmar o utilizador.');
+        this.notification.error(this.translate('messages.errors.unable_to_confirm_user'));
         this.logger.error('Error confirming user', error);
       });
   }

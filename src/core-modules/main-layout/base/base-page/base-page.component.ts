@@ -41,8 +41,8 @@ export abstract class BasePageComponent implements OnInit, OnDestroy, AfterViewI
   ngAfterViewInit() { }
 
 
-  translate(translation: string) {
-    return this.translateService.instant(translation);
+  translate(translation: string, params?: object) {
+    return this.translateService.instant(translation, params);
   }
 
   ngOnDestroy() {

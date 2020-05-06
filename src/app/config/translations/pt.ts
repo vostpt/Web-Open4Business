@@ -20,35 +20,84 @@ export const locale = {
       }
     },
     dictionary: {
-      cancelar: 'cancelar',
+      active: 'ativo',
+      active_s: 'ativos',
+      cancel: 'cancelar',
+      deleted_s: 'apagados',
+      edit: 'editar',
       email: 'e-mail',
       home: 'início',
+      inactives: 'inactivos',
       loading: 'a carregar...',
       login: 'login',
+      logins: 'logins',
+      marker: 'marcador',
       name: 'nome',
       password: 'password',
-      phone: 'Telefone',
+      pending_s: 'pendentes',
+      phone: 'telefone',
+      remove: 'remover',
       required: 'obrigatório',
       submit: 'submeter',
-      start: 'início'
+      start: 'início',
+      state: 'estado',
+      users: 'utilizadores'
     },
     labels: {
-      company_name: 'Nome da empresa'
+      access_accounts: 'Contas de acesso',
+      company_name: 'Nome da empresa',
+      change_your_password: 'Altere a sua password de acesso',
+      confirm_new_password: 'Confirme a nova password',
+      current_password: 'Password atual',
+      filter_by_state: 'Filtre por estado',
+      my_account: 'A minha conta',
+      new_password: 'Nova password',
+      search_by_name: 'Pesquise por nome',
+      users_list: 'Lista de utilizadores',
+      view_or_change_your_information: 'Visualize ou altere a sua informação'
     },
     actions: {
       access_to_menu: 'ACEDER AO MENU',
+      confirm_account: 'Confirmar Conta',
+      edit_account: 'Editar Conta',
+      deactivate_account: 'Desativar Conta',
+      delete_account: 'Apagar Conta',
+
       register_my_company: 'Registar a minha empresa'
     },
     messages: {
+      alerts: {
+        are_you_sure_remove_file: 'Tem a certeza que deseja remover o ficheiro?',
+        are_your_sure_deactivate_user: 'Tem a certeza que deseja desactivar o utilizador {{user}}?',
+        are_your_sure_delete_user: 'Tem a certeza que deseja remover o utilizador {{user}}?',
+      },
       errors: {
+        information_sent_has_conflicts: 'A informação enviada entrou em conflito com dados existentes. Por favor, experimente com outros dados.',
         invalid_email: 'E-Mail inválido',
+        invalid_format: 'Formato inválido',
+        invalid_value: 'Valor inválido',
         invalid_version_number: 'Versão inválida! Esta deve ser maior ou igual ao valor atual!',
         invalid_version_pattern: 'Padrão de versão inválido! O padrão deve seguir a regra exemplo (1.0.0)',
+        min_length: 'Tamanho mínimo',
         password_regex: 'A password tem que conter pelo menos 8 caracteres. Entre eles, uma maiúscula, uma minuscula, um número e um caráter especial',
         password_mismatch: 'Passwords não coincidem',
-        invalid_format: 'Formato inválido',
-        min_length: 'Tamanho mínimo',
-        invalid_value: 'Valor inválido'
+        unknown_error: 'Ocorreu um erro ao efetuar a operaçao solicitada. Tente mais tarde ou contacte os nossos serviços de apoio.',
+        unable_to_update: 'Não foi possível atualizar',
+        unable_to_update_password: 'Não foi possível atualizar a sua password. Verifique se a password atual está correcta.',
+        unable_to_confirm_user: 'Não foi possível confirmar o utilizador.',
+        unable_to_deactivate_user: 'Não foi possível desactivar o utilizador.',
+        unable_to_delete_user: 'Não foi possível apagar o utilizador.',
+
+      },
+      informations: {
+        press_or_drag_marker_file: 'Pressione ou arraste um ficheiro .png com 41x51'
+      },
+      success: {
+        information_successfully_sent: 'A informação foi enviada com sucesso',
+        marker_successfully_updated: 'Marcador atualizado com sucesso',
+        password_successfully_updated: 'Password atualizada com sucesso',
+        user_successfully_confirmed: 'Utilizador "{{user}}" confimado com sucesso!'
+        
       }
     },
     sections: {

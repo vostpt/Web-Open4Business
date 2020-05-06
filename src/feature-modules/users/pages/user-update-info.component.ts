@@ -1,12 +1,16 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
-import { FormsService, passwordFieldsMatchValidator, passwordFormatValidator } from '@core-modules/catalog/modules/forms';
-import { CheckboxComponent } from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { environment } from '@core-modules/core';
 import { BasePageComponent } from '@core-modules/main-layout';
+import { FormsService, passwordFieldsMatchValidator, passwordFormatValidator } from '@core-modules/catalog/modules/forms';
+
+import { CheckboxComponent } from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
+
+import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
 import { UsersService } from '@users-feature-module/services/users.service';
+
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 @Component({
@@ -25,7 +29,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
   public marker = '';
 
   defaultUploadConfiguration: DropzoneConfigInterface = {
-    dictRemoveFileConfirmation: 'Tem a certeza que deseja remover o ficheiro?',
+    dictRemoveFileConfirmation: this.translate('are_you_sure_remove_file'),
     maxFilesize: 1,
     maxFiles: 1,
     previewTemplate: `
@@ -36,8 +40,8 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
             <div class="result-success dz-success-mark"><i class="fa fa-check text-success"></i></div>
             <div class="result-error dz-error-mark pl-2"> <i class="fa fa-times text-danger"></i> </div> &nbsp;
             <span data-dz-name class="result-success pl-2"></span><span class="result-success pl-2" data-dz-size></span>
-            <div class="result-success actions h-100"><a href="javascript:;" title="Remover" data-dz-remove><i class="fa fa-trash"></i></a></div>
-            <div class="result-error dz-error-message">Ocorreu um erro. Tente novamente ou contacte-nos para apoio.</div>
+            <div class="result-success actions h-100"><a href="javascript:;" title="${this.translate('dictionary.remove')}" data-dz-remove><i class="fa fa-trash"></i></a></div>
+            <div class="result-error dz-error-message">${this.translate('messages.errors.unknown_error')}</div>
           </div>
         </div>
       </div>
@@ -47,7 +51,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
   dataUploadConfiguration = {
     ...this.defaultUploadConfiguration,
     ...{
-      dictDefaultMessage: 'Pressione ou arraste um ficheiro .png com 41x51',
+      dictDefaultMessage: this.translate('press_or_drag_marker_file'),
       headers: { authorization: 'Bearer ' + localStorage.getItem('token') },
       url: `${environment.apiUrl}/businesses/v1/file`,
       acceptedFiles: '.png', previewsContainer: '#dataUploadPreview'
@@ -71,7 +75,8 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
     private readonly usersService: UsersService,
     private readonly businessService: BusinessesService,
     private readonly formsService: FormsService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute
+  ) {
     super();
   }
 
@@ -97,7 +102,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
         this.authId !== localStorage.getItem('email')) {
         this.title = this.authId;
       } else {
-        this.title = 'A minha conta';
+        this.title = this.translate('labels.my_account');
         this.authId = null;
       }
 
@@ -105,8 +110,7 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
         {
           currentPassword: [null, this.authId ? null : Validators.required],
           password: [null, [Validators.required, passwordFormatValidator]],
-          confirmPassword:
-            [null, [Validators.required, passwordFormatValidator]]
+          confirmPassword: [null, [Validators.required, passwordFormatValidator]]
         },
         { validator: passwordFieldsMatchValidator });
 
@@ -117,21 +121,16 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
               this.datasets.user = result.data.info;
               this.datasets.company = result.data.company;
 
-              this.datasets.user['company'] =
-                result.data.company['company'];
+              this.datasets.user['company'] = result.data.company['company'];
 
-              this.fUserInfo.company.setValue(
-                this.datasets.user['company']);
+              this.fUserInfo.company.setValue(this.datasets.user['company']);
               this.fUserInfo.name.setValue(this.datasets.user['name']);
               this.fUserInfo.email.setValue(this.datasets.user['email']);
               this.fUserInfo.phone.setValue(this.datasets.user['phone'] || this.datasets.company['phone']);
               this.fUserInfo.isActive.setValue(
                 this.datasets.user['isActive']);
 
-              this.marker = `${
-                this.environment.variables
-                  .apiUrl}/insights/v1/marker?businessId=${
-                this.datasets.company['businessId']}`;
+              this.marker = `${this.environment.variables.apiUrl}/insights/v1/marker?businessId=${this.datasets.company['businessId']}`;
               this.contentReady = true;
               this.loader.hide('pageLoader');
             },
@@ -189,18 +188,15 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
             () => {
               this.formUserInfoOnEditMode = false;
               this.loader.hide('pageLoader');
-              this.notification.success(
-                'A informação foi enviada com sucesso');
+              this.notification.success(this.translate('information_successfully_sent'));
             },
             error => {
               this.loader.hide('pageLoader');
 
               if (error.status === 401) {  // Mail already exists
-                this.notification.error(
-                  'A informação enviada entrou em conflito com dados existentes. Por favor, experimente com outros dados.');
+                this.notification.error(this.translate('information_sent_has_conflicts'));
               } else {
-                this.notification.error(
-                  'Ocorreu um erro ao atualizar. Tente mais tarde ou contacte os nossos serviços de apoio.');
+                this.notification.error(this.translate('unknown_error'));
                 this.logger.error('User info update unsuccessful', error);
               }
             }));
@@ -212,16 +208,14 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
               this.datasets.company['businessId'], bodyPayload.dataFile)
             .subscribe(
               () => {
-                this.notification.success(
-                  'Marcador atualizado com sucesso');
+                this.notification.success(this.translate('marker_successfully_updated'));
               },
               error => {
                 console.log(error.error);
                 if (error.status === 400) {  // Mail already exists
                   this.notification.error(error.error.resultMessage);
                 } else {
-                  this.notification.error(
-                    'Não foi possível atualizar o marcador');
+                  this.notification.error(this.translate('unable_to_update'));
                 }
               }));
       }
@@ -263,25 +257,20 @@ export class UserUpdateInfoComponent extends BasePageComponent implements OnInit
             () => {
               this.formPasswordOnEditMode = false;
               this.loader.hide('pageLoader');
-              this.notification.success(
-                'A password foi alterada com sucesso');
+              this.notification.success(this.translate('password_successfully_updated'));
               this.formUserPassword.reset();
             },
             error => {
               this.loader.hide('pageLoader');
 
-              if (error.status ===
-                401) {  // Current password does not match
-                this.notification.error(
-                  'Não foi possível atualizar a sua password. Verifique se a password atual está correcta.');
+              if (error.status === 401) {  // Current password does not match
+                this.notification.error(this.translate('unable_to_update_password'));
               } else {
-                this.notification.error(
-                  'Ocorreu um erro ao atualizar. Tente mais tarde ou contacte os nossos serviços de apoio.');
-                this.logger.error('Passwordupdate unsuccessful', error);
+                this.notification.error(this.translate('unknown_error'));
+                this.logger.error('Password update unsuccessful', error);
               }
             }));
     } else {
-      console.log('Invalid form', this.formUserPassword.errors);
       this.loader.hide('pageLoader');
       this.formsService.showErrors(this.formUserPassword);
     }

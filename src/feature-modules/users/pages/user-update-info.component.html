@@ -2,9 +2,9 @@
 
 <div class="container">
   <ul class="breadcrumbs">
-    <li><a routerLink="/">OPEN4BUSINESS</a></li>
+    <li><a routerLink="/">{{ 'app.brand' | translate }}</a></li>
     <li>/</li>
-    <li *ngIf="isAdmin"><a routerLink="/users/list">Lista de Utilizadores</a></li>
+    <li *ngIf="isAdmin"><a routerLink="/users/list">{{ 'labels.users_list' | translate }}</a></li>
     <li *ngIf="isAdmin">/</li>
     <li class="current">
       <span>{{title}}</span>
@@ -16,7 +16,7 @@
   <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
       <h3 class="kt-portlet__head-title title">
-        Visualize ou altere a sua informação
+        {{ 'labels.view_or_change_your_information' | translate }}
       </h3>
     </div>
   </div>
@@ -27,20 +27,20 @@
         <div class="form-group row">
           <div class="col-lg-6">
             <app-catalog-form-input [formControlField]="fUserInfo.company" formControlName="company"
-              label="Nome da empresa" [placeholder]="" [required]="true"></app-catalog-form-input>
+              label="{{ 'labels.company_name' | translate }}" [placeholder]="" [required]="true"></app-catalog-form-input>
           </div>
           <div class="col-lg-6">
-            <app-catalog-form-input [formControlField]="fUserInfo.email" formControlName="email" label="E-mail"
+            <app-catalog-form-input [formControlField]="fUserInfo.email" formControlName="email" label=" {{ 'dictionary.email' | translate }}"
               [placeholder]="" [required]="true"></app-catalog-form-input>
           </div>
         </div>
         <div class="form-group row">
           <div class="col-lg-6">
-            <app-catalog-form-input [formControlField]="fUserInfo.name" formControlName="name" label="Nome"
+            <app-catalog-form-input [formControlField]="fUserInfo.name" formControlName="name" label=" {{ 'dictionary.name' | translate }}"
               [placeholder]="" [required]="true"></app-catalog-form-input>
           </div>
           <div class="col-lg-6">
-            <app-catalog-form-input [formControlField]="fUserInfo.phone" formControlName="phone" label="Telefone"
+            <app-catalog-form-input [formControlField]="fUserInfo.phone" formControlName="phone" label=" {{ 'dictionary.phone' | translate }}"
               [placeholder]="" [required]="true"></app-catalog-form-input>
           </div>
         </div>
@@ -53,7 +53,7 @@
 
         <div class="form-group row" [hidden]="!formUserInfoOnEditMode">
           <div class="col-lg-12">
-            <label>Marcador</label>
+            <label> {{ 'dictionary.marker' | translate }}</label>
             <dropzone #dataUpload [config]="dataUploadConfiguration" (success)="onUploadSuccess('dataFile', $event)"
               (error)="onUploadError($event)" (removedFile)="onFileRemoved($event)"></dropzone>
             <div class="preview-container uploaded-files">
@@ -64,7 +64,7 @@
 
         <div class="form-group row" [hidden]="!formUserInfoOnEditMode">
           <div class="col-lg-6" [hidden]="!isAdmin">
-            <app-catalog-form-checkbox [formControlField]="fUserInfo.isActive" formControlName="isActive" label="Ativo">
+            <app-catalog-form-checkbox [formControlField]="fUserInfo.isActive" formControlName="isActive" label=" {{ 'dictionary.active' | translate }}">
             </app-catalog-form-checkbox>
           </div>
         </div>
@@ -74,11 +74,10 @@
       <div class="kt-form__actions">
         <div class="row">
           <div class="col-lg-12 kt-align-right">
-            <button *ngIf="!formUserInfoOnEditMode" class="btn btn-primary ml-2" (click)="showEditableForm('formUserInfo')"><i class="fa fa-pen"></i> &nbsp; Editar</button>
-            <button *ngIf="formUserInfoOnEditMode" class="btn btn-outline-secondary ml-2" (click)="hideEditableForm('formUserInfo')"><i class="fa fa-times"></i> &nbsp; Cancelar</button>
+            <button *ngIf="!formUserInfoOnEditMode" class="btn btn-primary ml-2" (click)="showEditableForm('formUserInfo')"><i class="fa fa-pen"></i> &nbsp; {{ 'actions.edit' | translate | titlecase }}</button>
+            <button *ngIf="formUserInfoOnEditMode" class="btn btn-outline-secondary ml-2" (click)="hideEditableForm('formUserInfo')"><i class="fa fa-times"></i> &nbsp; {{ 'actions.cancel' | translate | titlecase }}</button>
             <button *ngIf="formUserInfoOnEditMode" type="submit" class="btn btn-primary ml-2">
-              <i class="fa fa-check"></i> &nbsp;
-              {{ 'dictionary.submit' | translate }}
+              <i class="fa fa-check"></i> &nbsp; {{ 'dictionary.submit' | translate | titlecase }}
             </button>
           </div>
         </div>
@@ -93,7 +92,7 @@
   <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
       <h3 class="kt-portlet__head-title title">
-        Altere a sua password de acesso
+        {{ 'labels.change_your_password' | translate }}
       </h3>
     </div>
   </div>
@@ -103,15 +102,15 @@
         <div class="form-group row">
           <div class="col-lg-4" *ngIf="!authId">
             <app-catalog-form-input [formControlField]="fUserPassword.currentPassword" formControlName="currentPassword" type="password"
-              label="Password atual" [required]="!authId"></app-catalog-form-input>
+              label="{{ 'labels.current_password' | translate }}" [required]="!authId"></app-catalog-form-input>
           </div>
           <div class="col-lg-4">
             <app-catalog-form-input [formControlField]="fUserPassword.password" formControlName="password" type="password"
-              label="Nova Password" [required]="true"></app-catalog-form-input>
+              label="{{ 'labels.new_password' | translate }}" [required]="true"></app-catalog-form-input>
           </div>
           <div class="col-lg-4">
             <app-catalog-form-input [formControlField]="fUserPassword.confirmPassword" formControlName="confirmPassword" type="password"
-              label="Confirme a nova password" [required]="true"></app-catalog-form-input>
+              label="{{ 'labels.confirm_new_password' | translate }}" [required]="true"></app-catalog-form-input>
           </div>
         </div>
       </fieldset>
@@ -120,10 +119,10 @@
       <div class="kt-form__actions">
         <div class="row">
           <div class="col-lg-12 kt-align-right">
-            <button *ngIf="!formPasswordOnEditMode" class="btn btn-primary ml-2" (click)="showEditableForm('formPassword')"><i class="fa fa-pen"></i> &nbsp; Editar</button>
-            <button *ngIf="formPasswordOnEditMode" class="btn btn-outline-secondary ml-2" (click)="hideEditableForm('formPassword')"><i class="fa fa-times"></i> &nbsp; Cancelar</button>
+            <button *ngIf="!formPasswordOnEditMode" class="btn btn-primary ml-2" (click)="showEditableForm('formPassword')"><i class="fa fa-pen"></i> &nbsp; {{ 'actions.edit' | translate | titlecase }}</button>
+            <button *ngIf="formPasswordOnEditMode" class="btn btn-outline-secondary ml-2" (click)="hideEditableForm('formPassword')"><i class="fa fa-times"></i> &nbsp; {{ 'actions.cancel' | translate | titlecase}}</button>
             <button *ngIf="formPasswordOnEditMode" type="submit" class="btn btn-primary ml-2">
-              <i class="fa fa-check"></i> &nbsp; {{ 'dictionary.submit' | translate }}
+              <i class="fa fa-check"></i> &nbsp; {{ 'dictionary.submit' | translate | titlecase }}
             </button>
           </div>
         </div>
