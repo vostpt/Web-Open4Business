@@ -1,7 +1,7 @@
 <div class="container">
   <div class="center-block">
     <img class="logo" src="/assets/images/404.png">
-    <p class="main-text">{{'sections.errors_pages.page_not_found' | translate }}</p>
+    <p class="main-text" [innerHtml]="'sections.error_pages.page_not_found' | translate"></p>
     <button routerLink="/" class="main-button">{{'dictionary.home' | translate | titlecase }}</button>
   </div>
 </div>

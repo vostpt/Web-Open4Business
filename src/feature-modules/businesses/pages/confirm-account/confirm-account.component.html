@@ -3,18 +3,18 @@
 <div class="content-section" *ngIf="contentReady">
   <div class="container center-block">
     <p class="title message" *ngIf="success">
-      A empresa foi confirmada com sucesso.<br />
-      Será enviado um email ao responsável a notificar que já pode aceder à plataforma.
+      {{ 'sections.businesses.confirm_account_success' | translate }}<br />
+      {{ 'sections.businesses.confirm_account_msg' | translate }}
     </p>
     
     <p class="title message" *ngIf="!success">
-      Não foi possível confirmar a empresa.
+      {{ 'sections.businesses.confirm_account_error' | translate }}
     </p>
 
     <a href="/"><img class="logo" src="assets/images/logos/o4b.png"></a>
 
     <h3 class="brand">#OPEN4BUSINESS</h3>
 
-    <button class="btn btn-primary btn-goto-list" routerLink="/users/list">Ir para lista de utilizadores</button>
+    <button class="btn btn-primary btn-goto-list" routerLink="/users/list">{{ 'actions.goto_user_list' | translate }}</button>
   </div>
 </div>

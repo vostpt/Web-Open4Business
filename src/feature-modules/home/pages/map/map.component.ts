@@ -69,8 +69,6 @@ export class MapComponent extends BasePageComponent implements OnInit,
               });
             });
 
-            console.log('custom markers loaded', this.imageLib);
-
             if (this.map) {
               console.log('MAP alerady loaded: load image lib', this.imageLib);
               this.imageLib.forEach((img) => {
@@ -151,7 +149,6 @@ export class MapComponent extends BasePageComponent implements OnInit,
     });
 
     // Load markers image
-    console.log('add custom markers to map', this.imageLib);
     this.imageLib.forEach((img) => {
       this.map.loadImage(img.path, (error, image) => {
         if (error) {

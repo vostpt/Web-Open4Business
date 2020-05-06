@@ -62,8 +62,15 @@ export const locale = {
       edit_account: 'Editar Conta',
       deactivate_account: 'Desativar Conta',
       delete_account: 'Apagar Conta',
-
-      register_my_company: 'Registar a minha empresa'
+      register_my_company: 'Registar a minha empresa',
+      goto_user_list: 'Ir para lista de utilizadores',
+      filter_by_state: 'Filtar por Estado',
+    },
+    status: {
+      WAITING_FOR_APPROVAL: 'À Espera de Aprovação',
+      APPROVED: 'Aprovadas',
+      REJECTED: 'Rejeitadas',
+      DISCARDED: 'Descartadas',
     },
     messages: {
       alerts: {
@@ -87,7 +94,6 @@ export const locale = {
         unable_to_confirm_user: 'Não foi possível confirmar o utilizador.',
         unable_to_deactivate_user: 'Não foi possível desactivar o utilizador.',
         unable_to_delete_user: 'Não foi possível apagar o utilizador.',
-
       },
       informations: {
         press_or_drag_marker_file: 'Pressione ou arraste um ficheiro .png com 41x51'
@@ -97,7 +103,6 @@ export const locale = {
         marker_successfully_updated: 'Marcador atualizado com sucesso',
         password_successfully_updated: 'Password atualizada com sucesso',
         user_successfully_confirmed: 'Utilizador "{{user}}" confimado com sucesso!'
-        
       }
     },
     sections: {
@@ -114,7 +119,6 @@ export const locale = {
         phone_placeholder: '9XXXXXXXX',
         phone_validation: '^9[1236]{1}[0-9]{7}$',
         signup_successful: '<p class="title">O seu pedido foi registado com sucesso.</p>Após validação irá receber um e-mail de confirmação, com as suas credenciais.'
-
       },
       error_pages: {
         page_not_found: 'A ligação a que tentaste aceder não foi encontrada.<br />Poderá ter sido movida, removida, alterada ou até nem existir.'
@@ -131,6 +135,18 @@ export const locale = {
         disclaimer: '#open4business - 2020 &nbsp; VOSTPT - Associação de Voluntários Digitais em Situações de Emergências para Portugal. <br /> Este site e os seus conteúdos encontram-se sob uma licença <a href="https://creativecommons.org/licenses/by-sa/4.0" target="_blank">Creative Commons CC-BY-SA 4.0 - Attribution-ShareAlike 4.0 International</a>',
         privacy_policy: 'Política de Privacidade',
         cookies_policy: 'Política de Cookies'
+      },
+      businesses: {
+        confirm_account_success: 'A empresa foi confirmada com sucesso.',
+        confirm_account_msg: 'Será enviado um email ao responsável a notificar que já pode aceder à plataforma.',
+        confirm_account_error: 'Não foi possível confirmar a empresa.',
+        locations: {
+          batches: {
+            pagination: {
+              title: '<strong>{{count}}</strong> Submissões {{status}}',
+            },
+          }
+        }
       }
     }
   }

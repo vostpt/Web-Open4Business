@@ -14,10 +14,10 @@ export class LocationsBatchesComponent extends BasePageComponent implements
     OnInit, AfterViewInit, OnDestroy {
 
   public statusList = [
-    {id: 'WAITING_FOR_APPROVAL', desc: 'À Espera de Aprovação'},
-    {id: 'APPROVED', desc: 'Aprovadas'},
-    {id: 'REJECTED', desc: 'Rejeitadas'},
-    {id: 'DISCARDED', desc: 'Descartadas'},
+    {id: 'WAITING_FOR_APPROVAL', desc: ''},
+    {id: 'APPROVED', desc: ''},
+    {id: 'REJECTED', desc: ''},
+    {id: 'DISCARDED', desc: ''},
   ];
 
   public statusListDesc = [];
@@ -38,7 +38,8 @@ export class LocationsBatchesComponent extends BasePageComponent implements
     super();
 
     this.statusList.forEach((s) => {
-      this.statusListDesc[s.id] = s.desc;
+      s.desc = this.translate('status.' + s.id);
+      this.statusListDesc[s.id] = this.translate('status.' + s.id);
     });
   }
 

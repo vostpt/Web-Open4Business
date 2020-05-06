@@ -5,19 +5,19 @@
   <ul class="breadcrumbs">
     <li><a routerLink="/">OPEN4BUSINESS</a></li>
     <li>/</li>
-    <li><a routerLink="/businesses/locations">As Minhas Lojas</a></li>
+    <li><a routerLink="/businesses/locations">{{ 'app.menus.my_locations' | translate }}</a></li>
     <li>/</li>
-    <li class="current"><span>Submissões</span></li>
+    <li class="current"><span>{{ 'app.menus.batches' | translate }}</span></li>
   </ul>
 
   <div class="row">
     <div class="col">
-      <p class="counter"><strong>{{datasets.batches.length}}</strong> Submissões {{statusListDesc[status]}}</p>
+      <p class="counter" [innerHtml]="'sections.businesses.locations.batches.pagination.title' | translate: {count: datasets.batches.length, status: statusListDesc[status] || ''}"></p>
     </div>
 
     <div class="col-lg-3">
       <form [formGroup]="form" class="">
-        <app-catalog-form-select [formControlField]="f.status" formControlName="status" [required]="false" placeholder="Filtar por Estado" clearable="true"
+        <app-catalog-form-select [formControlField]="f.status" formControlName="status" [required]="false" [placeholder]="'actions.filter_by_state' | translate" clearable="true"
         bindLabel="desc" bindValue="id" [items]="statusList"></app-catalog-form-select>
       </form>
     </div>
@@ -35,7 +35,7 @@
       <div _ngcontent-cqf-c174="" class="kt-portlet__head-label">
         <h3 _ngcontent-cqf-c174="" class="kt-portlet__head-title title-date">
           <span class="font-weight-bold"
-            [ngClass]="{'text-success': batch.status == 'APPROVED', 'text-danger': batch.status == 'REJECTED', 'text-warning': batch.status == 'WAITING_FOR_APPROVAL'}">{{batch.status}}</span>
+            [ngClass]="{'text-success': batch.status == 'APPROVED', 'text-danger': batch.status == 'REJECTED', 'text-warning': batch.status == 'WAITING_FOR_APPROVAL'}">{{ statusListDesc[batch.status] }}</span>
         </h3>
       </div>
     </div>
