@@ -32,8 +32,8 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
             <div class="result-success dz-success-mark"><i class="fa fa-check text-success"></i></div>
             <div class="result-error dz-error-mark pl-2"> <i class="fa fa-times text-danger"></i> </div> &nbsp;
             <span data-dz-name class="result-success pl-2"></span><span class="result-success pl-2" data-dz-size></span>
-            <div class="result-success actions h-100"><a href="javascript:;" title="Remover" data-dz-remove><i class="fa fa-trash"></i></a></div>
-            <div class="result-error dz-error-message">Ocorreu um erro. Tente novamente ou contacte-nos para apoio.</div>
+            <div class="result-success actions h-100"><a href="javascript:;" title="${this.translate('actions.remove')}" data-dz-remove><i class="fa fa-trash"></i></a></div>
+            <div class="result-error dz-error-message">${this.translate('messages.errors.unknown_error')}</div>
           </div>
         </div>
       </div>
@@ -43,7 +43,7 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
   dataUploadConfiguration = {
     ...this.defaultUploadConfiguration,
     ...{
-      dictDefaultMessage: 'Pressione ou arraste um ficheiro .csv',
+      dictDefaultMessage: this.translate('messages.informations.csv_upload'),
       headers: { authorization: 'Bearer ' + localStorage.getItem('token') },
       url: `${environment.apiUrl}/businesses/v1/file`,
       acceptedFiles: '.csv',
@@ -89,13 +89,13 @@ export class LocationsInsertComponent extends BasePageComponent implements OnIni
           .subscribe(
             (response) => {
               this.loader.hide('pageLoader');
-              this.notification.success('A informação foi enviada com sucesso');
+              this.notification.success(this.translate('messages.success.information_successfully_sent'));
               localStorage.setItem('lastImportStatus', JSON.stringify(response['data']));
               this.router.navigateByUrl('businesses/locations/success');
             },
             error => {
               this.loader.hide('pageLoader');
-              this.notification.error('Ocorreu um erro ao registar. Tente mais tarde ou contacte os nossos serviços de apoio.');
+              this.notification.error(this.translate('messages.errors.unknown_error'));
               this.logger.error('Locations insertion unsuccessful', error);
             }));
     }

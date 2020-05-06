@@ -4,10 +4,10 @@
   <ul class="breadcrumbs">
     <li><a routerLink="/">OPEN4BUSINESS</a></li>
     <li>/</li>
-    <li><a routerLink="/businesses/locations">As Minhas Lojas</a></li>
+    <li><a routerLink="/businesses/locations">{{ 'app.menus.my_locations' | translate }}</a></li>
     <li>/</li>
     <li class="current">
-      <span>Importar Lojas</span>
+      <span>{{ 'actions.import_locations' | translate }}</span>
     </li>
   </ul>
 </div>
@@ -15,40 +15,26 @@
 <div class="kt-portlet container">
   <div class="kt-portlet__head">
     <div class="kt-portlet__head-label">
-      <h3 class="kt-portlet__head-title title">Importar Lojas</h3>
+      <h3 class="kt-portlet__head-title title">{{ 'actions.import_locations' | translate }}</h3>
     </div>
-    <!-- <div class="kt-portlet__head-label">
-      <h3 class="kt-portlet__head-title title-date">
-        <a href="{{quickGuideLink}}">Quick Guide</a>
-      </h3>
-    </div> -->
   </div>
 
   <form [formGroup]="form" class="kt-form kt-form--label-right" (ngSubmit)="onFormSubmit()">
     <div class="kt-portlet__body">
       <div class="row">
-        <div class="col-lg-12 text">
-          Nesta área pode fazer o upload em bulk dos dados da sua empresa. Se ainda não o fez, aconselhamos a que
-          primeiro <a href="https://docs.google.com/document/d/1avWACz4iDCzyyuEmcp8bMLAmPO69f5S5iFIdyCou28c/edit" target="_blank">leia as instruções de preenchimento</a> e exportação dos dados no formato correto, e aceite por esta
-          plataforma. O ficheiro template pode ser encontrado <a href="https://docs.google.com/spreadsheets/d/1eRT0RfCV6rbwtlYmMIX6c6OKdi2EkbF5KbnqifPB1rI/edit#gid=606616492" target="_blank">aqui</a>.
-          Se porventura o ficheiro não for aceite pelo sistema, verifique de novo a sua estrutura e os dados. Se o erro persistir, por favor contacte-nos via <a href="mailto:o4b@vost.pt" target="_blank">o4b@vost.pt</a>.
-        </div>
+        <div class="col-lg-12 text" [innerHtml]="'sections.businesses.locations.import.info' | translate"></div>
       </div>
-
       <br />
       <br />
-
       <div class="row">
         <div class="col-lg-12 kt-align-center">
-          <!-- <button type="submit" class="btn btn-primary ml-2" (click)="downloadTemplate()">
-            Descarregar exemplo de CSV
-          </button> -->
           <a href="{{quickGuideLink}}">
-            <button type="button" class="btn btn-outline-primary ml-2">Guia Rápido</button>
+            <button type="button" class="btn btn-outline-primary ml-2">{{'app.menus.quick_guide' | translate }}</button>
           </a>
 
-          <a href="https://docs.google.com/spreadsheets/d/1eRT0RfCV6rbwtlYmMIX6c6OKdi2EkbF5KbnqifPB1rI/edit#gid=606616492" target="_blank">
-            <button type="button" class="btn btn-primary ml-2">Descarregar exemplo de CSV</button>
+          <a href="https://docs.google.com/spreadsheets/d/1eRT0RfCV6rbwtlYmMIX6c6OKdi2EkbF5KbnqifPB1rI/edit#gid=606616492"
+            target="_blank">
+            <button type="button" class="btn btn-primary ml-2">{{'actions.download_csv_example' | translate}}</button>
           </a>
         </div>
       </div>
@@ -64,7 +50,7 @@
 
       <div class="form-group row">
         <div class="col-lg-12">
-          <label>Ficheiro CSV</label>
+          <label>{{'labels.csv_file' | translate}}</label>
           <dropzone #dataUpload [config]="dataUploadConfiguration" (success)="onUploadSuccess('dataFile', $event)"
             (error)="onUploadError($event)" (removedFile)="onFileRemoved($event)"></dropzone>
           <div class="preview-container uploaded-files">
@@ -75,16 +61,19 @@
 
       <div class="form-group row">
         <div class="col-lg-4">
-          <app-catalog-form-input [formControlField]="f.name" formControlName="name" label="Nome" [required]="true">
+          <app-catalog-form-input [formControlField]="f.name" formControlName="name" [label]="'labels.name' | translate"
+            [required]="true">
           </app-catalog-form-input>
         </div>
         <div class="col-lg-4">
-          <app-catalog-form-input [formControlField]="f.email" formControlName="email" label="E-mail" [required]="true">
+          <app-catalog-form-input [formControlField]="f.email" formControlName="email"
+            [label]="'labels.email' | translate" [required]="true">
           </app-catalog-form-input>
         </div>
         <div class="col-lg-4">
-          <app-catalog-form-input [formControlField]="f.phone" formControlName="phone" label="Telefone"
-            [required]="false"></app-catalog-form-input>
+          <app-catalog-form-input [formControlField]="f.phone" formControlName="phone"
+            [label]="'labels.phone' | translate" [required]="false">
+          </app-catalog-form-input>
         </div>
       </div>
     </div>

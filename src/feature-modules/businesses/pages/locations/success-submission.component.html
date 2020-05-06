@@ -1,44 +1,53 @@
 <app-catalog-loader name="pageLoader"></app-catalog-loader>
 
+<div class="container">
+  <ul class="breadcrumbs">
+    <li><a routerLink="/">OPEN4BUSINESS</a></li>
+    <li>/</li>
+    <li><a routerLink="/businesses/locations">{{ 'app.menus.my_locations' | translate }}</a></li>
+    <li>/</li>
+    <li class="current">
+      <span>{{ 'actions.import_locations' | translate }}</span>
+    </li>
+  </ul>
+</div>
+
 <div class="banner-section" *ngIf="showInformationBanner"
   [ngClass]="{'bg-success': importResult.success, 'bg-warning': !importResult.success}">
   <i class="fa fa-times close-icon" (click)="dismissInformationBanner()"></i>
   <div class="container" [ngClass]="{'text-dark': !importResult.success}">
-    <p *ngIf="importResult.success" class="title">A tua contribuição foi enviada com
-      sucesso.</p>
-    <p *ngIf="!importResult.success" class="title">A tua contribuição foi registada, mas encontramos alguns erros. Corrija os erros abaixo e submeta outro ficheiro APENAS com as linhas corrigidas.
-    </p>
-
-    <p>As lojas importadas vão ser validadas antes de ficarem online. Agradecemos o teu contributo neste periodo excepcional.</p>
+    <p *ngIf="importResult.success" class="title">{{'sections.businesses.locations.import.success' | translate}}</p>
+    <p *ngIf="!importResult.success" class="title">{{'sections.businesses.locations.import.warning' | translate}}</p>
+    <p>{{'sections.businesses.locations.import.validation_info' | translate}}</p>
   </div>
 </div>
 
-<div class="errors">
+<div class="container errors">
   <div class="kt-portlet">
     <div class="kt-portlet__body">
-      <h4>Resultado</h4>
+      <h4 class="text-capitalize">{{'dictionary.result' | translate}}</h4>
       <ul>
         <li>
-          <span>Total: {{importResult.totalRows}}</span>
+          <span>{{'labels.total' | translate}}: {{importResult.totalRows}}</span>
         </li>
         <li>
-          <span>Adicionadas: {{importResult.addCount}}</span>
+          <span>{{'labels.added' | translate}}: {{importResult.addCount}}</span>
         </li>
         <li>
-          <span>Atualizadas: {{importResult.updateCount}}</span>
+          <span>{{'labels.updated' | translate}}: {{importResult.updateCount}}</span>
         </li>
         <li>
-          <span>Ignoradas: {{importResult.errorCount}}</span>
+          <span>{{'labels.ignored' | translate}}: {{importResult.errorCount}}</span>
         </li>
       </ul>
 
-      <a class="" routerLink="/businesses/locations">Ir para Lista de Empresas</a>
+      <a class="" routerLink="/businesses/locations">{{'actions.goto_locations_list' | translate}}</a>
     </div>
   </div>
 
   <div class="kt-portlet" *ngFor="let error of importResult.errors">
     <div class="kt-portlet__body">
-      <h4>Linha #{{error.row}}</h4>
+      <h4>{{ 'sections.businesses.locations.import.error_counter' | translate: {row: error.row} }}</h4>
       <ul>
         <li *ngFor="let detail of error.list">
           <span>{{detail}}</span>
@@ -48,12 +57,14 @@
   </div>
 </div>
 
+<br />
+
 <div class="content-section">
   <div class="container center-block">
     <a href="/"><img class="logo" src="assets/images/logos/o4b.png"></a>
 
     <h3 class="brand">#OPEN4BUSINESS</h3>
 
-    <button class="btn btn-primary btn-goto-list" routerLink="/businesses/locations">Ir para Lista de Empresas</button>
+    <button class="btn btn-primary btn-goto-list" routerLink="/businesses/locations">{{'actions.goto_locations_list' | translate}}</button>
   </div>
 </div>
