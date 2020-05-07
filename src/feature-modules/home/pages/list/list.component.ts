@@ -10,7 +10,6 @@ import { MapService } from '@home-feature-module/services/map.service';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
-  public searchPlaceholder = 'Pesquisar Empresas';
 
   public total = 0;
   public pages = 1;

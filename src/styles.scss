@@ -58,7 +58,7 @@ div.kt-content {
   font-family: Poppins, Helvetica, sans-serif;
   font-size: 1.1rem;
   color: black;
-  padding: 38px 25px 25px;
+  padding: 30px 25px 25px;
   box-shadow: 8px 8px 17px -6px #B9AFF0;
 
   h4 {
@@ -89,13 +89,13 @@ div.kt-content {
 
 .mapboxgl-popup-close-button {
   right: 0.5vw;
-  top: 1vh;
-  font-size: 80%;
+  top: 1.5vh;
+  font-size: 1.5rem;
   color: #909090;
 }
-.mapboxgl-popup-close-button:before {
-  content: 'FECHAR ';
-}
+// .mapboxgl-popup-close-button:before {
+//   content: 'FECHAR ';
+// }
 
 ul.breadcrumbs {
   margin: 0;

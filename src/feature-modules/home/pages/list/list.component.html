@@ -3,21 +3,17 @@
 <div *ngIf="contentReady" class="container">
 
   <ul class="breadcrumbs">
-    <li><a routerLink="/">OPEN4BUSINESS</a></li>
+    <li><a routerLink="/">{{ 'app.brand' | translate }}</a></li>
     <li>/</li>
     <li class="current">
-      <span>Lista de Empresas</span>
+      <span>{{ 'labels.companies_list' | translate }}</span>
     </li>
   </ul>
 
   <div class="row filters-section">
     <div class="col-lg-12 text">
-      <h3>Pequenas, Médias e Grandes Empresas em Funcionamento</h3>
-
-      <p class="text-justify">
-        Apoiemos os negócios locais e a economia do país.<br />
-        Podemos querer parar o virus, não podemos parar o país.
-      </p>
+      <h3>{{ 'labels.companies_up_and_running' | translate }}</h3>
+      <p class="text-justify" innerHtml="{{ 'sections.businesses.locations.list.subtitle' | translate }}"></p>
     </div>
   </div>
 
@@ -27,15 +23,15 @@
         <div class="form-group row">
           <div class="col-lg-4 input-ct">
             <app-catalog-form-input [formControlField]="f.search" formControlName="search"
-              [placeholder]="searchPlaceholder" [appendButton]="true" [appendButtonIcon]="'fa fa-search'">
+              placeholder="{{ 'labels.search_companies' | translate }}" [appendButton]="true" [appendButtonIcon]="'fa fa-search'">
             </app-catalog-form-input>
           </div>
           <div class="col-lg-4 input-ct">
-            <app-catalog-form-select [formControlField]="f.sector" formControlName="sector" [required]="false" placeholder="Sector" clearable="true"
+            <app-catalog-form-select [formControlField]="f.sector" formControlName="sector" [required]="false" placeholder="{{ 'labels.sector' | translate }}" clearable="true"
             bindLabel="desc" bindValue="id" [items]="sectorList"></app-catalog-form-select>
           </div>
           <div class="col-lg-4 input-ct">
-            <app-catalog-form-select [formControlField]="f.district" formControlName="district" [required]="false" placeholder="Distrito" clearable="true"
+            <app-catalog-form-select [formControlField]="f.district" formControlName="district" [required]="false" placeholder="{{ 'labels.district' | translate }}" clearable="true"
             bindLabel="desc" bindValue="id" [items]="districtList"></app-catalog-form-select>
           </div>
         </div>
@@ -45,7 +41,7 @@
 
   <div class="row">
     <div class="col-auto mr-auto">
-      <p class="counter"><strong>{{total}}</strong> Lojas</p>
+      <p class="counter"><strong>{{total}}</strong> {{ 'labels.locations' | translate }}</p>
     </div>
 
     <div class="col-auto" *ngIf="total > 0">

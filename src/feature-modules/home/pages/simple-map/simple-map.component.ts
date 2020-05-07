@@ -1,12 +1,15 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { FormsService } from '@core-modules/catalog/modules/forms';
-import { ParserService } from '@core-modules/core/services/parser.service';
-import { BasePageComponent } from '@core-modules/main-layout';
-import { MapboxMarkerProperties } from '@home-feature-module/models/mapbox-marker-properties.model';
-import { MapService } from '@home-feature-module/services/map.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { GeolocateControl, LngLatBounds, Map, NavigationControl, Popup } from 'mapbox-gl';
+
+import { BasePageComponent } from '@core-modules/main-layout';
+
+import { FormsService } from '@core-modules/catalog/modules/forms';
+import { MapService } from '@home-feature-module/services/map.service';
+import { ParserService } from '@core-modules/core/services/parser.service';
+
+import { MapboxMarkerProperties } from '@home-feature-module/models/mapbox-marker-properties.model';
 
 @Component({
   selector: 'app-home-simple-map',
@@ -17,25 +20,23 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
 
   public showCookieWarning = (JSON.parse(localStorage.getItem('dismissedCookieWarning')) ? false : true);
   public showInformationBanner = (JSON.parse(localStorage.getItem('dismissedInformationBanner')) ? false : true);
-  public searchPlaceholder = 'Pesquise locais';
 
-  public imageLib = [{name: 'pin', path: 'assets/images/mapbox/pin.png'}];
+  public imageLib = [{ name: 'pin', path: 'assets/images/mapbox/pin.png' }];
 
   public count: number = null;
-  public searchInfo = 'A carregar...';
+  public searchInfo = this.translate('dictionary.loading');
 
   private map: Map;
 
   form: FormGroup;
-  get f() {
-    return this.form.controls;
-  }
+  get f() { return this.form.controls; }
 
   constructor(
-      private readonly formBuilder: FormBuilder,
-      private readonly formsService: FormsService,
-      private readonly parserService: ParserService,
-      private readonly mapService: MapService, private route: ActivatedRoute) {
+    private readonly formBuilder: FormBuilder,
+    private readonly formsService: FormsService,
+    private readonly parserService: ParserService,
+    private readonly mapService: MapService, private route: ActivatedRoute
+  ) {
     super();
   }
 
@@ -43,70 +44,66 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
   @HostListener('document:keyup', ['$event'])
   handleDeleteKeyboardEvent(event: KeyboardEvent) {
     if (event.key === 'Escape') {
-      document.getElementsByClassName(
-          'mapboxgl-popup-close-button')[0]['click']();
+      document.getElementsByClassName('mapboxgl-popup-close-button')[0]['click']();
     }
   }
 
   ngOnInit() {
     this.loader.show('app-map');
 
-    this.form = this.formBuilder.group({search: [null, null]});
-
+    this.form = this.formBuilder.group({ search: [null, null] });
 
     this.route.queryParams.subscribe(params => {
       const search = params['search'];
       if (search) {
-        this.form.setValue({search});
+        this.form.setValue({ search });
       }
 
       let markers: GeoJSON.FeatureCollection;
 
       this.subscriptions.push(this.mapService.getBusinesses().subscribe(
-          (result: {data: {businesses: []}}) => {
-            this.imageLib =
-                [{name: 'pin', path: 'assets/images/mapbox/pin.png'}];
+        (result: { data: { businesses: [] } }) => {
+          this.imageLib =
+            [{ name: 'pin', path: 'assets/images/mapbox/pin.png' }];
 
-            result.data.businesses.forEach((b) => {
-              this.imageLib.push({
-                name: b['businessId'],
-                path: `${
-                    this.environment.variables
-                        .apiUrl}/insights/v1/marker?businessId=${
-                    b['businessId']}`
+          result.data.businesses.forEach((b) => {
+            this.imageLib.push({
+              name: b['businessId'],
+              path: `${this.environment.variables.apiUrl}/insights/v1/marker?businessId=${b['businessId']}`
+            });
+          });
+
+          if (this.map) {
+            this.logger.log('MAP already loaded: load image lib', this.imageLib);
+            this.imageLib.forEach((img) => {
+              this.map.loadImage(img.path, (error, image) => {
+                if (error) {
+                  throw error;
+                }
+                this.map.addImage(img.name, image);
               });
             });
+          }
+        },
+        (error) => {
+          this.loader.hide('app-map');
+          this.logger.error('Error fetching map custom markers', error);
+        }));
 
-            if (this.map) {
-              console.log('MAP alerady loaded: load image lib', this.imageLib);
-              this.imageLib.forEach((img) => {
-                this.map.loadImage(img.path, (error, image) => {
-                  if (error) {
-                    throw error;
-                  }
-                  this.map.addImage(img.name, image);
-                });
-              });
-            }
-          },
-          (error) => {
-            this.loader.hide('app-map');
-            this.logger.error('Error fetching map custom markers', error);
-          }));
-
-      this.subscriptions.push(this.mapService.getMarkers(search).subscribe(
-          (result: {data: {locations: object[]}}) => {
-            markers =
-                this.mapService.parseResponseToGeoJSON(result.data.locations);
+      this.subscriptions.push(
+        this.mapService.getMarkers(search).subscribe(
+          (result: { data: { locations: object[] } }) => {
+            markers = this.mapService.parseResponseToGeoJSON(result.data.locations);
             this.count = markers.features.length;
-            this.searchInfo = search ? 'lojas correspondem à tua pesquisa.' :
-                                       'lojas já estão registadas.';
+            this.searchInfo = this.translate(search ? 'labels.locations_match_your_search' : 'labels.locations_already_registered');
             this.loadMapbox(markers);
           },
           (error) => {
             this.loader.hide('app-map');
             this.logger.error('Error fetching map markers', error);
-          }));
+          }
+        )
+      );
 
       this.draw();
     });
@@ -116,46 +113,41 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
     this.loader.show('app-map');
 
     try {
-      document.getElementsByClassName(
-          'mapboxgl-popup-close-button')[0]['click']();
-    } catch (error) {
-    }
+      document.getElementsByClassName('mapboxgl-popup-close-button')[0]['click']();
+    } catch (error) { }
 
 
     const search = this.form.get('search').value;
     let markers: GeoJSON.FeatureCollection;
 
     this.subscriptions.push(this.mapService.getMarkers(search).subscribe(
-        (result: {data: {locations: object[]}}) => {
-          try {
-            markers =
-                this.mapService.parseResponseToGeoJSON(result.data.locations);
-            this.map.getSource('businesses')['setData'](markers);
+      (result: { data: { locations: object[] } }) => {
+        try {
+          markers = this.mapService.parseResponseToGeoJSON(result.data.locations);
+          this.map.getSource('businesses')['setData'](markers);
 
-            this.count = markers.features.length;
-            this.searchInfo = search ? 'lojas correspondem à tua pesquisa.' :
-                                       'lojas já estão registadas.';
+          this.count = markers.features.length;
+          this.searchInfo = this.translate(search ? 'labels.locations_match_your_search' : 'labels.locations_already_registered');
 
-            // Calculate bounds
-            const bounds = new LngLatBounds();
+          // Calculate bounds
+          const bounds = new LngLatBounds();
 
-            for (let i = 0; i < markers.features.length; i++) {
-              const marker = markers.features[i];
-              bounds.extend(marker.geometry['coordinates']);
-            }
-
-            console.log('bounds', bounds);
-            this.map.fitBounds(bounds);
-          } catch (error) {
-            console.error(error);
+          for (let i = 0; i < markers.features.length; i++) {
+            const marker = markers.features[i];
+            bounds.extend(marker.geometry['coordinates']);
           }
 
-          this.loader.hide('app-map');
-        },
-        (error) => {
-          this.loader.hide('app-map');
-          this.logger.error('Error fetching map markers', error);
-        }));
+          this.map.fitBounds(bounds);
+        } catch (error) {
+          this.logger.error('Error getting markers', error);
+        }
+
+        this.loader.hide('app-map');
+      },
+      (error) => {
+        this.loader.hide('app-map');
+        this.logger.error('Error fetching map markers', error);
+      }));
   }
 
   loadMapbox(markers: GeoJSON.FeatureCollection) {
@@ -205,7 +197,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
             '#f28cb1'
           ],
           'circle-radius':
-              ['step', ['get', 'point_count'], 20, 100, 30, 750, 40]
+            ['step', ['get', 'point_count'], 20, 100, 30, 750, 40]
         }
       });
 
@@ -219,7 +211,7 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
           'text-font': ['DIN Offc Pro Medium', 'Arial Unicode MS Bold'],
           'text-size': 12,
         },
-        paint: {'text-color': '#ffffff'}
+        paint: { 'text-color': '#ffffff' }
       });
 
       this.map.addLayer({
@@ -234,7 +226,6 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
           'icon-allow-overlap': true,
         }
       });
-
 
       this.map.addLayer({
         id: 'poi-labels',
@@ -253,16 +244,17 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
 
       // Add zoom and rotation controls to the map.
       this.map.addControl(
-          new NavigationControl(
-              {showCompass: true, showZoom: true, visualizePitch: true}),
-          'bottom-right');
+        new NavigationControl({ showCompass: true, showZoom: true, visualizePitch: true }),
+        'bottom-right'
+      );
 
       this.map.addControl(
-          new GeolocateControl({
-            positionOptions: {enableHighAccuracy: true},
-            trackUserLocation: true
-          }),
-          'bottom-right');
+        new GeolocateControl({
+          positionOptions: { enableHighAccuracy: true },
+          trackUserLocation: true
+        }),
+        'bottom-right'
+      );
 
       // Events.
       this.map.on('mouseenter', 'clusters', () => {
@@ -300,18 +292,18 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
         const element = new MapboxMarkerProperties(e.features[0].properties);
         const coordinates = e.lngLat;
 
-        this.map.flyTo({center: coordinates, offset: [0, 225]});
+        this.map.flyTo({ center: coordinates, offset: [0, 225] });
 
-        new Popup({offset: 25})
-            .setLngLat(coordinates)
-            .setHTML(this.getPopupHTML(element, coordinates))
-            .addTo(this.map);
+        new Popup({ offset: 25 })
+          .setLngLat(coordinates)
+          .setHTML(this.getPopupHTML(element, coordinates))
+          .addTo(this.map);
       });
 
       const that = this;
       this.map.on('click', 'clusters', (e) => {
         const cluster =
-            that.map.queryRenderedFeatures(e.point, {layers: ['clusters']});
+          that.map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
         console.log(cluster);
         const coordinates = cluster[0].geometry['coordinates'];
         const currentZoom = that.map.getZoom();
@@ -324,7 +316,6 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
   }
 
   flyIntoCluster(coordinates, currentZoom) {
-    console.log('currentZoom', currentZoom);
     /*
     in my case, I don't care about currentZoom instead I just hardcode max zoom
     which I know will reveal all the icons since the user can only zoom in this
@@ -361,61 +352,59 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
     let html = `
       <h4>${properties.store}</h4>
       <p class="small">${properties.sector}</p>
-      <p>Telf.: ${properties.phone}</p>
+      <p>${this.translate('labels.phone_short')}: ${properties.phone}</p>
       <p>${properties.address}</p>
       <p>${properties.zipCode} ${properties.parish}</p>
       <br />`;
 
-    html +=
-        (properties.schedule1Dow !== '' || properties.schedule2Dow !== '' ||
-                 properties.schedule3Dow !== '' ?
-             `<h5><b>Horário de Funcionamento</b></h5>` :
-             '');
+    html += (
+      properties.schedule1Dow !== '' || properties.schedule2Dow !== '' || properties.schedule3Dow !== '' ?
+        `<h5><b>${this.translate('labels.working_schedule')}</b></h5>` :
+        ''
+    );
 
     for (let i = 1; i <= 3; i++) {
-      const dayOfWeekPeriods = this.parserService.formatWeekdaysListProperty(
-          properties[`schedule${i}Dow`]);
-      const schedule =
-          this.parserService.formatScheduleProperty(properties[`schedule${i}`]);
+      const dayOfWeekPeriods = this.parserService.formatWeekdaysListProperty(properties[`schedule${i}Dow`]);
+      const schedule = this.parserService.formatScheduleProperty(properties[`schedule${i}`]);
 
       if (dayOfWeekPeriods !== '') {
         html += `<span>${properties[`schedule${i}Type`]}`;
 
         if (properties[`schedule${i}Period`]) {
-          html += `:&nbsp;<span class="font-italic">${
-              properties[`schedule${i}Period`]}</span>`;
+          html += `:&nbsp;<span class="font-italic">${properties[`schedule${i}Period`]}</span>`;
         }
 
         html += `</span>`;
       }
 
-      html +=
-          (dayOfWeekPeriods !== '' ? `
-          <div class="row">
+      html += (
+        dayOfWeekPeriods !== '' ?
+          `<div class="row">
             <div class="col-5"><p>${dayOfWeekPeriods}:</p></div>
             <div class="col-7"><p>${schedule}</p></div>
           </div>` :
-                                    '');
+          ''
+      );
     }
 
-    html +=
-        (properties.typeOfService !== '' ? `<br /><h5><b>Entregas</b></h5><p>${
-                                              properties.typeOfService}</p>` :
-                                          '');
+    html += (
+      properties.typeOfService !== '' ?
+        `<br /><h5><b>${this.translate('labels.delivery')}</b></h5><p>${properties.typeOfService}</p>` :
+        ''
+    );
 
     if (properties.byAppointment === 'Sim') {
-      html += `<br /><h5><b>Por Marcação</b></h5>`;
+      html += `<br /><h5><b>${this.translate('labels.by_appointment')}</b></h5>`;
       html += `<p>${properties.contactForSchedule}<p>`;
     }
 
-    html +=
-        (properties.obs !== '' ? `<br /><p class="notes">${properties.obs}</p>` :
-                                '');
+    html += (properties.obs !== '' ? `<br /><p class="notes">${properties.obs}</p>` : '');
 
-    html += `<br /><div class="row"><div class="col-12 text-center"><a href="https://www.google.com/maps/search/?api=1&query=${
-        properties.latitude},${
-        properties
-            .longitude}" target="_blank" class="btn btn-primary link">Abrir Mapa</a></div></div>`;
+    html += `<br />
+    <div class="row"><div class="col-12 text-center">
+    <a href="https://www.google.com/maps/search/?api=1&query=${properties.latitude},${properties.longitude}"
+    target="_blank" class="btn btn-primary link">${this.translate('actions.open_map')}</a>
+    </div></div>`;
 
     return html;
   }
