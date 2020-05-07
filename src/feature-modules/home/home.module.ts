@@ -7,7 +7,6 @@ import { CatalogModule } from '@core-modules/catalog';
 
 import { HomeRoutingModule } from './home-routing.module';
 
-import { MapComponent } from '@home-feature-module/pages/map/map.component';
 import { SimpleMapComponent } from './pages/simple-map/simple-map.component';
 import { SmallMediumCompaniesComponent } from '@home-feature-module/pages/small-medium-companies/small-medium-companies.component';
 import { ListComponent } from './pages/list/list.component';
@@ -28,7 +27,6 @@ import { ParserService } from '@core-modules/core/services/parser.service';
     HomeRoutingModule
   ],
   declarations: [
-    MapComponent,
     SimpleMapComponent,
     SmallMediumCompaniesComponent,
     ListComponent,
