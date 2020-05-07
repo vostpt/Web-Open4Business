@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild, ContentChild} from '@angular/core';
+import {AfterViewInit, Component, ContentChild, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {BusinessesService} from '@businesses-feature-module/services/businesses.service';
 import {SelectComponent} from '@core-modules/catalog/modules/forms/components/select/select.component';
@@ -12,7 +12,6 @@ import {BasePageComponent} from '@core-modules/main-layout';
 })
 export class LocationsBatchesComponent extends BasePageComponent implements
     OnInit, AfterViewInit, OnDestroy {
-
   public statusList = [
     {id: 'WAITING_FOR_APPROVAL', desc: ''},
     {id: 'APPROVED', desc: ''},
@@ -75,5 +74,32 @@ export class LocationsBatchesComponent extends BasePageComponent implements
                   this.loader.hide('pageLoader');
                   this.logger.error('Error fetching batches', error);
                 }));
+  }
+
+  approveBatch(batch) {
+    if (confirm(this.translate('messages.alerts.are_you_sure_approve_batch'))) {
+      const data = {
+        email: batch.personEmail,
+        batchId: batch.batchId,
+        confirm: true
+      };
+
+      this.subscriptions.push(
+          this.businessesService.confirmLocations(data).subscribe(
+              (result: {data: {locations: object[]}}) => {
+                this.notification.success(this.translate(
+                  'messages.success.location_successfully_approved'));
+
+                  this.getBatches();
+              },
+              (error) => {
+                this.loader.hide('pageLoader');
+                this.notification.error(this.translate(
+                  'messages.errors.unable_to_confirm_locations'));
+                this.logger.error('Error confirming locations', error);
+              }));
+    } else {
+      console.log('approveBatch: ignore');
+    }
   }
 }

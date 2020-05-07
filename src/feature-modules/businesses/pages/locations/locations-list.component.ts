@@ -433,7 +433,7 @@ export class LocationsListComponent extends BasePageComponent implements
 
   deleteStore(location) {
     if (!confirm(this.translate(
-            'messages.alert.are_you_sure_delete_location',
+            'messages.alerts.are_you_sure_delete_location',
             {store: location.store}))) {
       return;
     }
