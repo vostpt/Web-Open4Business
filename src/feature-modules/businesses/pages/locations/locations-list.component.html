@@ -6,15 +6,12 @@
     <li><a routerLink="/">OPEN4BUSINESS</a></li>
     <li>/</li>
     <li class="current">
-      <span>As Minhas Lojas</span>
+      <span>{{ 'app.menus.my_locations' | translate }}</span>
     </li>
   </ul>
 
   <div class="row filters-section">
-    <div class="col-lg-12 text">
-      Apoiemos os negócios locais e a economia do país.<br />
-      Podemos querer parar o virus, não podemos parar o país.
-    </div>
+    <div class="col-lg-12 text" [innerHtml]="'sections.businesses.locations.list.subtitle' | translate"></div>
   </div>
 
   <div>
@@ -28,24 +25,27 @@
           </div>
           <div class="col-xs-12 col-sm-auto input-ct">
             <button class="btn btn-outline-secondary w-100" (click)="editStore(null)">
-              <i class="fa fa-plus"></i>Adicionar</button>
+              <i class="fa fa-plus"></i>{{'actions.add' | translate}}</button>
           </div>
           <div class="col-xs-12 col-sm-auto input-ct">
-            <button *ngIf="companyTypeBig" class="btn btn-outline-secondary w-100" routerLink="/businesses/locations/new">
-              <i class="fa fa-upload"></i>Importar</button>
+            <button *ngIf="companyTypeBig" class="btn btn-outline-secondary w-100"
+              routerLink="/businesses/locations/new">
+              <i class="fa fa-upload"></i>{{'actions.import' | translate}}</button>
           </div>
           <div class="col-xs-12 col-sm-auto input-ct">
             <button class="btn btn-outline-secondary w-100" routerLink="/businesses/locations/batches">
-              <i class="fa fa-paper-plane"></i>Submissões</button>
+              <i class="fa fa-paper-plane"></i>{{'app.menus.batches' | translate}}</button>
           </div>
           <div class="col-xs-12 col-sm-auto input-ct">
             <a href="{{exportUrl}}{{exportSearch}}">
-              <button class="btn btn-outline-secondary w-100" type="button"><i class="fa fa-download"></i>Exportar</button>
+              <button class="btn btn-outline-secondary w-100" type="button"><i
+                  class="fa fa-download"></i>{{'actions.export' | translate}}</button>
             </a>
           </div>
         </div>
 
-        <h5 *ngIf="datasets.batches.length > 0">Lojas à espera de aprovação</h5>
+        <h5 *ngIf="datasets.batches.length > 0">
+          {{'sections.businesses.locations.list.locations_waiting_for_approval' | translate}}</h5>
 
         <div class="row" *ngIf="datasets.batches.length > 0">
           <div class="col">
@@ -63,59 +63,59 @@
     <div class="kt-portlet__body">
       <div class="row">
         <div class="col-4">
-          <dt>Status</dt>
-          <dd>{{batch.status}}</dd>
-        </div>
-
-        <div class="col-4">
-          <dt>Nome</dt>
+          <dt>{{'labels.name' | translate}}</dt>
           <dd>{{batch.personName}}</dd>
         </div>
 
         <div class="col-4">
-          <dt>Email</dt>
+          <dt>{{'labels.email' | translate}}</dt>
           <dd>{{batch.personEmail}}</dd>
         </div>
 
         <div class="col-4">
-          <dt>Telefone</dt>
+          <dt>{{'labels.phone' | translate}}</dt>
           <dd>{{batch.personPhone}}</dd>
         </div>
 
         <div class="col-4">
-          <dt>Atualizado em</dt>
+          <dt>{{'labels.updated_at' | translate}}</dt>
           <dd>{{batch.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</dd>
         </div>
 
         <div class="col-4">
-          <dt>Total de Lojas</dt>
+          <dt>{{'labels.total_locations' | translate}}</dt>
           <dd>{{batch.stats.total}}</dd>
         </div>
 
         <div class="col-4">
-          <dt>Lojas Adicionadas</dt>
+          <dt>{{'labels.added_locations' | translate}}</dt>
           <dd>{{batch.stats.added}}</dd>
         </div>
-        
+
         <div class="col-4">
-          <dt>Lojas Atualizadas</dt>
+          <dt>{{'labels.updated_locations' | translate}}</dt>
           <dd>{{batch.stats.updated}}</dd>
         </div>
 
         <div class="col-4">
-          <dt>Lojas Ignoradas</dt>
+          <dt>{{'labels.ignored_locations' | translate}}</dt>
           <dd>{{batch.stats.ignored}}</dd>
+        </div>
+
+        <div class="col-lg-4">
+          <dt>{{ 'labels.updated_at' | translate }}</dt>
+          <dd>{{batch.updatedAt*1000 | amDateFormat: 'YYYY-MM-DD HH:mm:ss' }}</dd>
         </div>
 
         <div class="col-lg-12 input-ct">
           <button class="btn btn-outline-secondary" (click)="cancelBatch()">
-            <i class="fa fa-window-close"></i>Cancelar</button>
+            <i class="fa fa-window-close"></i>{{'actions.cancel' | translate}}</button>
           &nbsp;
           <button class="btn btn-outline-secondary" (click)="submitBatch(batch.batchId, false)">
-            <i class="fa fa-trash"></i>Descartar</button>
+            <i class="fa fa-trash"></i>{{'actions.discard' | translate}}</button>
           &nbsp;
           <button class="btn btn-primary" (click)="submitBatch(batch.batchId, true)">
-            <i class="fa fa-paper-plane"></i>Submeter</button>
+            <i class="fa fa-paper-plane"></i>{{'actions.submit' | translate}}</button>
         </div>
       </div>
     </div>
@@ -129,80 +129,80 @@
         <div class="form-group row">
           <div class="col-lg-3 input-ct">
             <app-catalog-form-input id="edit-company" [formControlField]="ef.company" formControlName="company"
-              type="text" label="Empresa" [required]="true"></app-catalog-form-input>
+              type="text" [label]="'labels.company' | translate" [required]="true"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
-            <app-catalog-form-input [formControlField]="ef.store" formControlName="store" type="text" label="Loja"
-              [required]="true"></app-catalog-form-input>
+            <app-catalog-form-input [formControlField]="ef.store" formControlName="store" type="text"
+              [label]="'labels.location' | translate" [required]="true"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
-            <app-catalog-form-input [formControlField]="ef.address" formControlName="address" type="text" label="Morada"
-              [required]="false"></app-catalog-form-input>
+            <app-catalog-form-input [formControlField]="ef.address" formControlName="address" type="text"
+              [label]="'labels.address' | translate" [required]="false"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-input [formControlField]="ef.fregesia" formControlName="fregesia" type="text"
-              label="Freguesia" [required]="false"></app-catalog-form-input>
+              [label]="'labels.parish' | translate" [required]="false"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-input [formControlField]="ef.concelho" formControlName="concelho" type="text"
-              label="Concelho" [required]="false"></app-catalog-form-input>
+              [label]="'labels.council' | translate" [required]="false"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-input [formControlField]="ef.district" formControlName="district" type="text"
-              label="Distrito" [required]="false"></app-catalog-form-input>
+              [label]="'labels.district' | translate" [required]="false"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-input [formControlField]="ef.zipCode" formControlName="zipCode" type="text"
-              label="Código Postal" [required]="false"></app-catalog-form-input>
+              [label]="'labels.zipcode' | translate" [required]="false"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
-            <app-catalog-form-input [formControlField]="ef.phone" formControlName="phone" type="text" label="Telefone"
-              [required]="false"></app-catalog-form-input>
+            <app-catalog-form-input [formControlField]="ef.phone" formControlName="phone" type="text"
+              [label]="'labels.phone' | translate" [required]="false"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-input [formControlField]="ef.latitude" formControlName="latitude" type="text"
-              label="Latitude" [required]="true"></app-catalog-form-input>
+              [label]="'labels.latitude' | translate" [required]="true"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-input [formControlField]="ef.longitude" formControlName="longitude" type="text"
-              label="Longitude" [required]="true"></app-catalog-form-input>
+              [label]="'labels.longitude' | translate" [required]="true"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
-            <app-catalog-form-input [formControlField]="ef.sector" formControlName="sector" type="text" label="Sector"
-              [required]="false"></app-catalog-form-input>
+            <app-catalog-form-input [formControlField]="ef.sector" formControlName="sector" type="text"
+              [label]="'labels.sector' | translate" [required]="false"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-select [formControlField]="ef.byAppointment" formControlName="byAppointment"
-              label="Por Marcação" [required]="false" bindLabel="name" bindValue="id"
+              [label]="'labels.by_appointment' | translate" [required]="false" bindLabel="name" bindValue="id"
               [items]="[{id:'Sim', name:'Sim'}, {id:'Não', name:'Não'}]"></app-catalog-form-select>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-input [formControlField]="ef.contactForSchedule" formControlName="contactForSchedule"
-              type="text" label="Contato para Agendamento"></app-catalog-form-input>
+              type="text" [label]="'labels.contact_for_schedule' | translate"></app-catalog-form-input>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-select [formControlField]="ef.typeOfService" formControlName="typeOfService"
-              label="Tipo de Serviço" [required]="false" bindLabel="name" bindValue="id"
+              [label]="'labels.type_of_service' | translate" [required]="false" bindLabel="name" bindValue="id"
               [items]="[{id:'take-away', name:'take-away'}, {id:'entregas', name:'entregas'}, {id:'outro', name:'outro'}]">
             </app-catalog-form-select>
           </div>
 
           <!-- Schedule 1 -->
           <div class="col-lg-12 input-ct separator">
-            <h5>Horário 1</h5>
+            <h5>{{'dictionary.schedule' | translate}} 1</h5>
           </div>
 
           <div class="col-lg-3">
@@ -213,7 +213,7 @@
                 </app-catalog-form-select>
               </div>
               <div class="col-lg-2 input-ct" style="text-align: center; margin-top: 15px">
-                às
+                {{'dictionary.from_to_union' | translate}}
               </div>
               <div class="col-lg-5 input-ct">
                 <app-catalog-form-select [formControlField]="ef.schedule1EndHour" formControlName="schedule1EndHour"
@@ -222,10 +222,11 @@
               </div>
             </div>
           </div>
-          
+
           <div class="col-lg-9 input-ct additional-spacing" style="margin-top: 15px">
             <label *ngFor="let day of datasets.daysOfWeek" class="kt-checkbox kt-checkbox--solid mb-0">
-              <input type="checkbox" id="schedule1DowChoices-{{day}}" [value]="day" (change)="onCheckboxChange($event, 'schedule1DowChoices')">
+              <input type="checkbox" id="schedule1DowChoices-{{day}}" [value]="day"
+                (change)="onCheckboxChange($event, 'schedule1DowChoices')">
               <span></span>
               <label class="mb-0">{{day}}</label>
             </label>
@@ -233,14 +234,14 @@
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-select [formControlField]="ef.schedule1Type" formControlName="schedule1Type"
-              label="Tipo de Horário" [required]="false" bindLabel="name" bindValue="id"
+              [label]="'labels.type_of_schedule' | translate" [required]="false" bindLabel="name" bindValue="id"
               [items]="[{id:'Forças de Segurança / Protecção Civil', name:'Forças de Segurança / Protecção Civil'}, {id:'Idosos', name:'Idosos'}, {id:'Público em Geral', name:'Público em Geral'}]">
             </app-catalog-form-select>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-select [formControlField]="ef.schedule1Period" formControlName="schedule1Period"
-              label="Periodo Horário" [required]="false" bindLabel="name" bindValue="id"
+              [label]="'labels.schedule_period' | translate" [required]="false" bindLabel="name" bindValue="id"
               [items]="[{id:'manhã', name:'manhã'}, {id:'tarde', name:'tarde'}, {id:'dia completo', name:'dia completo'}]">
             </app-catalog-form-select>
           </div>
@@ -248,10 +249,10 @@
 
           <!-- Schedule 2 -->
           <div class="col-lg-12 input-ct separator">
-            <h5>Horário 2</h5>
+            <h5>{{'dictionary.schedule' | translate}} 2</h5>
           </div>
 
-          <div class="col-lg-3" >
+          <div class="col-lg-3">
             <div class="row">
               <div class="col-lg-5 input-ct">
                 <app-catalog-form-select [formControlField]="ef.schedule2StartHour" formControlName="schedule2StartHour"
@@ -259,7 +260,7 @@
                 </app-catalog-form-select>
               </div>
               <div class="col-lg-2 input-ct" style="text-align: center; margin-top: 15px">
-                às
+                {{'dictionary.from_to_union' | translate}}
               </div>
               <div class="col-lg-5 input-ct">
                 <app-catalog-form-select [formControlField]="ef.schedule2EndHour" formControlName="schedule2EndHour"
@@ -268,10 +269,11 @@
               </div>
             </div>
           </div>
-          
+
           <div class="col-lg-9 input-ct additional-spacing" style="margin-top: 15px">
             <label *ngFor="let day of datasets.daysOfWeek" class="kt-checkbox kt-checkbox--solid mb-0">
-              <input type="checkbox" id="schedule2DowChoices-{{day}}" [value]="day" (change)="onCheckboxChange($event, 'schedule2DowChoices')">
+              <input type="checkbox" id="schedule2DowChoices-{{day}}" [value]="day"
+                (change)="onCheckboxChange($event, 'schedule2DowChoices')">
               <span></span>
               <label class="mb-0">{{day}}</label>
             </label>
@@ -279,21 +281,21 @@
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-select [formControlField]="ef.schedule2Type" formControlName="schedule2Type"
-              label="Tipo de Horário" [required]="false" bindLabel="name" bindValue="id"
+              [label]="'labels.type_of_schedule' | translate" [required]="false" bindLabel="name" bindValue="id"
               [items]="[{id:'Forças de Segurança / Protecção Civil', name:'Forças de Segurança / Protecção Civil'}, {id:'Idosos', name:'Idosos'}, {id:'Público em Geral', name:'Público em Geral'}]">
             </app-catalog-form-select>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-select [formControlField]="ef.schedule2Period" formControlName="schedule2Period"
-              label="Periodo Horário" [required]="false" bindLabel="name" bindValue="id"
+              [label]="'labels.schedule_period' | translate" [required]="false" bindLabel="name" bindValue="id"
               [items]="[{id:'manhã', name:'manhã'}, {id:'tarde', name:'tarde'}, {id:'dia completo', name:'dia completo'}]">
             </app-catalog-form-select>
           </div>
 
           <!-- Schedule 3 -->
           <div class="col-lg-12 input-ct separator">
-            <h5>Horário 3</h5>
+            <h5>{{'dictionary.schedule' | translate}} 3</h5>
           </div>
 
           <div class="col-lg-3">
@@ -304,7 +306,7 @@
                 </app-catalog-form-select>
               </div>
               <div class="col-lg-2 input-ct" style="text-align: center; margin-top: 15px">
-                às
+                {{'dictionary.from_to_union' | translate}}
               </div>
               <div class="col-lg-5 input-ct">
                 <app-catalog-form-select [formControlField]="ef.schedule3EndHour" formControlName="schedule3EndHour"
@@ -316,7 +318,8 @@
 
           <div class="col-lg-9 input-ct additional-spacing" style="margin-top: 15px">
             <label *ngFor="let day of datasets.daysOfWeek" class="kt-checkbox kt-checkbox--solid mb-0">
-              <input type="checkbox" id="schedule3DowChoices-{{day}}" [value]="day" (change)="onCheckboxChange($event, 'schedule3DowChoices')">
+              <input type="checkbox" id="schedule3DowChoices-{{day}}" [value]="day"
+                (change)="onCheckboxChange($event, 'schedule3DowChoices')">
               <span></span>
               <label class="mb-0">{{day}}</label>
             </label>
@@ -324,32 +327,33 @@
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-select [formControlField]="ef.schedule3Type" formControlName="schedule3Type"
-              label="Tipo de Horário" [required]="false" bindLabel="name" bindValue="id"
+              [label]="'labels.type_of_schedule' | translate" [required]="false" bindLabel="name" bindValue="id"
               [items]="[{id:'Forças de Segurança / Protecção Civil', name:'Forças de Segurança / Protecção Civil'}, {id:'Idosos', name:'Idosos'}, {id:'Público em Geral', name:'Público em Geral'}]">
             </app-catalog-form-select>
           </div>
 
           <div class="col-lg-3 input-ct">
             <app-catalog-form-select [formControlField]="ef.schedule3Period" formControlName="schedule3Period"
-              label="Periodo Horário" [required]="false" bindLabel="name" bindValue="id"
+              [label]="'labels.schedule_period' | translate" [required]="false" bindLabel="name" bindValue="id"
               [items]="[{id:'manhã', name:'manhã'}, {id:'tarde', name:'tarde'}, {id:'dia completo', name:'dia completo'}]">
             </app-catalog-form-select>
           </div>
 
           <div class="col-lg-12 input-ct separator">
             <app-catalog-form-textarea [formControlField]="ef.obs" formControlName="obs" type="text"
-              label="Informação Adicional"></app-catalog-form-textarea>
+              [label]="'labels.aditional_info' | translate"></app-catalog-form-textarea>
           </div>
 
           <div class="col-lg-3 input-ct">
-            <app-catalog-form-checkbox [formControlField]="ef.isOpen" formControlName="isOpen" label="Aberto">
+            <app-catalog-form-checkbox [formControlField]="ef.isOpen" formControlName="isOpen"
+              [label]="'status.OPEN' | translate">
             </app-catalog-form-checkbox>
           </div>
 
           <div class="col-lg-12 input-ct separator">
-            <button class="btn btn-outline-secondary" type="button" (click)="discardStoreChanges()">Cancel</button>
+            <button class="btn btn-outline-secondary" type="button" (click)="discardStoreChanges()">{{'actions.cancel' | translate}}</button>
             &nbsp;
-            <button class="btn btn-primary" type="submit">Save</button>
+            <button class="btn btn-primary" type="submit">{{'actions.save' | translate}}</button>
           </div>
         </div>
       </div>
@@ -358,7 +362,7 @@
 
   <div class="row">
     <div class="col-auto mr-auto">
-      <p class="counter"><strong>{{total}}</strong> Lojas</p>
+      <p class="counter"><strong>{{total}}</strong> {{'labels.locations' | translate}}</p>
     </div>
 
     <div class="col-auto" *ngIf="total > 0">
@@ -389,11 +393,11 @@
       </div>
       <div _ngcontent-cqf-c174="" class="kt-portlet__head-label">
         <h3 _ngcontent-cqf-c174="" class="kt-portlet__head-title title-date">
-          <span *ngIf="!location.isActive"><span class="text-warning font-weight-bold">&nbsp;PENDENTE</span></span>
+          <span *ngIf="!location.isActive"><span class="text-warning font-weight-bold text-uppercase">&nbsp;{{'status.PENDING' | translate}}</span></span>
           <span *ngIf="location.isActive && location.isOpen"><span
-              class="text-success font-weight-bold">&nbsp;ABERTO</span></span>
+              class="text-success font-weight-bold text-uppercase">&nbsp;{{'status.OPEN' | translate}}</span></span>
           <span *ngIf="location.isActive && !location.isOpen"><span
-              class="text-danger font-weight-bold">&nbsp;FECHADO</span></span>
+              class="text-danger font-weight-bold text-uppercase">&nbsp;{{'status.CLOSED' | translate}}</span></span>
         </h3>
       </div>
     </div>
@@ -403,18 +407,18 @@
           <h4>{{location.store}}</h4>
           <p class="second-line">{{location.locationId}}</p>
           <p class="">{{location.sector}}</p>
-          <p>Telf.: {{location.phone}}</p>
+          <p>{{'labels.phone_short' | translate}}: {{location.phone}}</p>
           <p class="separator"><a
               href="https://www.google.com/maps/search/?api=1&query={{location.latitude}},{{location.longitude}}"
               target="_blank" class="link">{{location.latitude}},&nbsp;{{location.longitude}}</a></p>
         </div>
         <div class="col-lg-3">
-          <h5>Morada</h5>
+          <h5>{{'labels.address' | translate}}</h5>
           <p>{{location.address}}</p>
           <p>{{location.zipCode}} {{location.parish}}</p>
         </div>
         <div class="col-lg-3">
-          <h5>Horário de Funcionamento</h5>
+          <h5>{{'labels.working_schedule' | translate}}</h5>
           <div class="row" *ngFor="let number of [1,2,3]">
             <div class="col-5">
               <p>{{ location['schedule' + number + 'DowFormatted'] }}</p>
@@ -425,26 +429,26 @@
           </div>
         </div>
         <div class="col-lg-3">
-          <h5>Entregas</h5>
+          <h5>{{'labels.delivery' | translate}}</h5>
           <p>{{location.typeOfService}}</p>
-          <h5 class="separator">Por Marcação?</h5>
+          <h5 class="separator">{{'labels.by_appointment' | translate}}?</h5>
           <p>{{location.byAppointment}}.&nbsp;<span
-              *ngIf="location.contactForSchedule">Contaco:&nbsp;</span>{{location.contactForSchedule}}</p>
+              *ngIf="location.contactForSchedule">{{'labels.contact' | translate}}:&nbsp;</span>{{location.contactForSchedule}}</p>
         </div>
         <div class="col-lg-12 separator">
-          <h5>Observações</h5>
+          <h5>{{'labels.obs' | translate}}</h5>
           <p>{{location.obs}}</p>
         </div>
       </div>
       <div class="row justify-content-between go-to-map">
         <div class="col">
-          <a href="javascript:void(0);" (click)="editStore(location)"><i class="fa fa-edit"></i>&nbsp;Editar</a>
+          <a href="javascript:void(0);" (click)="editStore(location)"><i class="fa fa-edit"></i>&nbsp;{{'actions.edit' | translate}}</a>
           &nbsp;&nbsp;
           <a target="_blank" [routerLink]="['/']" [queryParams]="{ search: location.store}"><i
-              class="fa fa-map"></i>&nbsp;Ver no Mapa</a>
+              class="fa fa-map"></i>&nbsp;{{'actions.view_on_map' | translate}}</a>
           &nbsp;&nbsp;
           <a href="javascript:void(0);" class="text-danger" (click)="deleteStore(location)"><i
-              class="fa fa-trash"></i>&nbsp;Apagar</a>
+              class="fa fa-trash"></i>&nbsp;{{'actions.delete' | translate}}</a>
         </div>
         <div class="col audit">
           <span title="{{location.audit.personEmail}}">{{location.audit.personName}}<span
@@ -456,7 +460,7 @@
 
   <div class="row" *ngIf="total > 10">
     <div class="col-auto mr-auto">
-      <p class="counter"><strong>{{total}}</strong> Lojas</p>
+      <p class="counter"><strong>{{total}}</strong> {{'labels.locations' | translate}}</p>
     </div>
 
     <div class="col-auto">
