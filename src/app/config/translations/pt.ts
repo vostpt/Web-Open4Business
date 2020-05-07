@@ -138,6 +138,7 @@ export const locale = {
       alerts: {
         are_you_sure_remove_file: 'Tem a certeza que deseja remover o ficheiro?',
         are_you_sure_deactivate_user: 'Tem a certeza que deseja desactivar o utilizador "{{user}}"?',
+        are_you_sure_delete_location: 'Tem a certeza que deseja apagar a loja "{{store}}"?',
         are_you_sure_delete_user: 'Tem a certeza que deseja remover o utilizador "{{user}}"?',
       },
       errors: {
@@ -152,17 +153,23 @@ export const locale = {
         password_mismatch: 'Passwords não coincidem',
         unknown_error: 'Ocorreu um erro ao efetuar a operaçao solicitada. Tente mais tarde ou contacte os nossos serviços de apoio.',
         unable_to_update: 'Não foi possível atualizar',
+        unable_to_update_location: 'Não foi possível atualizar a Loja.',
         unable_to_update_password: 'Não foi possível atualizar a sua password. Verifique se a password atual está correcta.',
         unable_to_confirm_user: 'Não foi possível confirmar o utilizador.',
         unable_to_deactivate_user: 'Não foi possível desactivar o utilizador.',
+        unable_to_delete_location: 'Não foi possível apagar a Loja "{{store}}".',
         unable_to_delete_user: 'Não foi possível apagar o utilizador.',
+        unable_to_submit_batch: 'Não foi possível submeter o batch selecionado.',
       },
       informations: {
         csv_upload: 'Pressione ou arraste um ficheiro .csv',
         press_or_drag_marker_file: 'Pressione ou arraste um ficheiro .png com 41x51',
       },
       success: {
+        batch_successfully_submitted: 'Batch submetido com sucesso.',
         information_successfully_sent: 'A informação foi enviada com sucesso',
+        location_successfully_deleted: 'Loja apagada com sucesso.',
+        location_successfully_updated: 'Loja atualizada com sucesso.',
         marker_successfully_updated: 'Marcador atualizado com sucesso',
         password_successfully_updated: 'Password atualizada com sucesso',
         user_successfully_confirmed: 'Utilizador "{{user}}" confimado com sucesso!'
