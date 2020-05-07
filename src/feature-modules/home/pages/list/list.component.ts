@@ -143,66 +143,60 @@ export class ListComponent extends BasePageComponent implements OnInit, AfterVie
     if (this.sector) {
       filter = {
         ...filter,
-        ...{
-          sector: this.sector
-        }
+        ...{ sector: this.sector }
       };
     }
 
     if (this.district) {
       filter = {
         ...filter,
-        ...{
-          district: this.district
-        }
+        ...{ district: this.district }
       };
     }
 
     this.subscriptions.push(
-      this.mapService.getLocations(50, (this.page - 1) * 50, filter)
-        .subscribe(
-          result => {
-            // Locations call!
-            const resultData = result;
-            this.datasets.locations =
-              resultData['data'].locations.map(item => {
-                for (let i = 1; i <= 3; i++) {
-                  if (item[`schedule${i}Dow`]) {
-                    item[`schedule${i}DowFormatted`] =
-                      this.parserService.formatWeekdaysListProperty(
-                        item[`schedule${i}Dow`]);
-                    item[`schedule${i}Formatted`] =
-                      this.parserService.formatScheduleProperty(
-                        item[`schedule${i}`]);
-                  }
+      this.mapService.getLocations(50, (this.page - 1) * 50, filter).subscribe(
+        result => {
+          // Locations call!
+          const resultData = result;
+          this.datasets.locations =
+            resultData['data'].locations.map(item => {
+              for (let i = 1; i <= 3; i++) {
+                if (item[`schedule${i}Dow`]) {
+                  item[`schedule${i}DowFormatted`] =
+                    this.parserService.formatWeekdaysListProperty(
+                      item[`schedule${i}Dow`]);
+                  item[`schedule${i}Formatted`] =
+                    this.parserService.formatScheduleProperty(
+                      item[`schedule${i}`]);
                 }
+              }
 
-                return item;
-              });
+              return item;
+            });
 
-            this.total = parseInt(resultData['data'].total, 10);
-            this.pages = Math.ceil(this.total / 50);
-            const offset = parseInt(resultData['data'].offset, 10);
-            this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
-            this.contentReady = true;
+          this.total = parseInt(resultData['data'].total, 10);
+          this.pages = Math.ceil(this.total / 50);
+          const offset = parseInt(resultData['data'].offset, 10);
+          this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
+          this.contentReady = true;
 
-            if (this.districtList.length === 0 &&
-              resultData['data'].districts) {
-              this.districtList =
-                resultData['data'].districts.map((d) => {
-                  return {
-                    desc: `${d.district} (${d.count})`,
-                    id: d.district
-                  };
-                });
-            }
+          if (this.districtList.length === 0 &&
+            resultData['data'].districts) {
+            this.districtList = resultData['data'].districts.map((d) => {
+              return {
+                desc: `${d.district} (${d.count})`,
+                id: d.district
+              };
+            });
+          }
 
-            this.loader.hide('pageLoader');
-          },
-          (error) => {
-            this.loader.hide('pageLoader');
-            this.logger.error('Error fetching map markers', error);
-          }));
+          this.loader.hide('pageLoader');
+        },
+        (error) => {
+          this.loader.hide('pageLoader');
+          this.logger.error('Error fetching map markers', error);
+        }));
   }
 
   onSearch() {
@@ -210,4 +204,5 @@ export class ListComponent extends BasePageComponent implements OnInit, AfterVie
     this.page = 1;
     this.getLocations();
   }
+
 }

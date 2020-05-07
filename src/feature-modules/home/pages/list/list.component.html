@@ -70,18 +70,18 @@
         <div class="col-lg-3">
           <h4>{{location.store}}</h4>
           <p class="">{{location.sector}}<span *ngIf="location.council || location.district">,&nbsp;{{location.council || location.district}}</span></p>
-          <p>Telf.: {{location.phone}}</p>
+          <p>{{ 'labels.phone_short' | translate }}: {{location.phone}}</p>
           <p class="separator"><a
               href="https://www.google.com/maps/search/?api=1&query={{location.latitude}},{{location.longitude}}"
               target="_blank" class="link">{{location.latitude}},&nbsp;{{location.longitude}}</a></p>
         </div>
         <div class="col-lg-3">
-          <h5>Morada</h5>
+          <h5>{{ 'labels.address' | translate }}</h5>
           <p>{{location.address}}</p>
           <p>{{location.zipCode}} {{location.parish}}</p>
         </div>
         <div class="col-lg-3">
-          <h5>Horário de Funcionamento</h5>
+          <h5>{{ 'labels.working_schedule' | translate }}</h5>
           <div class="row" *ngFor="let number of [1,2,3]">
             <div class="col-5">
               <p>{{ location['schedule' + number + 'DowFormatted'] }}</p>
@@ -92,21 +92,21 @@
           </div>
         </div>
         <div class="col-lg-3">
-          <h5>Entregas</h5>
+          <h5>{{ 'labels.delivery' | translate }}</h5>
           <p>{{location.typeOfService}}</p>
-          <h5 class="separator">Por Marcação?</h5>
+          <h5 class="separator">{{ 'labels.by_appointment' | translate }}?</h5>
           <p>{{location.byAppointment}}.&nbsp;<span
-              *ngIf="location.contactForSchedule">Contaco:&nbsp;</span>{{location.contactForSchedule}}</p>
+              *ngIf="location.contactForSchedule">{{ 'labels.contact' | translate }}:&nbsp;</span>{{location.contactForSchedule}}</p>
         </div>
         <div class="col-lg-12 separator">
-          <h5>Observações</h5>
+          <h5>{{ 'labels.obs' | translate }}</h5>
           <p>{{location.obs}}</p>
         </div>
       </div>
       <div class="row justify-content-between go-to-map">
         <div class="col">
           <a target="_blank" [routerLink]="['/']" [queryParams]="{ search: location.store}"><i
-              class="fa fa-map"></i>&nbsp;Ver no Mapa</a>
+              class="fa fa-map"></i>&nbsp;{{ 'actions.view_on_map' | translate }}</a>
           &nbsp;&nbsp;
         </div>
         <div class="col audit">
@@ -119,7 +119,7 @@
 
   <div class="row" *ngIf="total > 10">
     <div class="col-auto mr-auto">
-      <p class="counter"><strong>{{total}}</strong> Lojas</p>
+      <p class="counter"><strong>{{total}}</strong> {{ 'labels.locations' | translate }}</p>
     </div>
 
     <div class="col-auto">
