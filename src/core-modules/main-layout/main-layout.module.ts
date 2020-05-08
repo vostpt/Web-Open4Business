@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { MatDialogModule } from '@angular/material/dialog';
 import { NgbDropdownModule, NgbProgressbarModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
 import { LoadingBarModule } from '@ngx-loading-bar/core';
 import { PerfectScrollbarModule, PerfectScrollbarConfigInterface, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
@@ -20,6 +21,7 @@ import { UserProfileComponent } from './components/header/topbar/user-profile/us
 import { AsideLeftComponent } from './components/aside-left/aside-left.component';
 import { AsideRightComponent } from './components/aside-right/aside-right.component';
 import { PageFooterComponent } from './components/page-footer/page-footer.component';
+import { ModalComponent } from './components/modal/modal.component';
 import { ScrollTopComponent } from './components/scroll-top/scroll-top.component';
 
 // Services.
@@ -61,6 +63,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AsideLeftComponent,
     AsideRightComponent,
     PageFooterComponent,
+    ModalComponent,
     ScrollTopComponent,
 
     // Directives.
@@ -78,6 +81,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RouterModule,
 
     TranslateModule.forChild(),
+    MatDialogModule,
     NgbDropdownModule,
     NgbProgressbarModule,
     NgbTooltipModule,
@@ -90,7 +94,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     RouterModule,
 
     TranslateModule,
-
+    MatDialogModule,
     NgbDropdownModule,
     NgbProgressbarModule,
     NgbTooltipModule,
@@ -108,6 +112,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     AsideLeftComponent,
     AsideRightComponent,
     PageFooterComponent,
+    ModalComponent,
     ScrollTopComponent,
 
     // Directives.

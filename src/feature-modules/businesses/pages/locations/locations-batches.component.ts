@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ContentChild, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {BusinessesService} from '@businesses-feature-module/services/businesses.service';
-import {SelectComponent} from '@core-modules/catalog/modules/forms/components/select/select.component';
-import {BasePageComponent} from '@core-modules/main-layout';
+import { AfterViewInit, Component, ContentChild, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { BasePageComponent } from '@core-modules/main-layout';
+
+import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
 
 @Component({
   selector: 'app-businesses-locations-batches',
@@ -11,12 +11,12 @@ import {BasePageComponent} from '@core-modules/main-layout';
   styleUrls: ['./locations-batches.component.scss']
 })
 export class LocationsBatchesComponent extends BasePageComponent implements
-    OnInit, AfterViewInit, OnDestroy {
+  OnInit, AfterViewInit, OnDestroy {
   public statusList = [
-    {id: 'WAITING_FOR_APPROVAL', desc: ''},
-    {id: 'APPROVED', desc: ''},
-    {id: 'REJECTED', desc: ''},
-    {id: 'DISCARDED', desc: ''},
+    { id: 'WAITING_FOR_APPROVAL', desc: '' },
+    { id: 'APPROVED', desc: '' },
+    { id: 'REJECTED', desc: '' },
+    { id: 'DISCARDED', desc: '' },
   ];
 
   public statusListDesc = [];
@@ -29,11 +29,11 @@ export class LocationsBatchesComponent extends BasePageComponent implements
   }
 
   contentReady = false;
-  datasets = {batches: []};
+  datasets = { batches: [] };
 
   constructor(
-      private readonly formBuilder: FormBuilder,
-      private readonly businessesService: BusinessesService) {
+    private readonly formBuilder: FormBuilder,
+    private readonly businessesService: BusinessesService) {
     super();
 
     this.statusList.forEach((s) => {
@@ -43,7 +43,7 @@ export class LocationsBatchesComponent extends BasePageComponent implements
   }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({status: [null, null]});
+    this.form = this.formBuilder.group({ status: [null, null] });
 
     this.form.get('status').valueChanges.subscribe(val => {
       this.status = val;
@@ -55,25 +55,25 @@ export class LocationsBatchesComponent extends BasePageComponent implements
     this.getBatches();
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   getBatches() {
     this.loader.show('pageLoader');
 
     this.subscriptions.push(
-        this.businessesService.getBatches(this.status)
-            .subscribe(
-                (result: {data: {batches: object[]}}) => {
-                  this.datasets.batches = result.data.batches;
+      this.businessesService.getBatches(this.status)
+        .subscribe(
+          (result: { data: { batches: object[] } }) => {
+            this.datasets.batches = result.data.batches;
 
-                  this.contentReady = true;
-                  this.loader.hide('pageLoader');
-                  document.getElementById('kt_scrolltop').click();
-                },
-                (error) => {
-                  this.loader.hide('pageLoader');
-                  this.logger.error('Error fetching batches', error);
-                }));
+            this.contentReady = true;
+            this.loader.hide('pageLoader');
+            document.getElementById('kt_scrolltop').click();
+          },
+          (error) => {
+            this.loader.hide('pageLoader');
+            this.logger.error('Error fetching batches', error);
+          }));
   }
 
   approveBatch(batch) {
@@ -85,19 +85,19 @@ export class LocationsBatchesComponent extends BasePageComponent implements
       };
 
       this.subscriptions.push(
-          this.businessesService.confirmLocations(data).subscribe(
-              (result: {data: {locations: object[]}}) => {
-                this.notification.success(this.translate(
-                  'messages.success.location_successfully_approved'));
+        this.businessesService.confirmLocations(data).subscribe(
+          (result: { data: { locations: object[] } }) => {
+            this.notification.success(this.translate(
+              'messages.success.location_successfully_approved'));
 
-                  this.getBatches();
-              },
-              (error) => {
-                this.loader.hide('pageLoader');
-                this.notification.error(this.translate(
-                  'messages.errors.unable_to_confirm_locations'));
-                this.logger.error('Error confirming locations', error);
-              }));
+            this.getBatches();
+          },
+          (error) => {
+            this.loader.hide('pageLoader');
+            this.notification.error(this.translate(
+              'messages.errors.unable_to_confirm_locations'));
+            this.logger.error('Error confirming locations', error);
+          }));
     } else {
       console.log('approveBatch: ignore');
     }

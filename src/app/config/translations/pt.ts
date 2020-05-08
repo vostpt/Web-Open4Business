@@ -108,6 +108,7 @@ export const locale = {
       access_to_menu: 'ACEDER AO MENU',
       approve: 'Aprovar',
       cancel: 'Cancelar',
+      choose_from_map: 'Escolher do mapa',
       confirm_account: 'Confirmar Conta',
       confirm_locations: 'Confirmar Lojas',
       deactivate_account: 'Desativar Conta',

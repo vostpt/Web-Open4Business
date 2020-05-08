@@ -1,5 +1,7 @@
 @import "./core-modules/main-layout/_assets/styles/style.angular.scss";
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
 // @import "./core-modules/main-layout/_assets/styles/custom/layout-customization.scss";
+
 
 // Custom classes.
 :root {
@@ -48,7 +50,25 @@ div.kt-content {
 }
 
 
+// Dialogs.
+.mat-dialog-actions {
+  justify-content: flex-end;
+  padding: 12px 0 18px 0 !important;
+
+  >* {
+    margin: 0.25rem;
+  }
+}
+
+
 // Mapbox overrides.
+.mapboxgl-marker {
+  background-image: url('assets/images/mapbox/pin.png');
+  width: 41px;
+  height: 51px;
+  cursor: pointer;
+}
+
 .mapboxgl-popup {
   transition: none;
 }

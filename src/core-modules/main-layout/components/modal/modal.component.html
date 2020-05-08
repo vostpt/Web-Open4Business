@@ -1,0 +1,12 @@
+<button class="close" mat-button mat-button-close (click)="dismiss()"><span aria-hidden="true">&times;</span></button>
+<h1 mat-dialog-title>
+  <ng-content select="[header]"></ng-content>
+</h1>
+
+<mat-dialog-content>
+  <ng-content select="[body]"></ng-content>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <ng-content select="[footer]"></ng-content>
+</mat-dialog-actions>

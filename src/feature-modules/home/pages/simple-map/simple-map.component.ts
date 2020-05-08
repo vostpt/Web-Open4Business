@@ -35,7 +35,8 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
     private readonly formBuilder: FormBuilder,
     private readonly formsService: FormsService,
     private readonly parserService: ParserService,
-    private readonly mapService: MapService, private route: ActivatedRoute
+    private readonly mapService: MapService,
+    private route: ActivatedRoute
   ) {
     super();
   }
@@ -302,9 +303,8 @@ export class SimpleMapComponent extends BasePageComponent implements OnInit, OnD
 
       const that = this;
       this.map.on('click', 'clusters', (e) => {
-        const cluster =
-          that.map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
-        console.log(cluster);
+        const cluster = that.map.queryRenderedFeatures(e.point, { layers: ['clusters'] });
+        // console.log(cluster);
         const coordinates = cluster[0].geometry['coordinates'];
         const currentZoom = that.map.getZoom();
 

@@ -1,0 +1,15 @@
+<app-layout-modal (dismissEvent)="onCancel()">
+
+  <ng-container header>{{ 'actions.choose_from_map' | translate }}</ng-container>
+
+  <ng-container body>
+    <div id="map-container"></div>
+  </ng-container>
+
+  <ng-container footer>
+    <button class="btn btn-outline-secondary" type="button" (click)="onCancel()">{{'actions.cancel' | translate}}</button>
+    &nbsp;
+    <button class="btn btn-primary" type="button" (click)="onSave()">{{'actions.save' | translate}}</button>
+  </ng-container>
+
+</app-layout-modal>
