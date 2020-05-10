@@ -390,8 +390,6 @@ export class LocationsListComponent extends BasePageComponent implements
               }
             });
           }
-
-          console.log('edit', this.ef[`schedule${i}DowChoices`].value);
         }
       }, 50);
     } else {
@@ -405,7 +403,6 @@ export class LocationsListComponent extends BasePageComponent implements
   }
 
   discardStoreChanges() {
-    console.log('discardStoreChanges');
     this.editing = false;
   }
 
@@ -429,9 +426,6 @@ export class LocationsListComponent extends BasePageComponent implements
     this.ef.schedule1Dow.setValue(
         this.datasets.daysOfWeek
             .map(day => {
-              console.log(
-                  this.ef.schedule1DowChoices.value.includes(day),
-                  this.ef.schedule1DowChoices.value, day);
               return (
                   this.ef.schedule1DowChoices.value.includes(day) ? day : null);
             })

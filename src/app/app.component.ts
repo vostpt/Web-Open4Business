@@ -32,7 +32,8 @@ export class AppComponent implements OnInit, OnDestroy {
       currLang = environment.defaultLanguage.toLowerCase();
     }
 
-    // this.translateService.setDefaultLang(environment.defaultLanguage.toLowerCase());
+    currLang = environment.defaultLanguage.toLowerCase();
+
     this.translateService.setDefaultLang(currLang);
     this.translateService.setTranslation(
         ptLanguage.lang, ptLanguage.data, true);

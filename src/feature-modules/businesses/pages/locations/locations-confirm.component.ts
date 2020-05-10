@@ -218,7 +218,6 @@ export class LocationsConfirmComponent extends BasePageComponent implements
   }
 
   save(confirm) {
-    console.log('save', confirm);
     const data = {
       email: this.batch.personEmail,
       batchId: this.batchId,
@@ -323,7 +322,6 @@ export class LocationsConfirmComponent extends BasePageComponent implements
   }
 
   discardStoreChanges() {
-    console.log('discardStoreChanges');
     this.editing = false;
   }
 
