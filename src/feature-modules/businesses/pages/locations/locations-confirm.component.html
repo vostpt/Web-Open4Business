@@ -366,6 +366,10 @@
       </div>
     </div>
     <div class="kt-portlet__body">
+      <div class="alert alert-warning" role="alert" *ngIf="!location.isLocationValid">
+        {{ 'messages.alerts.invalid_location' | translate }}
+      </div>
+      
       <div class="row custom-card">
         <div class="col-lg-3">
           <h4>{{location.store}}</h4>

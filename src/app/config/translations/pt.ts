@@ -149,6 +149,7 @@ export const locale = {
         are_you_sure_deactivate_user: 'Tem a certeza que deseja desactivar o utilizador "{{user}}"?',
         are_you_sure_delete_location: 'Tem a certeza que deseja apagar a loja "{{store}}"?',
         are_you_sure_delete_user: 'Tem a certeza que deseja remover o utilizador "{{user}}"?',
+        invalid_location: 'Esta loja não se encontra em território nacional.'
       },
       errors: {
         information_sent_has_conflicts: 'A informação enviada entrou em conflito com dados existentes. Por favor, experimente com outros dados.',

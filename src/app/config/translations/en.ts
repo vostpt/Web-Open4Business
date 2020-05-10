@@ -149,6 +149,7 @@ export const locale = {
         are_you_sure_deactivate_user: 'Are you you sure you want to deactivate "{{user}}"?',
         are_you_sure_delete_location: 'Are you sure you want to delete the shop "{{store}}"?',
         are_you_sure_delete_user: 'Are you sure you want to delete "{{user}}"?',
+        invalid_location: 'Store locations is invalid.'
       },
       errors: {
         information_sent_has_conflicts: 'The information you submitted is in conflict with information already in our system. Please try again.',

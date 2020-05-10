@@ -421,7 +421,7 @@
     </div>
     <div class="kt-portlet__body">
       <div class="alert alert-warning" role="alert" *ngIf="!location.isLocationValid">
-        Esta loja não se encontra em território nacional.
+        {{ 'messages.alerts.invalid_location' | translate }}
       </div>
 
       <div class="row custom-card">
