@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment, UrlModel } from '@core-modules/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class BusinessesService {
   private apiUrl = `${environment.apiUrl}`;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private translateService: TranslateService) {}
 
 
   getUser() {
@@ -99,4 +100,44 @@ export class BusinessesService {
 
     return this.http.delete(url.buildUrl());
   }
+
+  reverseGeoCoding(latitude: number, longitude: number) {
+    const url = new UrlModel('https://api.mapbox.com').setPath('/geocoding/v5/mapbox.places/:longitude,:latitude.json');
+
+    const qParams = {
+      access_token: environment.mapbox,
+      types: 'country'
+    };
+
+    const pParams = {
+      latitude,
+      longitude
+    };
+
+    url.setQueryParams(qParams);
+    url.setPathParams(pParams);
+
+    return this.http.get(url.buildUrl());
+  } 
+
+  geoCoding(search: string) {
+    const url = new UrlModel('https://api.mapbox.com').setPath('/geocoding/v5/mapbox.places/:search.json');
+
+    const qParams = {
+      access_token: environment.mapbox,
+      autocomplete: true,
+      language: this.translateService.currentLang || this.translateService.getDefaultLang(),
+      country: environment.country,
+      // type: 'address'
+    };
+
+    const pParams = {
+      search
+    };
+
+    url.setQueryParams(qParams);
+    url.setPathParams(pParams);
+
+    return this.http.get(url.buildUrl());
+  } 
 }

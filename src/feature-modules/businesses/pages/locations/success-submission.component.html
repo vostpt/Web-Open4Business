@@ -12,14 +12,17 @@
   </ul>
 </div>
 
-<div class="banner-section" *ngIf="showInformationBanner"
-  [ngClass]="{'bg-success': importResult.success, 'bg-warning': !importResult.success}">
-  <i class="fa fa-times close-icon" (click)="dismissInformationBanner()"></i>
-  <div class="container" [ngClass]="{'text-dark': !importResult.success}">
-    <p *ngIf="importResult.success" class="title">{{'sections.businesses.locations.import.success' | translate}}</p>
-    <p *ngIf="!importResult.success" class="title">{{'sections.businesses.locations.import.warning' | translate}}</p>
-    <p>{{'sections.businesses.locations.import.validation_info' | translate}}</p>
+<div class="container">
+  <div class="banner-section" *ngIf="showInformationBanner"
+    [ngClass]="{'bg-success': importResult.success, 'bg-warning': !importResult.success}">
+    <i class="fa fa-times close-icon" (click)="dismissInformationBanner()"></i>
+    <div class="container" [ngClass]="{'text-dark': !importResult.success}">
+      <p *ngIf="importResult.success" class="title">{{'sections.businesses.locations.import.success' | translate}}</p>
+      <p *ngIf="!importResult.success" class="title">{{'sections.businesses.locations.import.warning' | translate}}</p>
+      <p>{{'sections.businesses.locations.import.validation_info' | translate}}</p>
+    </div>
   </div>
+
 </div>
 
 <div class="container errors">
@@ -41,7 +44,11 @@
         </li>
       </ul>
 
-      <a class="" routerLink="/businesses/locations">{{'actions.goto_locations_list' | translate}}</a>
+      <br />
+      
+      <a class="" routerLink="/businesses/locations">
+        <button class="btn btn-primary">{{'actions.goto_locations_list' | translate}}</button>
+      </a>
     </div>
   </div>
 
@@ -58,13 +65,3 @@
 </div>
 
 <br />
-
-<div class="content-section">
-  <div class="container center-block">
-    <a href="/"><img class="logo" src="assets/images/logos/o4b.png"></a>
-
-    <h3 class="brand">#OPEN4BUSINESS</h3>
-
-    <button class="btn btn-primary btn-goto-list" routerLink="/businesses/locations">{{'actions.goto_locations_list' | translate}}</button>
-  </div>
-</div>

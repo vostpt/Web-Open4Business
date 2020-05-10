@@ -38,3 +38,26 @@
   font-size: 0.8rem;
   font-weight: lighter;
 }
+
+
+.input-ct {
+  margin-top: 5px;
+}
+
+.separator {
+  margin-top: 15px;
+  clear: both;
+}
+
+.pending-batch {
+  cursor: pointer;
+  padding: 10px;
+}
+
+p.counter {
+  line-height: 32px;
+}
+
+.additional-spacing > label{
+  margin-left: 10px;
+}

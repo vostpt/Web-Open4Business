@@ -6,6 +6,15 @@
   }
 }
 
+.lang-selector {
+  padding: 20px;
+  font-size: large;
+  font-weight: bolder;
+
+  a {
+    text-transform: uppercase;
+  }
+}
 
 .kt-quick-panel {
   background-color: var(--base-color-02);

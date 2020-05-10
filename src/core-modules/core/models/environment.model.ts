@@ -11,6 +11,7 @@ export class EnvironmentModel {
   apiUrl: string;
   mapbox: string;
   googleAnalytics: string;
+  country: string;
 }
 
 export const environment: EnvironmentModel = {
@@ -19,5 +20,6 @@ export const environment: EnvironmentModel = {
   defaultLanguage: window['__env'].defaultLanguage || 'pt',
   apiUrl: window['__env'].apiUrl,
   mapbox: window['__env'].mapbox,
-  googleAnalytics: window['__env'].googleAnalytics
+  googleAnalytics: window['__env'].googleAnalytics,
+  country: window['__env'].country
 };

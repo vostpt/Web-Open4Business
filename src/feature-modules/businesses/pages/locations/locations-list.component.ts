@@ -1,30 +1,29 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { forkJoin } from 'rxjs';
-import { MatDialog } from '@angular/material/dialog';
-
-import { environment } from '@core-modules/core';
-
-import { BasePageComponent } from '@core-modules/main-layout';
-import { CheckboxComponent } from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
-import { SelectComponent } from '@core-modules/catalog/modules/forms/components/select/select.component';
-import { ChooseCoordinatesFromMapModalComponent } from '@businesses-feature-module/modals/choose-coordinates-from-map-modal.component';
-
-import { BusinessesService } from '@businesses-feature-module/services/businesses.service';
-import { ParserService } from '@core-modules/core/services/parser.service';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators, FormArray} from '@angular/forms';
+import {MatDialog} from '@angular/material/dialog';
+import {ChooseCoordinatesFromMapModalComponent} from '@businesses-feature-module/modals/choose-coordinates-from-map-modal.component';
+import {BusinessesService} from '@businesses-feature-module/services/businesses.service';
+import {CheckboxComponent} from '@core-modules/catalog/modules/forms/components/checkbox/checkbox.component';
+import {SelectComponent} from '@core-modules/catalog/modules/forms/components/select/select.component';
+import {environment} from '@core-modules/core';
+import {ParserService} from '@core-modules/core/services/parser.service';
+import {BasePageComponent} from '@core-modules/main-layout';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-businesses-locations-list',
   templateUrl: './locations-list.component.html',
   styleUrls: ['./locations-list.component.scss']
 })
-export class LocationsListComponent extends BasePageComponent implements OnInit, AfterViewInit, OnDestroy {
-
+export class LocationsListComponent extends BasePageComponent implements
+    OnInit, AfterViewInit, OnDestroy {
   public editing = false;
   public total = 0;
   public pages = 1;
   public page = 1;
-  public exportUrl = `${environment.apiUrl}/businesses/v1/locations/export?token=${localStorage.getItem('token')}`;
+  public exportUrl =
+      `${environment.apiUrl}/businesses/v1/locations/export?token=${
+          localStorage.getItem('token')}`;
   public exportSearch = '';
   public batch: {
     batchId: string,
@@ -33,31 +32,36 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
     personEmail: string,
     personPhone: string,
     updatedAt: number,
-    stats: { total: number, added: number, updated: number, ignored: number }
+    stats: {total: number, added: number, updated: number, ignored: number}
   } = null;
+  public status: string;
+
+  public statusList = [
+    {id: 'PENDING', desc: ''}, {id: 'OPEN', desc: ''}, {id: 'CLOSED', desc: ''}
+  ];
 
   contentReady = false;
   datasets = {
-    user: { companyType: '' },
+    user: {companyType: ''},
     locations: [],
     batches: [],
     hourOfDays:
-      [
-        { id: '00:00' }, { id: '00:30' }, { id: '01:00' }, { id: '01:30' },
-        { id: '02:00' }, { id: '02:30' }, { id: '03:00' }, { id: '03:30' },
-        { id: '04:00' }, { id: '04:30' }, { id: '05:00' }, { id: '05:30' },
-        { id: '06:00' }, { id: '06:30' }, { id: '07:00' }, { id: '07:30' },
-        { id: '08:00' }, { id: '08:30' }, { id: '09:00' }, { id: '09:30' },
-        { id: '10:00' }, { id: '10:30' }, { id: '11:00' }, { id: '11:30' },
-        { id: '12:00' }, { id: '12:30' }, { id: '13:00' }, { id: '13:30' },
-        { id: '14:00' }, { id: '14:30' }, { id: '15:00' }, { id: '15:30' },
-        { id: '16:00' }, { id: '16:30' }, { id: '17:00' }, { id: '17:30' },
-        { id: '18:00' }, { id: '18:30' }, { id: '19:00' }, { id: '19:30' },
-        { id: '20:00' }, { id: '20:30' }, { id: '21:00' }, { id: '21:30' },
-        { id: '22:00' }, { id: '22:30' }, { id: '23:00' }, { id: '23:30' }
-      ],
+        [
+          {id: '00:00'}, {id: '00:30'}, {id: '01:00'}, {id: '01:30'},
+          {id: '02:00'}, {id: '02:30'}, {id: '03:00'}, {id: '03:30'},
+          {id: '04:00'}, {id: '04:30'}, {id: '05:00'}, {id: '05:30'},
+          {id: '06:00'}, {id: '06:30'}, {id: '07:00'}, {id: '07:30'},
+          {id: '08:00'}, {id: '08:30'}, {id: '09:00'}, {id: '09:30'},
+          {id: '10:00'}, {id: '10:30'}, {id: '11:00'}, {id: '11:30'},
+          {id: '12:00'}, {id: '12:30'}, {id: '13:00'}, {id: '13:30'},
+          {id: '14:00'}, {id: '14:30'}, {id: '15:00'}, {id: '15:30'},
+          {id: '16:00'}, {id: '16:30'}, {id: '17:00'}, {id: '17:30'},
+          {id: '18:00'}, {id: '18:30'}, {id: '19:00'}, {id: '19:30'},
+          {id: '20:00'}, {id: '20:30'}, {id: '21:00'}, {id: '21:30'},
+          {id: '22:00'}, {id: '22:30'}, {id: '23:00'}, {id: '23:30'}
+        ],
     daysOfWeek:
-      ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado', 'Domingo']
+        ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado', 'Domingo']
   };
 
   get companyTypeSmall() {
@@ -78,15 +82,22 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
   }
 
   constructor(
-    private readonly dialog: MatDialog,
-    private readonly formBuilder: FormBuilder,
-    private readonly parserService: ParserService,
-    private readonly businessesService: BusinessesService) {
+      private readonly dialog: MatDialog,
+      private readonly formBuilder: FormBuilder,
+      private readonly parserService: ParserService,
+      private readonly businessesService: BusinessesService) {
     super();
   }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({ search: [null, null] });
+    this.form =
+        this.formBuilder.group({search: [null, null], status: [null, null]});
+
+    this.form.get('status').valueChanges.subscribe(val => {
+      this.status = val;
+
+      this.onSearch();
+    });
 
     this.editForm = this.formBuilder.group({
       locationId: [null, Validators.required],
@@ -136,10 +147,14 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
       isOpen: [CheckboxComponent, null],
     });
 
+    this.statusList.forEach((s) => {
+      s.desc = this.translate('status.' + s.id);
+    });
+
     this.getAll();
   }
 
-  ngAfterViewInit() { }
+  ngAfterViewInit() {}
 
   goto(page: number) {
     if (page < 1) {
@@ -160,48 +175,73 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
     let filter = {};
 
     if (search) {
-      filter = { search };
+      filter = {search};
       this.exportSearch = '&search=' + search;
     }
 
+    if (this.status) {
+      filter = {...filter, status: this.status.toLowerCase()};
+    }
+
     if (this.batch) {
-      filter = { ...filter, batchId: this.batch.batchId };
+      filter = {...filter, batchId: this.batch.batchId};
     }
 
     this.subscriptions.push(
-      this.businessesService.getLocations(filter, 50, (this.page - 1) * 50)
-        .subscribe(
-          result => {
-            // Locations call!
-            const resultData = result;
-            this.datasets.locations =
-              resultData['data'].locations.map(item => {
-                for (let i = 1; i <= 3; i++) {
-                  if (item[`schedule${i}Dow`]) {
-                    item[`schedule${i}DowFormatted`] =
-                      this.parserService.formatWeekdaysListProperty(
-                        item[`schedule${i}Dow`]);
-                    item[`schedule${i}Formatted`] =
-                      this.parserService.formatScheduleProperty(
-                        item[`schedule${i}`]);
-                  }
-                }
+        this.businessesService.getLocations(filter, 50, (this.page - 1) * 50)
+            .subscribe(
+                result => {
+                  // Locations call!
+                  const resultData = result;
 
-                return item;
-              });
+                  this.datasets.locations = [];
+                  resultData['data'].locations.forEach(item => {
+                    for (let i = 1; i <= 3; i++) {
+                      if (item[`schedule${i}Dow`]) {
+                        item[`schedule${i}DowFormatted`] =
+                            this.parserService.formatWeekdaysListProperty(
+                                item[`schedule${i}Dow`]);
+                        item[`schedule${i}Formatted`] =
+                            this.parserService.formatScheduleProperty(
+                                item[`schedule${i}`]);
+                      }
+                    }
+                    this.datasets.locations.push(item);
+                    this.checkCoordinates(item);
+                  });
 
-            this.total = parseInt(resultData['data'].total, 10);
-            this.pages = Math.ceil(this.total / 50);
-            const offset = parseInt(resultData['data'].offset, 10);
-            this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
+                  this.total = parseInt(resultData['data'].total, 10);
+                  this.pages = Math.ceil(this.total / 50);
+                  const offset = parseInt(resultData['data'].offset, 10);
+                  this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
 
-            this.loader.hide('pageLoader');
-            // document.getElementById('kt_scrolltop').click();
-          },
-          (error) => {
-            this.loader.hide('pageLoader');
-            this.logger.error('Error fetching map markers', error);
-          }));
+                  this.loader.hide('pageLoader');
+                  // document.getElementById('kt_scrolltop').click();
+                },
+                (error) => {
+                  this.loader.hide('pageLoader');
+                  this.logger.error('Error fetching map markers', error);
+                }));
+  }
+
+  checkCoordinates(location) {
+    // this.subscriptions.push(
+    //     this.businessesService
+    //         .reverseGeoCoding(location.latitude, location.longitude)
+    //         .subscribe(
+    //             (result) => {
+    //               location.outsideCountry = true;
+
+    //               if (result['features'].length > 0) {
+    //                 const country = result['features'][0];
+    //                 if (country.place_name == 'Portugal') {
+    //                   location.outsideCountry = false;
+    //                 }
+    //               }
+    //             },
+    //             (error) => {
+    //               this.logger.error('Error reverse geocondig', error);
+    //             }));
   }
 
   getAll() {
@@ -211,60 +251,61 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
     let filter = {};
 
     if (search) {
-      filter = { search };
+      filter = {search};
       this.exportSearch = '&search=' + search;
     }
 
     if (this.batch) {
-      filter = { ...filter, batchId: this.batch.batchId };
+      filter = {...filter, batchId: this.batch.batchId};
     }
 
     this.subscriptions.push(
-      forkJoin([
-        this.businessesService.getUser(),
-        this.businessesService.getLocations(filter, 50, (this.page - 1) * 50),
-        this.businessesService.getBatches('WAITING_FOR_APPROVAL,REJECTED'),
-      ])
-        .subscribe(
-          result => {
-            this.datasets.user.companyType =
-              result[0]['data'].company.companyType;
+        forkJoin([
+          this.businessesService.getUser(),
+          this.businessesService.getLocations(filter, 50, (this.page - 1) * 50),
+          this.businessesService.getBatches('WAITING_FOR_APPROVAL,REJECTED'),
+        ])
+            .subscribe(
+                result => {
+                  this.datasets.user.companyType =
+                      result[0]['data'].company.companyType;
 
-            // Locations call!
-            const resultData = result[1];
-            this.datasets.locations =
-              resultData['data'].locations.map(item => {
-                for (let i = 1; i <= 3; i++) {
-                  if (item[`schedule${i}Dow`]) {
-                    item[`schedule${i}DowFormatted`] =
-                      this.parserService.formatWeekdaysListProperty(
-                        item[`schedule${i}Dow`]);
-                    item[`schedule${i}Formatted`] =
-                      this.parserService.formatScheduleProperty(
-                        item[`schedule${i}`]);
-                  }
-                }
+                  // Locations call!
+                  const resultData = result[1];
 
-                return item;
-              });
+                  this.datasets.locations = [];
+                  resultData['data'].locations.forEach(item => {
+                    for (let i = 1; i <= 3; i++) {
+                      if (item[`schedule${i}Dow`]) {
+                        item[`schedule${i}DowFormatted`] =
+                            this.parserService.formatWeekdaysListProperty(
+                                item[`schedule${i}Dow`]);
+                        item[`schedule${i}Formatted`] =
+                            this.parserService.formatScheduleProperty(
+                                item[`schedule${i}`]);
+                      }
+                    }
+                    this.datasets.locations.push(item);
+                    this.checkCoordinates(item);
+                  });
 
-            this.total = parseInt(resultData['data'].total, 10);
-            this.pages = Math.ceil(this.total / 50);
-            const offset = parseInt(resultData['data'].offset, 10);
-            this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
+                  this.total = parseInt(resultData['data'].total, 10);
+                  this.pages = Math.ceil(this.total / 50);
+                  const offset = parseInt(resultData['data'].offset, 10);
+                  this.page = offset > 0 ? Math.round(offset / 50) + 1 : 1;
 
-            // Load batches
-            const batchesData = result[2];
-            this.datasets.batches = batchesData['data'].batches;
+                  // Load batches
+                  const batchesData = result[2];
+                  this.datasets.batches = batchesData['data'].batches;
 
-            this.contentReady = true;
-            this.loader.hide('pageLoader');
-            // document.getElementById('kt_scrolltop').click();
-          },
-          (error) => {
-            this.loader.hide('pageLoader');
-            this.logger.error('Error fetching map markers', error);
-          }));
+                  this.contentReady = true;
+                  this.loader.hide('pageLoader');
+                  // document.getElementById('kt_scrolltop').click();
+                },
+                (error) => {
+                  this.loader.hide('pageLoader');
+                  this.logger.error('Error fetching map markers', error);
+                }));
   }
 
   onSearch() {
@@ -275,15 +316,15 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
 
 
   onCheckboxChange(e, field) {
-    const checkboxField: FormArray = this.editForm.get(field) as FormArray;
+    const checkboxField: FormArray = this.ef[field] as FormArray;
 
     if (e.target.checked) {
-      checkboxField.push(new FormControl(e.target.value));
+      checkboxField.value.push(e.target.value);
     } else {
       let i = 0;
-      checkboxField.controls.forEach((item: FormControl) => {
-        if (item.value === e.target.value) {
-          checkboxField.removeAt(i);
+      this.ef[field].value.forEach((item: FormControl) => {
+        if (item === e.target.value) {
+          checkboxField.value.splice(i, 1);
           return;
         }
         i++;
@@ -294,13 +335,16 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
   openMapToChooseCoordinates() {
     const dialogRef = this.dialog.open(ChooseCoordinatesFromMapModalComponent, {
       width: '80%',
-      data: (this.ef.latitude.value && this.ef.longitude.value ? { lat: this.ef.latitude.value, lng: this.ef.longitude.value } : null)
+      data:
+          (this.ef.latitude.value && this.ef.longitude.value ?
+               {lat: this.ef.latitude.value, lng: this.ef.longitude.value} :
+               null)
     });
 
-    dialogRef.afterClosed().subscribe((result: { lat: number, lng: number }) => {
+    dialogRef.afterClosed().subscribe((result: {lat: number, lng: number}) => {
       if (result) {
-        this.ef.latitude.setValue(result.lat);
-        this.ef.longitude.setValue(result.lng);
+        this.ef.latitude.setValue(Math.round(result.lat * 1000000) / 1000000);
+        this.ef.longitude.setValue(Math.round(result.lng * 1000000) / 1000000);
       }
     });
   }
@@ -326,11 +370,11 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
           if (location[`schedule${i}`]) {
             const hours = location[`schedule${i}`].split('-');
             this.editForm.controls[`schedule${i}StartHour`].setValue(
-              hours[0].substring(0, 5));
+                hours[0].substring(0, 5));
 
             if (hours && hours.length > 1) {
               this.editForm.controls[`schedule${i}EndHour`].setValue(
-                hours[1].substring(0, 5));
+                  hours[1].substring(0, 5));
             }
           }
 
@@ -339,13 +383,15 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
 
             days.forEach((d) => {
               if (document.getElementById(
-                `schedule${i}DowChoices-${d.trim()}`)) {
-                this.editForm.controls[`schedule${i}DowChoices`].value.push(d);
+                      `schedule${i}DowChoices-${d.trim()}`)) {
                 document.getElementById(
-                  `schedule${i}DowChoices-${d.trim()}`)['checked'] = true;
+                    `schedule${i}DowChoices-${d.trim()}`)['checked'] = true;
+                this.ef[`schedule${i}DowChoices`].value.push(d);
               }
             });
           }
+
+          console.log('edit', this.ef[`schedule${i}DowChoices`].value);
         }
       }, 50);
     } else {
@@ -366,124 +412,138 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
   saveStoreChanges() {
     this.loader.show('pageLoader');
 
-
     if (this.ef.schedule1StartHour.value && this.ef.schedule1EndHour.value) {
       this.ef.schedule1.setValue(`${this.ef.schedule1StartHour.value}-${
-        this.ef.schedule1EndHour.value}`);
+          this.ef.schedule1EndHour.value}`);
     }
     if (this.ef.schedule2StartHour.value && this.ef.schedule2EndHour.value) {
       this.ef.schedule2.setValue(`${this.ef.schedule2StartHour.value}-${
-        this.ef.schedule2EndHour.value}`);
+          this.ef.schedule2EndHour.value}`);
     }
     if (this.ef.schedule3StartHour.value && this.ef.schedule3EndHour.value) {
       this.ef.schedule3.setValue(`${this.ef.schedule3StartHour.value}-${
-        this.ef.schedule3EndHour.value}`);
+          this.ef.schedule3EndHour.value}`);
     }
 
     // Necessary to order the days.
     this.ef.schedule1Dow.setValue(
-      this.datasets.daysOfWeek
-        .map(day => {
-          return (
-            this.ef.schedule1DowChoices.value.includes(day) ? day : null);
-        })
-        .filter(n => n)
-        .join(','));
+        this.datasets.daysOfWeek
+            .map(day => {
+              console.log(
+                  this.ef.schedule1DowChoices.value.includes(day),
+                  this.ef.schedule1DowChoices.value, day);
+              return (
+                  this.ef.schedule1DowChoices.value.includes(day) ? day : null);
+            })
+            .filter(n => n)
+            .join(','));
 
     this.ef.schedule2Dow.setValue(
-      this.datasets.daysOfWeek
-        .map(day => {
-          return (
-            this.ef.schedule2DowChoices.value.includes(day) ? day : null);
-        })
-        .filter(n => n)
-        .join(','));
+        this.datasets.daysOfWeek
+            .map(day => {
+              return (
+                  this.ef.schedule2DowChoices.value.includes(day) ? day : null);
+            })
+            .filter(n => n)
+            .join(','));
 
     this.ef.schedule3Dow.setValue(
-      this.datasets.daysOfWeek
-        .map(day => {
-          return (
-            this.ef.schedule3DowChoices.value.includes(day) ? day : null);
-        })
-        .filter(n => n)
-        .join(','));
+        this.datasets.daysOfWeek
+            .map(day => {
+              return (
+                  this.ef.schedule3DowChoices.value.includes(day) ? day : null);
+            })
+            .filter(n => n)
+            .join(','));
 
     this.subscriptions.push(
-      this.businessesService.updateLocation(this.editForm.value)
-        .subscribe(
-          (result: {
-            resultCode: number,
-            resultMessage: string,
-            resultTimestamp: number,
-            data: any,
-            service: string,
-            traceId: string
-          }) => {
-            this.loader.hide('pageLoader');
+        this.businessesService.updateLocation(this.editForm.value)
+            .subscribe(
+                (result: {
+                  resultCode: number,
+                  resultMessage: string,
+                  resultTimestamp: number,
+                  data: any,
+                  service: string,
+                  traceId: string
+                }) => {
+                  this.loader.hide('pageLoader');
 
-            if (result.resultCode === 200) {
-              this.editing = false;
-              this.notification.success(this.translate(
-                'messages.success.location_successfully_updated'));
+                  if (result.resultCode === 200) {
+                    this.editing = false;
+                    this.notification.success(this.translate(
+                        'messages.success.location_successfully_updated'));
 
-              this.getLocations();
-            } else {
-              this.notification.error(
-                this.translate(
-                  'messages.errors.unable_to_update_location') +
-                ' ' + result.resultMessage);
-            }
-          },
-          (error) => {
-            this.loader.hide('pageLoader');
+                    this.getLocations();
+                  } else {
+                    let errorMessage = '';
+                    switch (result.resultCode) {
+                      case 450:
+                        errorMessage = this.translate(
+                            'messages.errors.unable_to_update_location_schedule');
+                        break;
 
-            if (error.error) {
-              this.notification.error(`${error.error.resultMessage}`);
-            } else {
-              this.notification.error(this.translate(
-                'messages.errors.unable_to_update_location'));
-            }
+                      case 451:
+                        errorMessage = this.translate(
+                            'messages.errors.unable_to_update_location_location');
+                        break;
+                    }
+                    this.notification.error(
+                        this.translate(
+                            'messages.errors.unable_to_update_location') +
+                        ' ' + errorMessage);
+                  }
+                },
+                (error) => {
+                  this.loader.hide('pageLoader');
 
-            this.logger.error('Error saving location', error.error);
-          }));
+                  if (error.error) {
+                    this.notification.error(`${error.error.resultMessage}`);
+                  } else {
+                    this.notification.error(this.translate(
+                        'messages.errors.unable_to_update_location'));
+                  }
+
+                  this.logger.error('Error saving location', error.error);
+                }));
   }
 
   deleteStore(location) {
     if (!confirm(this.translate(
-      'messages.alerts.are_you_sure_delete_location',
-      { store: location.store }))) {
+            'messages.alerts.are_you_sure_delete_location',
+            {store: location.store}))) {
       return;
     }
     this.loader.show('pageLoader');
 
     this.subscriptions.push(
-      this.businessesService.deleteLocation(location.locationId)
-        .subscribe(
-          (result: any) => {
-            this.loader.hide('pageLoader');
+        this.businessesService.deleteLocation(location.locationId)
+            .subscribe(
+                (result: any) => {
+                  this.loader.hide('pageLoader');
 
-            if (result.resultCode === 200) {
-              this.editing = false;
+                  if (result.resultCode === 200) {
+                    this.editing = false;
 
-              this.notification.success(this.translate(
-                'messages.success.location_successfully_deleted'));
+                    this.notification.success(this.translate(
+                        'messages.success.location_successfully_deleted'));
 
-              this.getLocations();
-            } else {
-              this.notification.error(
-                this.translate(
-                  'messages.errors.unable_to_delete_location',
-                  { store: location.store }) +
-                ' ' + result.resultMessage);
-            }
-          },
-          (error) => {
-            this.loader.hide('pageLoader');
-            this.notification.error(this.translate(
-              'messages.errors.unable_to_delete_location',
-              { store: location.store }));
-            this.logger.error('Error deleting location', error);
-          }));
+                    this.getLocations();
+                  } else {
+                    this.notification.error(
+                        this.translate(
+                            'messages.errors.unable_to_delete_location',
+                            {store: location.store}) +
+                        ' ' + result.resultMessage);
+                  }
+                },
+                (error) => {
+                  this.loader.hide('pageLoader');
+                  this.notification.error(this.translate(
+                      'messages.errors.unable_to_delete_location',
+                      {store: location.store}));
+                  this.logger.error('Error deleting location', error);
+                }));
   }
 
   filterBatch(batch: {
@@ -493,7 +553,7 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
     personEmail: string,
     personPhone: string,
     updatedAt: number,
-    stats: { total: number, added: number, updated, ignored: number }
+    stats: {total: number, added: number, updated, ignored: number}
   }) {
     this.batch = batch;
 
@@ -510,45 +570,44 @@ export class LocationsListComponent extends BasePageComponent implements OnInit,
     this.loader.show('pageLoader');
 
     this.subscriptions.push(
-      this.businessesService.submitBatch(batchId, submit)
-        .subscribe(
-          (result: { resultCode }) => {
-            if (result.resultCode === 200) {
-              this.editing = false;
-              this.notification.success(this.translate(
-                'messages.success.batch_successfully_submitted'));
+        this.businessesService.submitBatch(batchId, submit)
+            .subscribe(
+                (result: {resultCode}) => {
+                  if (result.resultCode === 200) {
+                    this.editing = false;
+                    this.notification.success(this.translate(
+                        'messages.success.batch_successfully_submitted'));
 
-              this.batch = null;
-              this.onSearch();
+                    this.batch = null;
+                    this.onSearch();
 
-              // Reload batches
-              this.subscriptions.push(
-                this.businessesService
-                  .getBatches('WAITING_FOR_APPROVAL,REJECTED')
-                  .subscribe(
-                    result => {
-                      // Load batches
-                      const batchesData = result;
-                      this.datasets.batches =
-                        batchesData['data'].batches;
-                    },
-                    (error) => {
-                      this.logger.error(
-                        'Error fetching map markers', error);
-                    }));
-            } else {
-              this.notification.error(this.translate(
-                'messages.errors.unable_to_submit_batch'));
-            }
+                    // Reload batches
+                    this.subscriptions.push(
+                        this.businessesService
+                            .getBatches('WAITING_FOR_APPROVAL,REJECTED')
+                            .subscribe(
+                                result => {
+                                  // Load batches
+                                  const batchesData = result;
+                                  this.datasets.batches =
+                                      batchesData['data'].batches;
+                                },
+                                (error) => {
+                                  this.logger.error(
+                                      'Error fetching map markers', error);
+                                }));
+                  } else {
+                    this.notification.error(this.translate(
+                        'messages.errors.unable_to_submit_batch'));
+                  }
 
-            this.loader.hide('pageLoader');
-          },
-          (error) => {
-            this.loader.hide('pageLoader');
-            this.logger.error('Error submiting batch', error);
-            this.notification.error(
-              this.translate('messages.errors.unable_to_submit_batch'));
-          }));
+                  this.loader.hide('pageLoader');
+                },
+                (error) => {
+                  this.loader.hide('pageLoader');
+                  this.logger.error('Error submiting batch', error);
+                  this.notification.error(
+                      this.translate('messages.errors.unable_to_submit_batch'));
+                }));
   }
-
 }

@@ -3,11 +3,23 @@
   <ng-container header>{{ 'actions.choose_from_map' | translate }}</ng-container>
 
   <ng-container body>
+    <div class="input-ct">
+      <form [formGroup]="form" (ngSubmit)="search()">
+        <app-catalog-form-input [formControlField]="f.search" formControlName="search"
+          placeholder="{{ 'labels.search_locations' | translate }}" [appendButton]="search"
+          [appendButtonIcon]="'fa fa-search'"></app-catalog-form-input>
+      </form>
+      
+      <ul class="search-results" [hidden]="!showResults">
+        <li (click)="setMarker(result)" *ngFor="let result of searchResults">{{result.label}}</li>
+      </ul>
+    </div>
     <div id="map-container"></div>
   </ng-container>
 
   <ng-container footer>
-    <button class="btn btn-outline-secondary" type="button" (click)="onCancel()">{{'actions.cancel' | translate}}</button>
+    <button class="btn btn-outline-secondary" type="button"
+      (click)="onCancel()">{{'actions.cancel' | translate}}</button>
     &nbsp;
     <button class="btn btn-primary" type="button" (click)="onSave()">{{'actions.save' | translate}}</button>
   </ng-container>

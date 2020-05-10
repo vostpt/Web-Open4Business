@@ -1,3 +1,23 @@
 #map-container {
   height: 60vh;
 }
+
+.input-ct {
+  padding-bottom: 10px;
+}
+
+.search-results {
+  list-style: none;
+  padding: 0;
+  margin-top: -4px;
+  border: solid 1px #e2e5ec;
+
+  li {
+    padding: 10px;
+    cursor: pointer;
+
+    &:hover {    
+      background-color: #CCC;
+    }
+  }
+}

@@ -2,6 +2,14 @@
   <a href="javascript:;" class="kt-quick-panel__close" [id]="this.toggleBy + '-close-btn'" (click)="onClose()">
     <i class="flaticon2-delete"></i>
   </a>
+  
+  <div class="lang-selector">
+    <span *ngFor="let lang of availableLangs; let i = index">
+      <a href="javascript:void(0)" (click)="setLang(lang)" [ngClass]="{'text-primary': currLang == lang, 'text-secondary': currLang !== lang}">{{ lang }}</a>
+      <span [hidden]="i == availableLangs.length - 1">&nbsp;|&nbsp;</span>
+    </span>
+  </div>
+
   <div class="kt-mt-50 h-100 px-4">
     <!-- <ng-content select="[content]"></ng-content> -->
     <div content class="h-100">

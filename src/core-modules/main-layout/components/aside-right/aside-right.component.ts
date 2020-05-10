@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { OffcanvasOptions } from '../../../main-layout/directives/offcanvas.directive';
 import { environment } from '@core-modules/core';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-main-layout-aside-right',
@@ -16,12 +17,14 @@ export class AsideRightComponent implements OnInit {
   name: string;
   session: boolean;
   isAdmin: boolean;
+  currLang: string;
+  availableLangs: string[];
 
   offcanvasOptions: OffcanvasOptions;
 
   quickGuideLink = `${environment.apiUrl}/insights/v1/guide`;
 
-  constructor() {
+  constructor(private translateService: TranslateService) {
     if (localStorage.getItem('email')) {
       this.email = `${localStorage.getItem('email')}`;
       this.name = `${localStorage.getItem('name')}`;
@@ -35,6 +38,9 @@ export class AsideRightComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.availableLangs = this.translateService.getLangs();
+    this.currLang = this.translateService.currentLang || this.translateService.defaultLang;
+    console.log(this.currLang);
     this.offcanvasOptions = {
       overlay: true,
       baseClass: 'kt-quick-panel',
@@ -55,4 +61,8 @@ export class AsideRightComponent implements OnInit {
     this.closeEvent.emit({ type: 'close', data: null });
   }
 
+  setLang(lang: string) {
+    this.currLang = lang;
+    this.translateService.use(this.currLang);
+  }
 }
