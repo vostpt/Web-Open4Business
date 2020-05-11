@@ -183,7 +183,7 @@ export const locale = {
       success: {
         batch_successfully_submitted: 'Batch successfully submittted.',
         information_successfully_sent: 'The information was sent',
-        location_successfully_approved: 'Shops deleted',
+        location_successfully_approved: 'Shops confirmed',
         location_successfully_deleted: 'Shop deleted',
         location_successfully_updated: 'Shop updated',
         marker_successfully_updated: 'Pin updated',
